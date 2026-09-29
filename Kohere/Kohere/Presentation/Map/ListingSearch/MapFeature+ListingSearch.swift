@@ -121,7 +121,7 @@ extension MapFeature {
         //    진단에서 넘어오면 옮길 결과가 없어 카드가 빈다.
         var search = MapLocationSearchState()
         if plan.previousResults == .keep, case let .locationSearch(previous) = state.searchMode {
-            search.results = previous.results
+            search.results.items = previous.results.items
         }
         state.searchMode = .locationSearch(search)
 
@@ -152,8 +152,7 @@ extension MapFeature {
                 state.viewportSearchTrigger = .onFirstIdle   // 첫 멈춤에 검색된다. (MapFeature+Viewport)
                 return reset
             }
-            // reset의 취소가 끝난 뒤 시작해야 같은 ID로 등록되는 새 요청이 취소되지 않는다.
-            return .concatenate(reset, startListingSearchEffect(state: &state, viewport: viewport))
+            return .merge(reset, startListingSearchEffect(state: &state, viewport: viewport))
 
         case let .afterCameraMove(coordinate, position):
             state.viewportSearchTrigger = .onArrival(at: coordinate)   // 도착한 멈춤에 검색된다. (MapFeature+Viewport)
@@ -179,7 +178,7 @@ extension MapFeature {
             .cancel(id: MapEffectID.listingMapMarkers),
             .cancel(id: MapEffectID.diagnosisDetail),
             .cancel(id: MapEffectID.diagnosisRecommendations),
-            .cancel(id: MapEffectID.diagnosisMap)
+            .cancel(id: MapEffectID.diagnosisMarkers)
         )
     }
 
@@ -189,11 +188,12 @@ extension MapFeature {
         state: inout State,
         viewport: MapViewport
     ) -> Effect<Action> {
+        guard case var .locationSearch(search) = state.searchMode else { return .none }
         state.viewportSearchTrigger = .manual(lastSearched: viewport)
         state.showsResearchButton = false
         state.clearSelectedListing()
-        state.isListingSearchLoading = true
-        state.listingSearchErrorMessage = nil
+        search.results.beginFirstPage()
+        state.searchMode = .locationSearch(search)
 
         let input = state.appliedFilter.listingSearchInput(
             bounds: viewport.visibleBounds
@@ -229,19 +229,23 @@ extension MapFeature {
         isFirstPage: Bool,
         state: inout State
     ) -> Effect<Action> {
-        guard state.listingSource == .locationSearch else { return .none }
+        guard case var .locationSearch(search) = state.searchMode else { return .none }
 
         switch result {
         case let .success(page):
             debugLogListingSearchResponse(page)
-            state.isListingSearchLoading = false
-            state.listingSearchErrorMessage = nil
-            applyListingSearchPage(page, isFirstPage: isFirstPage, to: &state)
+            search.results.apply(page.content, pageInfo: page.page, isFirstPage: isFirstPage)
+            state.searchMode = .locationSearch(search)
+
+            if let selectedMarkerID = state.selectedMarkerID,
+               !state.markers.contains(where: { $0.id == selectedMarkerID }) {
+                state.clearSelectedListing()
+            }
 
         case let .failure(error):
             debugLogListingSearchError(error)
-            state.isListingSearchLoading = false
-            state.listingSearchErrorMessage = error.localizedDescription
+            search.results.settle()
+            state.searchMode = .locationSearch(search)
         }
 
         return .none
@@ -287,16 +291,16 @@ extension MapFeature {
         appearedListingID: String,
         state: inout State
     ) -> Effect<Action> {
-        guard state.listings.last?.listingID == appearedListingID,
-              !state.isListingSearchLoading,
-              state.listingSource == .locationSearch,
-              state.listingPageInfo?.hasNext == true,
+        guard case var .locationSearch(search) = state.searchMode,
+              search.results.items.last?.id == appearedListingID,
+              !search.results.isLoading,
+              search.results.hasNextPage,
               let lastSearchedViewport = state.viewportSearchTrigger.lastSearchedViewport
         else { return .none }
 
-        let nextPage = (state.listingPageInfo?.number ?? 0) + 1
-        state.isListingSearchLoading = true
-        state.listingSearchErrorMessage = nil
+        let nextPage = search.results.nextPageNumber
+        search.results.beginNextPage()
+        state.searchMode = .locationSearch(search)
 
         let input = state.appliedFilter.listingSearchInput(
             bounds: lastSearchedViewport.visibleBounds,
@@ -314,26 +318,5 @@ extension MapFeature {
             }
         }
         .cancellable(id: MapEffectID.listingSearch, cancelInFlight: true)
-    }
-
-    // MARK: - Result Mapping
-
-    func applyListingSearchPage(
-        _ page: ListingSearchPage,
-        isFirstPage: Bool,
-        to state: inout State
-    ) {
-        state.listingPageInfo = page.page
-
-        if isFirstPage {
-            state.listingSearchResults = page.content
-        } else {
-            state.listingSearchResults.appendUnique(contentsOf: page.content)
-        }
-
-        if let selectedMarkerID = state.selectedMarkerID,
-           !state.markers.contains(where: { $0.id == selectedMarkerID }) {
-            state.clearSelectedListing()
-        }
     }
 }

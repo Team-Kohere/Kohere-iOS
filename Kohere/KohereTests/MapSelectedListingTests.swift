@@ -7,8 +7,9 @@ final class MapSelectedListingTests: XCTestCase {
     func testLoadedMarkerUsesListWithoutFetchingAgain() async {
         let item = ListingItemModel(listing: makeMarkerListing(), language: .english)
         var state = MapFeature.State()
-        state.listingSource = .locationSearch
-        state.listingSearchResults = [makeMarkerListing()]
+        state.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [makeMarkerListing()], status: .loaded)
+        ))
         let store = TestStore(initialState: state) { MapFeature() } withDependencies: {
             $0.listingClient.fetchListings = { _ in
                 XCTFail("목록에 있는 마커는 다시 조회하지 않는다")
@@ -36,10 +37,10 @@ final class MapSelectedListingTests: XCTestCase {
         let rate = KRWToUSDExchangeRate(usdPerKRW: 0.001)
         let pageInfo = PageInfo(number: 2, size: 10, totalElements: 40, totalPages: 4, hasNext: true)
         var state = MapFeature.State()
-        state.listingSource = .locationSearch
+        state.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [other], pageInfo: pageInfo, status: .loaded)
+        ))
         state.krwToUSDExchangeRate = rate
-        state.listingSearchResults = [other]
-        state.listingPageInfo = pageInfo
         state.appliedFilter.updateMonthlyRentMaximum(50)
         state.appliedFilter.updateDepositMaximum(150)
         state.appliedFilter.selectedOptions = [.privateBathroom]
@@ -79,8 +80,9 @@ final class MapSelectedListingTests: XCTestCase {
         XCTAssertEqual(input.conditions, [.privateBathroom])
         XCTAssertEqual(input.propertyTypes, [.goshiwon])
         XCTAssertEqual(store.state.listings, state.listings)
-        XCTAssertEqual(store.state.listingSearchResults, [other])
-        XCTAssertEqual(store.state.listingPageInfo, pageInfo)
+        XCTAssertEqual(store.state.searchMode, .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [other], pageInfo: pageInfo, status: .loaded)
+        )))
         let item = try XCTUnwrap(selectedItem(from: store.state))
         XCTAssertEqual(item.title, listing.title)
         XCTAssertEqual(item.thumbnailURL, listing.thumbnailURL)
@@ -131,8 +133,7 @@ final class MapSelectedListingTests: XCTestCase {
         let requestID = UUID()
         let requests = LockIsolated<[ListingSearchInput]>([])
         var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.activeDiagnosisID = 42
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 42))
         state.appliedFilterSource = .diagnosis
         state.appliedFilter.updateMonthlyRentMaximum(50)
         state.appliedFilter.selectedOptions = [.privateBathroom, .englishSupport]
@@ -157,7 +158,7 @@ final class MapSelectedListingTests: XCTestCase {
         XCTAssertEqual(store.state.editingFilter, state.editingFilter)
         XCTAssertEqual(store.state.listingSource, .diagnosis)
         XCTAssertEqual(store.state.appliedFilterSource, .diagnosis)
-        XCTAssertEqual(store.state.activeDiagnosisID, 42)
+        XCTAssertEqual(store.state.searchMode, .diagnosis(MapDiagnosisSearchState(diagnosisID: 42)))
         await store.finish()
     }
 
@@ -168,13 +169,11 @@ final class MapSelectedListingTests: XCTestCase {
         let newRequestID = UUID()
         let requests = LockIsolated<[ListingSearchInput]>([])
         var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.activeDiagnosisID = 42
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 42))
         state.appliedFilterSource = .diagnosis
         state.selectedMarkerID = listing.listingID
         state.selectedListingRequestID = oldRequestID
         state.sheetMode = .selectedListing
-        state.isDiagnosisDetailLoading = true
         let detail = DiagnosisDetail(
             diagnosisID: 42, region: "SEOUL", purpose: "STUDY", university: nil, district: nil,
             conditions: [.privateBathroom], monthlyRentMin: 0, monthlyRentMax: 500_000,
@@ -198,7 +197,6 @@ final class MapSelectedListingTests: XCTestCase {
         XCTAssertEqual(input.maxBudget, 500_000)
         XCTAssertEqual(input.conditions, [.privateBathroom])
         XCTAssertEqual(store.state.selectedListing, listing)
-        XCTAssertFalse(store.state.isDiagnosisDetailLoading)
         await store.finish()
     }
 
@@ -208,8 +206,9 @@ final class MapSelectedListingTests: XCTestCase {
         let requestID = UUID()
         let clock = TestClock()
         var state = MapFeature.State()
-        state.listingSource = .locationSearch
-        state.listingSearchResults = [makeMarkerListing(id: "other")]
+        state.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [makeMarkerListing(id: "other")], status: .loaded)
+        ))
         let store = TestStore(initialState: state) { MapFeature() } withDependencies: {
             $0.uuid = .constant(requestID)
             $0.listingClient.fetchListings = { _ in
@@ -238,8 +237,9 @@ final class MapSelectedListingTests: XCTestCase {
         state.selectedMarkerID = listing.listingID
         state.selectedListingRequestID = UUID()
         state.sheetMode = .selectedListing
-        state.listingSource = .locationSearch
-        state.listingSearchResults = [listing]
+        state.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [listing], status: .loaded)
+        ))
         let store = TestStore(initialState: state) { MapFeature() }
         XCTAssertNil(store.state.selectedListingItem)
         await store.send(.selectedListingCardTapped)
@@ -265,7 +265,7 @@ final class MapSelectedListingTests: XCTestCase {
         let listing = makeMarkerListing()
         let requestID = UUID()
         var state = MapFeature.State()
-        state.listingSource = .locationSearch
+        state.searchMode = .locationSearch(MapLocationSearchState())
         state.selectedMarkerID = listing.listingID
         state.selectedListing = listing
         state.selectedListingRequestID = requestID

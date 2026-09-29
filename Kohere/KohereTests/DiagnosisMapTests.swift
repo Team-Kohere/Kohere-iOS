@@ -28,24 +28,27 @@ final class DiagnosisMapTests: XCTestCase {
         store.exhaustivity = .off
         await store.send(.diagnosisResultRequested(diagnosisID: 42, filter: MapFilterState()))
         await clock.advance(by: .seconds(1))
-        await store.receive(\.diagnosisMapResponse)
+        await store.receive(\.diagnosisMarkersResponse)
         XCTAssertEqual(started.value, ["map", "list"])
         XCTAssertEqual(store.state.markers.map(\.id), ["first", "outside-page"])
-        XCTAssertEqual(store.state.diagnosisMapTotal, 137)
+        XCTAssertEqual(store.state.searchMode, .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 42,
+            recommendations: PagedRequest(status: .loadingFirstPage),
+            markerRequest: .loaded
+        )))
         XCTAssertTrue(store.state.listings.isEmpty)
-        XCTAssertTrue(store.state.isRecommendationsLoading)
+        XCTAssertTrue(store.state.isListLoading)
         await clock.advance(by: .seconds(1))
         await store.receive(\.diagnosisRecommendationsResponse)
         XCTAssertEqual(store.state.listings.map(\.listingID), ["first"])
         XCTAssertEqual(store.state.markers.map(\.id), ["first", "outside-page"])
-        XCTAssertFalse(store.state.isRecommendationsLoading)
+        XCTAssertFalse(store.state.isListLoading)
         await store.finish()
     }
 
     func testLateFirstPageDoesNotDismissSelectedMarkerOrMoveCamera() async {
         var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.activeDiagnosisID = 42
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 42))
         state.selectedMarkerID = "outside-page"
         state.selectedListingRequestID = UUID()
         state.sheetMode = .selectedListing
@@ -63,12 +66,9 @@ final class DiagnosisMapTests: XCTestCase {
     }
 
     func testChangingFilterKeepsValuesAndIgnoresOldDiagnosisMap() async {
-        let requestID = UUID()
         var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.activeDiagnosisID = 42
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 42, markerRequest: .loading))
         state.appliedFilterSource = .diagnosis
-        state.diagnosisMapRequestID = requestID
         state.editingFilter.updateMonthlyRentMaximum(50)
         state.editingFilter.selectedOptions = [.privateBathroom]
         let store = TestStore(initialState: state) { MapFeature() }
@@ -76,43 +76,33 @@ final class DiagnosisMapTests: XCTestCase {
         await store.send(.filterApplyButtonTapped)
         XCTAssertEqual(store.state.listingSource, .locationSearch)
         XCTAssertEqual(store.state.appliedFilter, state.editingFilter)
-        XCTAssertNil(store.state.activeDiagnosisID)
-        XCTAssertNil(store.state.diagnosisMapRequestID)
-        await store.send(.diagnosisMapResponse(requestID: requestID, .success(mapResult())))
+        await store.send(.diagnosisMarkersResponse(.success(mapResult())))
         XCTAssertTrue(store.state.markers.isEmpty)
     }
 
-    func testOlderMapRequestCannotReplaceNewDiagnosisMarkers() async {
-        var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.activeDiagnosisID = 43
-        state.diagnosisMapRequestID = UUID()
-        let store = TestStore(initialState: state) { MapFeature() }
-        let oldRequestID = UUID()
-        await store.send(.diagnosisMapResponse(requestID: oldRequestID, .success(mapResult())))
-        await store.send(.diagnosisMapResponse(requestID: oldRequestID, .failure(.emptyResponse)))
-        XCTAssertEqual(store.state.diagnosisMapRequestID, state.diagnosisMapRequestID)
-    }
+    // 늦은 마커 응답은 요청 ID가 아니라 effect 취소로 걸러진다. testMapDismissalCancelsPendingMarkersResponse 참고.
 
     func testMapFailureDoesNotClearRecommendationList() async {
-        let requestID = UUID()
+        let loadedRecommendations = PagedRequest(items: recommendations().listings, status: .loaded)
         var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.diagnosisMapRequestID = requestID
-        state.diagnosisRecommendedListings = recommendations().listings
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 42,
+            recommendations: loadedRecommendations,
+            markerRequest: .loading
+        ))
         let store = TestStore(initialState: state) { MapFeature() }
         store.exhaustivity = .off
-        await store.send(.diagnosisMapResponse(requestID: requestID, .failure(.emptyResponse)))
-        XCTAssertEqual(store.state.diagnosisRecommendedListings, state.diagnosisRecommendedListings)
-        XCTAssertNil(store.state.diagnosisMapRequestID)
-        XCTAssertNotNil(store.state.diagnosisMapErrorMessage)
+        await store.send(.diagnosisMarkersResponse(.failure(.emptyResponse)))
+        XCTAssertEqual(store.state.searchMode, .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 42,
+            recommendations: loadedRecommendations,
+            markerRequest: .idle
+        )))
     }
 
-    func testMapDismissalCancelsPendingMapResponse() async {
+    func testMapDismissalCancelsPendingMarkersResponse() async {
         let clock = TestClock()
-        let requestID = UUID()
         let store = TestStore(initialState: MapFeature.State()) { MapFeature() } withDependencies: {
-            $0.uuid = .constant(requestID)
             $0.diagnosisClient.fetchRecommendationMap = { _ in
                 try await clock.sleep(for: .seconds(1))
                 return self.mapResult()
@@ -125,11 +115,13 @@ final class DiagnosisMapTests: XCTestCase {
         store.exhaustivity = .off
         await store.send(.diagnosisResultRequested(diagnosisID: 42, filter: MapFilterState()))
         await store.send(.mapDismissed)
-        XCTAssertNil(store.state.diagnosisMapRequestID)
+        XCTAssertEqual(store.state.searchMode, .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 42,
+            markerRequest: .idle
+        )))
         await clock.advance(by: .seconds(1))
-        await store.send(.diagnosisMapResponse(requestID: requestID, .success(mapResult())))
-        XCTAssertTrue(store.state.markers.isEmpty)
         await store.finish()
+        XCTAssertTrue(store.state.markers.isEmpty)
     }
 
     func testMapRouterUsesGuestOwnershipHeaderWithoutQuery() throws {
@@ -147,11 +139,10 @@ final class DiagnosisMapTests: XCTestCase {
     }
 
     func testMapReentryReloadsMissingMarkersWithoutReplacingLoadedRecommendations() async {
+        let loadedRecommendations = PagedRequest(items: recommendations().listings, status: .loaded)
         var state = MapFeature.State()
-        state.listingSource = .diagnosis
-        state.activeDiagnosisID = 42
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 42, recommendations: loadedRecommendations))
         state.appliedFilterSource = .diagnosis
-        state.diagnosisRecommendedListings = recommendations().listings
         let requests = LockIsolated(0)
         let store = TestStore(initialState: state) { MapFeature() } withDependencies: {
             $0.diagnosisClient.fetchRecommendationMap = { id in
@@ -164,14 +155,54 @@ final class DiagnosisMapTests: XCTestCase {
         }
         store.exhaustivity = .off
         await store.send(.mapAppeared)
-        await store.receive(\.diagnosisMapResponse)
+        await store.receive(\.diagnosisMarkersResponse)
         await store.finish()
-        XCTAssertEqual(store.state.diagnosisRecommendedListings, state.diagnosisRecommendedListings)
-        XCTAssertEqual(store.state.diagnosisMapTotal, 137)
+        XCTAssertEqual(store.state.searchMode, .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 42,
+            recommendations: loadedRecommendations,
+            markerRequest: .loaded
+        )))
         XCTAssertEqual(requests.value, 1)
         await store.send(.mapAppeared)
         await store.finish()
         XCTAssertEqual(requests.value, 1)
+    }
+
+    func testMapReentryReloadsRecommendationsWhenFirstPageWasInterrupted() async {
+        var state = MapFeature.State()
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 42, markerRequest: .loaded))
+        state.appliedFilterSource = .diagnosis
+        let recommendationRequests = LockIsolated(0)
+        let markerRequests = LockIsolated(0)
+        let store = TestStore(initialState: state) { MapFeature() } withDependencies: {
+            $0.diagnosisClient.fetchRecommendations = { input in
+                XCTAssertEqual(input.diagnosisID, 42)
+                XCTAssertEqual(input.page, 0)
+                recommendationRequests.withValue { $0 += 1 }
+                return self.recommendations()
+            }
+            $0.diagnosisClient.fetchRecommendationMap = { _ in
+                markerRequests.withValue { $0 += 1 }
+                return self.mapResult()
+            }
+            $0.fetchKRWToUSDExchangeRateUseCase = .init { .init(usdPerKRW: 0.001) }
+            $0.convertMonthlyRentCurrencyUseCase = .liveValue
+        }
+        store.exhaustivity = .off
+        await store.send(.mapAppeared)
+        await store.receive(\.diagnosisRecommendationsResponse)
+        await store.finish()
+        XCTAssertEqual(recommendationRequests.value, 1)
+        XCTAssertEqual(markerRequests.value, 0)
+        XCTAssertEqual(store.state.searchMode, .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 42,
+            recommendations: PagedRequest(
+                items: recommendations().listings,
+                pageInfo: recommendations().page,
+                status: .loaded
+            ),
+            markerRequest: .loaded
+        )))
     }
 
     func testMapResponsePreservesTotalAndSkipsUnplottableMarker() throws {

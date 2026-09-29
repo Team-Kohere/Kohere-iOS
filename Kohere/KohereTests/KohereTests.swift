@@ -601,11 +601,13 @@ final class MapFavoriteSyncTests: XCTestCase {
         var state = MapFeature.State()
         let status = ListingFavoriteStatus(isFavorited: false, favoriteCount: 4)
 
-        state.listingSource = .locationSearch
-        state.listingSearchResults = [
-            makeMapTestListing(id: "listing-1", isFavorited: true, favoriteCount: 5),
-            makeMapTestListing(id: "listing-2", isFavorited: true, favoriteCount: 8)
-        ]
+        state.searchMode = .locationSearch(MapLocationSearchState(results: PagedRequest(
+            items: [
+                makeMapTestListing(id: "listing-1", isFavorited: true, favoriteCount: 5),
+                makeMapTestListing(id: "listing-2", isFavorited: true, favoriteCount: 8)
+            ],
+            status: .loaded
+        )))
 
         state.synchronizeFavoriteStatus(status, for: "listing-1")
 
@@ -682,17 +684,18 @@ final class MapListingNavigationTests: XCTestCase {
         initialState.markers = [marker]
         initialState.selectedMarkerID = marker.id
         initialState.sheetMode = .selectedListing
-        initialState.listingSource = .diagnosis
-        initialState.activeDiagnosisID = 1
-        initialState.diagnosisRecommendedListings = [DiagnosisRecommendedListing(
-            listingID: "listing-1", title: "Listing", type: "Apartment",
-            minMonthlyRent: 500_000, maxMonthlyRent: 500_000, minDeposit: 0, maxDeposit: 0,
-            thumbnailURL: nil, coordinate: coordinate, nearestTransit: nil
-        )]
+        initialState.searchMode = .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 1,
+            recommendations: PagedRequest(
+                items: [DiagnosisRecommendedListing(
+                    listingID: "listing-1", title: "Listing", type: "Apartment",
+                    minMonthlyRent: 500_000, maxMonthlyRent: 500_000, minDeposit: 0, maxDeposit: 0,
+                    thumbnailURL: nil, coordinate: coordinate, nearestTransit: nil
+                )],
+                status: .loadingFirstPage
+            )
+        ))
         initialState.appliedFilterSource = .diagnosis
-        initialState.isListingSearchLoading = true
-        initialState.isRecommendationsLoading = true
-        initialState.recommendationsErrorMessage = "이전 추천 오류"
 
         let store = TestStore(initialState: initialState) {
             MapFeature()
@@ -702,12 +705,8 @@ final class MapListingNavigationTests: XCTestCase {
             $0.path.removeAll()
             $0.selectedMarkerID = nil
             $0.sheetMode = .listingList
-            $0.listingSource = .locationSearch
-            $0.activeDiagnosisID = nil
+            $0.searchMode = .locationSearch(MapLocationSearchState())
             $0.appliedFilterSource = .manual
-            $0.isListingSearchLoading = false
-            $0.isRecommendationsLoading = false
-            $0.recommendationsErrorMessage = nil
             $0.viewportSearchTrigger = .onArrival(at: coordinate)
             $0.cameraMoveRequest = MapCameraMoveRequest(
                 coordinate: coordinate,
@@ -727,7 +726,7 @@ final class MapDiagnosisRecommendationTests: XCTestCase {
         let nextCoordinate = MapCoordinate(latitude: 37.595316, longitude: 127.051202)
         var state = MapFeature.State()
         // 진단 추천 데이터는 진단 모드 안에만 존재한다. 실제 흐름에서는 진단 진입이 먼저 모드를 바꾼다.
-        state.listingSource = .diagnosis
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 1))
         let allMarkers = [
             MapMarkerItem(id: "listing-1", coordinate: firstCoordinate),
             MapMarkerItem(id: "listing-2", coordinate: nextCoordinate),
@@ -760,7 +759,8 @@ final class MapDiagnosisRecommendationTests: XCTestCase {
         )
 
         XCTAssertEqual(state.markers, allMarkers)
-        XCTAssertEqual(state.diagnosisRecommendedListings.map(\.listingID), ["listing-1", "listing-2"])
+        guard case let .diagnosis(diagnosis) = state.searchMode else { return XCTFail("진단 모드가 유지되어야 한다") }
+        XCTAssertEqual(diagnosis.recommendations.items.map(\.listingID), ["listing-1", "listing-2"])
     }
 
     private func makeRecommendations(
@@ -1366,8 +1366,10 @@ final class RootFavoritePropagationTests: XCTestCase {
         let status = ListingFavoriteStatus(isFavorited: true, favoriteCount: 7)
         var state = RootFeature.State(isAuthLoading: false)
         state.home.recentlyViewedSection.items = [makeListingItem(isLiked: false, favoriteCount: 6)]
-        state.map.listingSource = .locationSearch
-        state.map.listingSearchResults = [makeMapTestListing(id: "listing-1", isFavorited: false, favoriteCount: 6)]
+        state.map.searchMode = .locationSearch(MapLocationSearchState(results: PagedRequest(
+            items: [makeMapTestListing(id: "listing-1", isFavorited: false, favoriteCount: 6)],
+            status: .loaded
+        )))
         state.map.path.append(
             .listingDetail(
                 ListingDetailFeature.State(

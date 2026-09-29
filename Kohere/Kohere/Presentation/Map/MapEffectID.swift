@@ -10,7 +10,7 @@ enum MapEffectID {
     static let diagnosisButtonAutoCollapse = "MapFeature.diagnosisButtonAutoCollapse"
     static let diagnosisDetail = "MapFeature.diagnosisDetail"
     static let diagnosisRecommendations = "MapFeature.diagnosisRecommendations"
-    static let diagnosisMap = "MapFeature.diagnosisMap"
+    static let diagnosisMarkers = "MapFeature.diagnosisMarkers"
     static let listingSearch = "MapFeature.listingSearch"
     static let listingMapMarkers = "MapFeature.listingMapMarkers"
     static let selectedListing = "MapFeature.selectedListing"
