@@ -14,30 +14,29 @@ extension MapFeature {
         filter: MapFilterState,
         state: inout State
     ) -> Effect<Action> {
-        state.path = StackState<Path.State>()
-        // 새 진단은 항상 빈 진단 데이터로 시작한다. 이전 모드(또는 이전 진단)의 데이터는 여기서 함께 사라진다.
+        // 1. 모드. 새 진단은 항상 빈 진단 데이터로 시작한다. 이전 모드(또는 이전 진단)의 데이터는 여기서 함께 사라진다.
         state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: diagnosisID))
-        state.clearSelectedListing()
-        state.isFilterPresented = false
+
+        // 2. 모든 새 검색이 하는 정리
+        let reset = resetForNewSearch(state: &state)
+
+        // 3. 진단 전용
+        state.path = StackState<Path.State>()
         state.appliedFilterSource = .diagnosis
         state.appliedFilter = filter
         state.editingFilter = filter
         state.selectedPlaceSearchTitle = nil
         state.isDiagnosisButtonExpanded = false
         state.isDiagnosisMatchesButtonExpanded = true
-        state.showsResearchButton = false
         state.viewportSearchTrigger = .onFirstIdle
         state.markers = []
         state.isDiagnosisDetailLoading = state.userType != nil
         state.isRecommendationsLoading = true
 
+        // 4. 요청. reset의 취소가 끝난 뒤 시작해야 같은 ID로 등록되는 새 요청이 취소되지 않는다.
         let diagnosisClient = diagnosisClient
-        var effects: [Effect<Action>] = [
+        var requests: [Effect<Action>] = [
             .cancel(id: MapEffectID.diagnosisButtonAutoCollapse),
-            .cancel(id: MapEffectID.diagnosisDetail),
-            .cancel(id: MapEffectID.diagnosisRecommendations),
-            .cancel(id: MapEffectID.listingSearch),
-            .cancel(id: MapEffectID.listingMapMarkers),
             .run { send in
                 do {
                     let input = DiagnosisRecommendationsInput(diagnosisID: diagnosisID)
@@ -54,7 +53,7 @@ extension MapFeature {
         ]
 
         if state.userType != nil {
-            effects.append(.run { send in
+            requests.append(.run { send in
                 do {
                     let detail = try await diagnosisClient.fetchDetail(diagnosisID)
                     try Task.checkCancellation()
@@ -67,7 +66,7 @@ extension MapFeature {
             .cancellable(id: MapEffectID.diagnosisDetail, cancelInFlight: true))
         }
 
-        return .merge(effects)
+        return .concatenate(reset, .merge(requests))
     }
 
     func handleDiagnosisDetailResponse(
@@ -221,14 +220,6 @@ extension MapFeature {
             state.diagnosisMapErrorMessage = error.localizedDescription
         }
         return .none
-    }
-
-    func cancelDiagnosisRequestEffects() -> Effect<Action> {
-        .merge(
-            .cancel(id: MapEffectID.diagnosisDetail),
-            .cancel(id: MapEffectID.diagnosisRecommendations),
-            .cancel(id: MapEffectID.diagnosisMap)
-        )
     }
 
 }
