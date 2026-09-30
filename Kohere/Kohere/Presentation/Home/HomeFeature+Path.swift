@@ -118,6 +118,7 @@ extension HomeFeature {
             return .none
 
         case .element(id: _, action: .chatBot(.delegate(.dismissRequested))):
+
             _ = state.path.popLast()
             return .none
 
