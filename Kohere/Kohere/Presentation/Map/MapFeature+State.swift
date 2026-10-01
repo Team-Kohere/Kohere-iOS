@@ -18,7 +18,7 @@ extension MapFeature {
 
         // 현재 검색 모드 / 화면 표시
         // - searchMode(listingSource): 목록과 마커를 어느 API 결과로 채우는지 정한다. (위치 검색 / 진단 추천)
-        //   모드별 데이터는 연관값에 있다. 아래 확장의 같은 이름 프로퍼티는 호출부 호환용 접근자다.
+        //   모드별 데이터는 연관값에 있다.
         // - appliedFilterSource: 적용된 필터가 진단 조건인지 나타낸다. 필터 칩과 진단 버튼 표시에만 쓴다.
         // 가능한 조합
         // - idle + manual: 지도 첫 진입 전
@@ -83,7 +83,7 @@ extension MapFeature {
         case diagnosisResultRequested(diagnosisID: Int, filter: MapFilterState)
         case diagnosisDetailResponse(Result<DiagnosisDetail, Error>)
         case diagnosisRecommendationsResponse(Result<DiagnosisRecommendations, Error>, isFirstPage: Bool)
-        case diagnosisMapResponse(requestID: UUID, Result<DiagnosisRecommendationMap, DataError>)
+        case diagnosisMarkersResponse(Result<DiagnosisRecommendationMap, DataError>)
 
         // 지도 viewport / 카메라
         case viewportChanged(MapViewport)
@@ -133,22 +133,21 @@ extension MapFeature.State {
 // MARK: - 검색 모드 접근자
 
 extension MapFeature.State {
-    /// 현재 모드의 종류. 다른 모드로 바꾸면 새 모드는 빈 데이터로 시작하고, 이전 모드 데이터는 사라진다.
+    /// 현재 모드의 종류. 읽기 전용이다. 모드 전환은 `searchMode`에 새 값을 넣는 것으로만 한다.
     var listingSource: MapListingSource {
-        get {
-            switch searchMode {
-            case .idle: .idle
-            case .locationSearch: .locationSearch
-            case .diagnosis: .diagnosis
-            }
+        switch searchMode {
+        case .idle: .idle
+        case .locationSearch: .locationSearch
+        case .diagnosis: .diagnosis
         }
-        set {
-            guard newValue != listingSource else { return }
-            switch newValue {
-            case .idle: searchMode = .idle
-            case .locationSearch: searchMode = .locationSearch(MapLocationSearchState())
-            case .diagnosis: searchMode = .diagnosis(MapDiagnosisSearchState())
-            }
+    }
+
+    /// 현재 모드의 목록 요청이 진행 중인지. 시트의 빈 상태 판정에 쓴다.
+    var isListLoading: Bool {
+        switch searchMode {
+        case .idle: false
+        case let .locationSearch(search): search.results.isLoading
+        case let .diagnosis(diagnosis): diagnosis.recommendations.isLoading
         }
     }
 
@@ -161,7 +160,7 @@ extension MapFeature.State {
         case .idle:
             return []
         case let .locationSearch(search):
-            items = search.results.map {
+            items = search.results.items.map {
                 ListingItemModel(
                     listing: $0,
                     exchangeRate: krwToUSDExchangeRate,
@@ -170,7 +169,7 @@ extension MapFeature.State {
                 )
             }
         case let .diagnosis(diagnosis):
-            items = diagnosis.recommendations.map {
+            items = diagnosis.recommendations.items.map {
                 ListingItemModel(
                     recommendation: $0,
                     exchangeRate: krwToUSDExchangeRate,
@@ -185,98 +184,5 @@ extension MapFeature.State {
             items[index].favoriteCount = status.favoriteCount
         }
         return items
-    }
-
-    // 아래는 기존 필드 이름을 유지하는 호환용 접근자다. 해당 모드가 아니면 읽을 때 기본값을 돌려주고, 쓸 때는 무시한다.
-    // 호출부를 `searchMode` 패턴 매칭으로 옮기면 제거한다.
-
-    private var locationSearch: MapLocationSearchState? {
-        if case let .locationSearch(search) = searchMode { search } else { nil }
-    }
-
-    private var diagnosisSearch: MapDiagnosisSearchState? {
-        if case let .diagnosis(diagnosis) = searchMode { diagnosis } else { nil }
-    }
-
-    private mutating func updateLocationSearch(_ update: (inout MapLocationSearchState) -> Void) {
-        guard case var .locationSearch(search) = searchMode else { return }
-        update(&search)
-        searchMode = .locationSearch(search)
-    }
-
-    private mutating func updateDiagnosisSearch(_ update: (inout MapDiagnosisSearchState) -> Void) {
-        guard case var .diagnosis(diagnosis) = searchMode else { return }
-        update(&diagnosis)
-        searchMode = .diagnosis(diagnosis)
-    }
-
-    var listingSearchResults: [Listing] {
-        get { locationSearch?.results ?? [] }
-        set { updateLocationSearch { $0.results = newValue } }
-    }
-
-    var listingPageInfo: PageInfo? {
-        get { locationSearch?.pageInfo }
-        set { updateLocationSearch { $0.pageInfo = newValue } }
-    }
-
-    var isListingSearchLoading: Bool {
-        get { locationSearch?.isLoading ?? false }
-        set { updateLocationSearch { $0.isLoading = newValue } }
-    }
-
-    var listingSearchErrorMessage: String? {
-        get { locationSearch?.errorMessage }
-        set { updateLocationSearch { $0.errorMessage = newValue } }
-    }
-
-    var activeDiagnosisID: Int? {
-        get { diagnosisSearch?.diagnosisID }
-        set { updateDiagnosisSearch { $0.diagnosisID = newValue } }
-    }
-
-    var diagnosisRecommendedListings: [DiagnosisRecommendedListing] {
-        get { diagnosisSearch?.recommendations ?? [] }
-        set { updateDiagnosisSearch { $0.recommendations = newValue } }
-    }
-
-    var diagnosisRecommendationPageInfo: PageInfo? {
-        get { diagnosisSearch?.pageInfo }
-        set { updateDiagnosisSearch { $0.pageInfo = newValue } }
-    }
-
-    var isRecommendationsLoading: Bool {
-        get { diagnosisSearch?.isRecommendationsLoading ?? false }
-        set { updateDiagnosisSearch { $0.isRecommendationsLoading = newValue } }
-    }
-
-    var recommendationsErrorMessage: String? {
-        get { diagnosisSearch?.recommendationsErrorMessage }
-        set { updateDiagnosisSearch { $0.recommendationsErrorMessage = newValue } }
-    }
-
-    var diagnosisMapRequestID: UUID? {
-        get { diagnosisSearch?.mapRequestID }
-        set { updateDiagnosisSearch { $0.mapRequestID = newValue } }
-    }
-
-    var diagnosisMapTotal: Int? {
-        get { diagnosisSearch?.mapTotal }
-        set { updateDiagnosisSearch { $0.mapTotal = newValue } }
-    }
-
-    var diagnosisMapErrorMessage: String? {
-        get { diagnosisSearch?.mapErrorMessage }
-        set { updateDiagnosisSearch { $0.mapErrorMessage = newValue } }
-    }
-
-    var isDiagnosisDetailLoading: Bool {
-        get { diagnosisSearch?.isDetailLoading ?? false }
-        set { updateDiagnosisSearch { $0.isDetailLoading = newValue } }
-    }
-
-    var diagnosisErrorMessage: String? {
-        get { diagnosisSearch?.detailErrorMessage }
-        set { updateDiagnosisSearch { $0.detailErrorMessage = newValue } }
     }
 }

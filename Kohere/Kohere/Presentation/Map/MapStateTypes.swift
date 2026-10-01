@@ -27,30 +27,68 @@ enum MapSearchMode: Equatable {
     case diagnosis(MapDiagnosisSearchState)
 }
 
+/// 페이지 단위 요청의 진행 상태. 지도 이탈·재진입 판단에 쓴다.
+enum PagedRequestStatus: Equatable {
+    /// 첫 페이지를 받은 적이 없다. 처음, 첫 페이지 조회 중 지도를 떠났거나 실패한 뒤.
+    case idle
+    case loadingFirstPage
+    case loaded
+    case loadingNextPage
+}
+
+/// 페이지 단위로 받는 요청 하나의 상태. 원소 타입만 다르고 나머지는 같다.
+struct PagedRequest<Item: Equatable & Identifiable>: Equatable {
+    var items: [Item] = []
+    var pageInfo: PageInfo?
+    var status: PagedRequestStatus = .idle
+
+    var isLoading: Bool { status == .loadingFirstPage || status == .loadingNextPage }
+    var hasNextPage: Bool { pageInfo?.hasNext == true }
+    var nextPageNumber: Int { (pageInfo?.number ?? 0) + 1 }
+
+    mutating func beginFirstPage() { status = .loadingFirstPage }
+    mutating func beginNextPage() { status = .loadingNextPage }
+
+    /// 응답 반영. 첫 페이지는 교체, 다음 페이지는 중복을 빼고 이어 붙인다.
+    mutating func apply(_ page: [Item], pageInfo: PageInfo?, isFirstPage: Bool) {
+        self.pageInfo = pageInfo
+        if isFirstPage { items = page } else { items.appendUnique(contentsOf: page) }
+        status = .loaded
+    }
+
+    /// 실패하거나 진행 중 요청이 끊겼을 때. 첫 페이지였으면 받은 적 없는 상태로, 다음 페이지였으면 받은 상태로 돌아간다.
+    /// items는 건드리지 않는다. (첫 페이지 재조회 중 남겨둔 이전 카드는 재진입 재요청이 교체한다)
+    mutating func settle() {
+        switch status {
+        case .loadingFirstPage: status = .idle
+        case .loadingNextPage: status = .loaded
+        case .idle, .loaded: break
+        }
+    }
+}
+
+/// 진단 마커(전체) 요청의 진행 상태. 페이지가 없어 상태만 있다.
+enum MapMarkerRequestStatus: Equatable {
+    /// 받은 적 없고 요청도 안 도는 상태. 재진입 시 다시 요청한다.
+    case idle
+    case loading
+    case loaded
+}
+
 /// 위치 기반 일반 검색 모드의 데이터.
 struct MapLocationSearchState: Equatable {
     /// 서버 원본. 화면용 `listings`는 이 값으로 계산한다.
-    var results: [Listing] = []
-    var pageInfo: PageInfo?
-    var isLoading = false
-    var errorMessage: String?
+    var results = PagedRequest<Listing>()
 }
 
 /// 진단 추천 모드의 데이터.
 struct MapDiagnosisSearchState: Equatable {
-    /// 지금 기다리는 진단. 늦게 도착한 다른 진단의 응답을 거르는 기준이다.
-    var diagnosisID: Int?
+    /// 지금 보고 있는 진단.
+    var diagnosisID: Int
     /// 서버 원본. 화면용 `listings`는 이 값으로 계산한다.
-    var recommendations: [DiagnosisRecommendedListing] = []
-    var pageInfo: PageInfo?
-    var isRecommendationsLoading = false
-    var recommendationsErrorMessage: String?
-    /// 진단 마커 요청 추적. 지도 이탈 후 재진입 시 누락된 마커를 다시 조회하는 판단에 쓴다.
-    var mapRequestID: UUID?
-    var mapTotal: Int?
-    var mapErrorMessage: String?
-    var isDetailLoading = false
-    var detailErrorMessage: String?
+    var recommendations = PagedRequest<DiagnosisRecommendedListing>()
+    /// 마커 전체 요청. 결과 자체는 공통 필드 `markers`에 들어간다.
+    var markerRequest: MapMarkerRequestStatus = .idle
 }
 
 /// 적용된 필터가 진단 조건인지. 표시용이며 목록 데이터 출처와는 별개다.
