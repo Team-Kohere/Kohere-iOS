@@ -93,12 +93,13 @@ struct MapListingSheetView: View {
     }
 
     private var listingRows: some View {
-        ScrollView(.vertical, showsIndicators: false) {
+        let listings = store.listings
+        return ScrollView(.vertical, showsIndicators: false) {
             LazyVStack(spacing: 0) {
-                if shouldShowEmptyState {
+                if shouldShowEmptyState(listings: listings) {
                     emptyListingView
                 } else {
-                    listingCardListView
+                    listingCardListView(listings: listings)
                 }
             }
             .padding(.horizontal, 20)
@@ -106,10 +107,9 @@ struct MapListingSheetView: View {
         }
     }
 
-    private var shouldShowEmptyState: Bool {
-        guard store.listings.isEmpty,
-              !store.isListingSearchLoading,
-              !store.isRecommendationsLoading
+    private func shouldShowEmptyState(listings: [ListingItemModel]) -> Bool {
+        guard listings.isEmpty,
+              !store.isListLoading
         else { return false }
 
         switch store.listingSource {
@@ -117,15 +117,15 @@ struct MapListingSheetView: View {
             return false
 
         case .locationSearch:
-            return store.lastSearchedViewport != nil
+            return store.viewportSearchTrigger.lastSearchedViewport != nil
 
         case .diagnosis:
             return true
         }
     }
 
-    private var listingCardListView: some View {
-        ForEach(store.listings) { item in
+    private func listingCardListView(listings: [ListingItemModel]) -> some View {
+        ForEach(listings) { item in
             ListingCardView(
                 item: item,
                 showsLikeButton: store.showsFavoriteControls,

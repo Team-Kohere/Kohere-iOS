@@ -113,11 +113,7 @@ extension HomeFeature {
         ):
             return .send(.delegate(.favoriteStatusChanged(listingID: listingID, status: status)))
 
-        case .element(id: _, action: .notifications(.backButtonTapped)):
-            _ = state.path.popLast()
-            return .none
-
-        case .element(id: _, action: .chatBot(.backButtonTapped)):
+        case .element(id: _, action: .chatBot(.delegate(.dismissRequested))):
             _ = state.path.popLast()
             return .none
 
@@ -129,7 +125,8 @@ extension HomeFeature {
             _ = state.path.popLast()
             return .none
 
-        case let .element(id: _, action: .chatBot(.mapRequested(request))):
+        case let .element(id: _, action: .chatBot(.delegate(.mapRequested(request)))):
+            _ = state.path.popLast()
             return .send(.delegate(.mapRequested(request)))
 
         case .element(id: _, action: .search(.bannerTapped)):

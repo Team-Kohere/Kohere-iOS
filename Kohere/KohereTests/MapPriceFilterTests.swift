@@ -13,9 +13,10 @@ final class MapPriceFilterTests: XCTestCase {
         let store = makeSearchStore(state, listRequests, markerRequests, clock)
 
         await store.send(.initialLocationSearchRequested) {
-            $0.listingSource = .locationSearch
-            $0.lastSearchedViewport = self.viewport
-            $0.isListingSearchLoading = true
+            $0.viewportSearchTrigger = .manual(lastSearched: self.viewport)
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loadingFirstPage)
+            ))
         }
         await receiveSearch(store, clock)
         XCTAssertEqual(listRequests.value.count, 1)
@@ -58,9 +59,10 @@ final class MapPriceFilterTests: XCTestCase {
         await store.send(.filterApplyButtonTapped) {
             $0.appliedFilter = self.boundedFilter
             $0.isFilterPresented = false
-            $0.listingSource = .locationSearch
-            $0.lastSearchedViewport = self.viewport
-            $0.isListingSearchLoading = true
+            $0.viewportSearchTrigger = .manual(lastSearched: self.viewport)
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loadingFirstPage)
+            ))
         }
         await receiveSearch(store, clock)
         XCTAssertEqual(listRequests.value.count, 1)
@@ -93,9 +95,10 @@ final class MapPriceFilterTests: XCTestCase {
         await store.send(.filterButtonTapped) { $0.isFilterPresented = true }
         await store.send(.filterApplyButtonTapped) {
             $0.isFilterPresented = false
-            $0.listingSource = .locationSearch
-            $0.lastSearchedViewport = self.viewport
-            $0.isListingSearchLoading = true
+            $0.viewportSearchTrigger = .manual(lastSearched: self.viewport)
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loadingFirstPage)
+            ))
         }
         await receiveSearch(store, clock)
         XCTAssertEqual(listRequests.value.count, 1)
@@ -118,7 +121,7 @@ final class MapPriceFilterTests: XCTestCase {
         previousFilter.selectedPropertyTypes = [.goshiwon]
         var state = MapFeature.State()
         state.currentViewport = viewport
-        state.listingSource = .locationSearch
+        state.searchMode = .locationSearch(MapLocationSearchState())
         state.appliedFilter = previousFilter
         state.editingFilter = previousFilter
         state.isFilterPresented = true
@@ -137,8 +140,10 @@ final class MapPriceFilterTests: XCTestCase {
         await store.send(.filterApplyButtonTapped) {
             $0.appliedFilter = MapFilterState()
             $0.isFilterPresented = false
-            $0.lastSearchedViewport = self.viewport
-            $0.isListingSearchLoading = true
+            $0.viewportSearchTrigger = .manual(lastSearched: self.viewport)
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loadingFirstPage)
+            ))
         }
         await receiveSearch(store, clock)
         XCTAssertEqual(listRequests.value.count, 1)
@@ -218,7 +223,7 @@ final class MapPriceFilterTests: XCTestCase {
         state.appliedFilter = filter
         state.editingFilter = filter
         state.appliedFilterSource = .diagnosis
-        state.listingSource = .diagnosis
+        state.searchMode = .diagnosis(MapDiagnosisSearchState(diagnosisID: 1))
         let store = TestStore(initialState: state) { MapFeature() }
         await store.send(.filterButtonTapped) { $0.isFilterPresented = true }
         await store.send(.filterOptionTapped(.privateBathroom)) {
@@ -228,7 +233,7 @@ final class MapPriceFilterTests: XCTestCase {
             $0.appliedFilter = $0.editingFilter
             $0.appliedFilterSource = .manual
             $0.isFilterPresented = false
-            $0.listingSource = .locationSearch
+            $0.searchMode = .locationSearch(MapLocationSearchState())
         }
         XCTAssertEqual(store.state.appliedFilter.monthlyRentRange.maximum, 50)
         XCTAssertEqual(store.state.appliedFilter.depositRange.maximum, 300)
@@ -241,26 +246,34 @@ final class MapPriceFilterTests: XCTestCase {
 
     func testPaginationKeepsAppliedSelectedCaps() async {
         let requests = LockIsolated<[ListingSearchInput]>([])
+        let lastListing = Listing(
+            listingID: "last-listing", title: "", type: "", minMonthlyRent: nil, maxMonthlyRent: nil,
+            minDeposit: nil, maxDeposit: nil, minMaintenanceFee: nil, maxMaintenanceFee: nil,
+            minStayMonths: nil, maxStayMonths: nil, thumbnailURL: nil, coordinate: nil, address: nil,
+            nearestTransit: nil, distanceMeters: nil, isFavorited: false, favoriteCount: nil
+        )
+        let pageInfo = PageInfo(number: 0, size: 10, totalElements: 11, totalPages: 2, hasNext: true)
         var state = MapFeature.State()
         state.appliedFilter = boundedFilter
-        state.listingSource = .locationSearch
-        state.lastSearchedViewport = viewport
-        state.listingPageInfo = PageInfo(number: 0, size: 10, totalElements: 11, totalPages: 2, hasNext: true)
-        state.listings = [ListingItemModel(
-            id: "last-listing", formattedPrice: "", formattedUsdPrice: "", detailsDescription: "",
-            locationDescription: "", typeTag: "", period: "", isLiked: false
-        )]
+        state.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [lastListing], pageInfo: pageInfo, status: .loaded)
+        ))
+        state.viewportSearchTrigger = .manual(lastSearched: viewport)
         let store = TestStore(initialState: state) { MapFeature() } withDependencies: {
             $0.listingClient.fetchListings = { @MainActor input in
                 requests.withValue { $0.append(input) }
                 return ListingSearchPage(content: [], page: nil)
             }
         }
-        await store.send(.listingRowAppeared("last-listing")) { $0.isListingSearchLoading = true }
+        await store.send(.listingRowAppeared("last-listing")) {
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(items: [lastListing], pageInfo: pageInfo, status: .loadingNextPage)
+            ))
+        }
         await store.receive(\.listingSearchResponse) {
-            $0.isListingSearchLoading = false
-            $0.listingPageInfo = nil
-            $0.listings = []
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(items: [lastListing], pageInfo: nil, status: .loaded)
+            ))
         }
         XCTAssertEqual(requests.value.count, 1)
         for input in requests.value {
@@ -307,7 +320,11 @@ final class MapPriceFilterTests: XCTestCase {
     }
 
     private func receiveSearch(_ store: TestStoreOf<MapFeature>, _ clock: TestClock<Duration>) async {
-        await store.receive(\.listingSearchResponse) { $0.isListingSearchLoading = false }
+        await store.receive(\.listingSearchResponse) {
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loaded)
+            ))
+        }
         await clock.advance(by: .milliseconds(1))
         await store.receive(\.listingMapMarkersResponse)
     }

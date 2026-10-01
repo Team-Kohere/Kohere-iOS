@@ -12,67 +12,58 @@ import XCTest
 @MainActor
 final class MapLocationSearchFlowTests: XCTestCase {
     func testMapDismissedStopsListingSearchLoadingWithoutClearingResults() async {
-        let listing = makeListingItem()
         var initialState = MapFeature.State()
-        initialState.listingSource = .locationSearch
-        initialState.listings = [listing]
-        initialState.listingSearchErrorMessage = "이전 검색 오류"
-        initialState.isListingSearchLoading = true
+        initialState.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [makeListing()], status: .loadingFirstPage)
+        ))
 
         let store = TestStore(initialState: initialState) {
             MapFeature()
         }
 
         await store.send(.mapDismissed) {
-            $0.isListingSearchLoading = false
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(items: [self.makeListing()], status: .idle)
+            ))
         }
 
         XCTAssertEqual(store.state.listingSource, .locationSearch)
-        XCTAssertEqual(store.state.listings, [listing])
-        XCTAssertEqual(store.state.listingSearchErrorMessage, "이전 검색 오류")
+        XCTAssertEqual(store.state.listings.map(\.listingID), ["listing-1"])
     }
 
-    func testBrowseListingsLeavesDiagnosisModeWithoutClearingVisibleResults() async {
+    // 진단 카드(목록)는 모드 전환과 함께 사라지고, 마커는 새 결과가 올 때까지 남는다.
+    func testBrowseListingsLeavesDiagnosisModeKeepingMarkersUntilNewResults() async {
         let coordinate = MapCoordinate(latitude: 37.5559, longitude: 126.9250)
         let marker = MapMarkerItem(id: "listing-1", coordinate: coordinate)
-        let listing = makeListingItem()
         var previousFilter = MapFilterState()
         previousFilter.selectedOptions = [.englishSupport]
         var initialState = MapFeature.State()
-        initialState.listingSource = .diagnosis
-        initialState.activeDiagnosisID = 1
+        initialState.searchMode = .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 1,
+            recommendations: PagedRequest(items: [makeRecommendation()], status: .loadingFirstPage)
+        ))
         initialState.appliedFilter = previousFilter
         initialState.editingFilter = previousFilter
         initialState.appliedFilterSource = .diagnosis
         initialState.selectedMarkerID = marker.id
         initialState.sheetMode = .selectedListing
         initialState.markers = [marker]
-        initialState.listings = [listing]
-        initialState.isDiagnosisDetailLoading = true
-        initialState.diagnosisErrorMessage = "이전 진단 오류"
-        initialState.isRecommendationsLoading = true
-        initialState.recommendationsErrorMessage = "이전 추천 오류"
 
         let store = TestStore(initialState: initialState) {
             MapFeature()
         }
 
         await store.send(.browseListingsRequested) {
-            $0.listingSource = .locationSearch
-            $0.activeDiagnosisID = nil
+            $0.searchMode = .locationSearch(MapLocationSearchState())
             $0.appliedFilter = MapFilterState()
             $0.editingFilter = MapFilterState()
             $0.appliedFilterSource = .manual
             $0.selectedMarkerID = nil
             $0.sheetMode = .listingList
-            $0.isDiagnosisDetailLoading = false
-            $0.diagnosisErrorMessage = nil
-            $0.isRecommendationsLoading = false
-            $0.recommendationsErrorMessage = nil
         }
 
         XCTAssertEqual(store.state.markers, [marker])
-        XCTAssertEqual(store.state.listings, [listing])
+        XCTAssertTrue(store.state.listings.isEmpty)
     }
 
     func testPlaceResultWaitsForTargetViewportAndClearsVisibleResults() async {
@@ -85,29 +76,26 @@ final class MapLocationSearchFlowTests: XCTestCase {
             coordinate: coordinate
         )
         var initialState = MapFeature.State()
-        initialState.listingSource = .diagnosis
-        initialState.activeDiagnosisID = 1
+        initialState.searchMode = .diagnosis(MapDiagnosisSearchState(
+            diagnosisID: 1,
+            recommendations: PagedRequest(items: [makeRecommendation()], status: .loaded)
+        ))
         initialState.appliedFilterSource = .diagnosis
         initialState.markers = [MapMarkerItem(id: "listing-1", coordinate: coordinate)]
-        initialState.listings = [makeListingItem()]
-        initialState.isListingSearchLoading = true
 
         let store = TestStore(initialState: initialState) {
             MapFeature()
         }
 
         await store.send(.placeSearchResultSelected(placeResult)) {
-            $0.listingSource = .locationSearch
-            $0.activeDiagnosisID = nil
+            $0.searchMode = .locationSearch(MapLocationSearchState())
             $0.appliedFilterSource = .manual
-            $0.pendingViewportSearchTarget = MapPendingViewportSearchTarget(coordinate: coordinate)
+            $0.viewportSearchTrigger = .onArrival(at: coordinate)
             $0.selectedPlaceSearchTitle = placeResult.title
             $0.cameraMoveRequest = MapCameraMoveRequest(
                 coordinate: coordinate,
                 targetPosition: .center
             )
-            $0.isListingSearchLoading = false
-            $0.listings = []
             $0.markers = []
         }
     }
@@ -125,8 +113,8 @@ final class MapLocationSearchFlowTests: XCTestCase {
             northEast: MapCoordinate(latitude: 37.5650, longitude: 126.9350)
         )
         var initialState = MapFeature.State()
-        initialState.listingSource = .locationSearch
-        initialState.pendingViewportSearchTarget = MapPendingViewportSearchTarget(coordinate: target)
+        initialState.searchMode = .locationSearch(MapLocationSearchState())
+        initialState.viewportSearchTrigger = .onArrival(at: target)
 
         let store = TestStore(initialState: initialState) {
             MapFeature()
@@ -143,15 +131,18 @@ final class MapLocationSearchFlowTests: XCTestCase {
 
         await store.send(.viewportChanged(targetViewport)) {
             $0.currentViewport = targetViewport
-            $0.pendingViewportSearchTarget = nil
-            $0.lastSearchedViewport = targetViewport
-            $0.isListingSearchLoading = true
+            $0.viewportSearchTrigger = .manual(lastSearched: targetViewport)
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loadingFirstPage)
+            ))
         }
         await store.receive {
             guard case .listingSearchResponse(.success, _) = $0 else { return false }
             return true
         } assert: {
-            $0.isListingSearchLoading = false
+            $0.searchMode = .locationSearch(MapLocationSearchState(
+                results: PagedRequest(status: .loaded)
+            ))
         }
         await store.receive {
             guard case .listingMapMarkersResponse(.success) = $0 else { return false }
@@ -180,9 +171,9 @@ final class MapLocationSearchFlowTests: XCTestCase {
             northEast: MapCoordinate(latitude: 37.5750, longitude: 126.9450)
         )
         var initialState = MapFeature.State()
-        initialState.listingSource = .locationSearch
+        initialState.searchMode = .locationSearch(MapLocationSearchState())
         initialState.currentViewport = previousViewport
-        initialState.lastSearchedViewport = previousViewport
+        initialState.viewportSearchTrigger = .manual(lastSearched: previousViewport)
 
         let store = TestStore(initialState: initialState) {
             MapFeature()
@@ -194,16 +185,60 @@ final class MapLocationSearchFlowTests: XCTestCase {
         }
     }
 
-    private func makeListingItem() -> ListingItemModel {
-        ListingItemModel(
-            id: "listing-1",
-            formattedPrice: "₩500,000 / month",
-            formattedUsdPrice: "$360 / month",
-            detailsDescription: "Studio",
-            locationDescription: "Seoul",
-            typeTag: "Apartment",
-            period: "6 months",
-            isLiked: false
+    func testMapReentryRestartsInterruptedFirstPageSearch() async {
+        let viewport = makeViewport(
+            center: MapCoordinate(latitude: 37.5559, longitude: 126.9250),
+            southWest: MapCoordinate(latitude: 37.5450, longitude: 126.9150),
+            northEast: MapCoordinate(latitude: 37.5650, longitude: 126.9350)
+        )
+        var initialState = MapFeature.State()
+        initialState.searchMode = .locationSearch(MapLocationSearchState(
+            results: PagedRequest(status: .idle)
+        ))
+        initialState.currentViewport = viewport
+        initialState.viewportSearchTrigger = .manual(lastSearched: viewport)
+        // 진단 버튼 펼침 판정(UserDefaults 의존성)을 건너뛰기 위해 진단 조건 표시 상태로 둔다. (locationSearch + diagnosis는 허용된 조합)
+        initialState.appliedFilterSource = .diagnosis
+        let searchedBounds = LockIsolated<[MapBounds?]>([])
+
+        let store = TestStore(initialState: initialState) {
+            MapFeature()
+        } withDependencies: {
+            $0.listingClient.fetchListings = { input in
+                searchedBounds.withValue { $0.append(input.bounds) }
+                return ListingSearchPage(content: [self.makeListing()], page: nil)
+            }
+            $0.listingClient.fetchMapMarkers = { _ in [] }
+            $0.fetchKRWToUSDExchangeRateUseCase = .init { .init(usdPerKRW: 0.001) }
+            $0.convertMonthlyRentCurrencyUseCase = .liveValue
+        }
+        store.exhaustivity = .off
+
+        await store.send(.mapAppeared)
+        await store.receive(\.listingSearchResponse)
+        await store.finish()
+
+        XCTAssertEqual(searchedBounds.value, [viewport.visibleBounds])
+        XCTAssertEqual(store.state.searchMode, .locationSearch(MapLocationSearchState(
+            results: PagedRequest(items: [makeListing()], status: .loaded)
+        )))
+    }
+
+    private func makeListing() -> Listing {
+        Listing(
+            listingID: "listing-1", title: "Listing", type: "Apartment",
+            minMonthlyRent: 500_000, maxMonthlyRent: 500_000, minDeposit: 0, maxDeposit: 0,
+            minMaintenanceFee: nil, maxMaintenanceFee: nil, minStayMonths: 6, maxStayMonths: nil,
+            thumbnailURL: nil, coordinate: nil, address: "Seoul", nearestTransit: nil,
+            distanceMeters: nil, isFavorited: false, favoriteCount: nil
+        )
+    }
+
+    private func makeRecommendation() -> DiagnosisRecommendedListing {
+        DiagnosisRecommendedListing(
+            listingID: "listing-1", title: "Listing", type: "Apartment",
+            minMonthlyRent: 500_000, maxMonthlyRent: 500_000, minDeposit: 0, maxDeposit: 0,
+            thumbnailURL: nil, coordinate: nil, nearestTransit: nil
         )
     }
 

@@ -17,38 +17,27 @@ extension MapFeature {
         var appLanguage: AppLanguage = .english
 
         // 현재 검색 모드 / 화면 표시
-        var listingSource: MapListingSource = .idle
+        // - searchMode(listingSource): 목록과 마커를 어느 API 결과로 채우는지 정한다. (위치 검색 / 진단 추천)
+        //   모드별 데이터는 연관값에 있다.
+        // - appliedFilterSource: 적용된 필터가 진단 조건인지 나타낸다. 필터 칩과 진단 버튼 표시에만 쓴다.
+        // 가능한 조합
+        // - idle + manual: 지도 첫 진입 전
+        // - locationSearch + manual: 일반 검색
+        // - locationSearch + diagnosis: 진단 중 재검색하거나, 필터를 바꾸지 않고 적용한 경우
+        // - diagnosis + diagnosis: 진단으로 막 진입한 경우
+        // diagnosis + manual 조합은 나오면 안 된다. 두 값은 beginLocationSearch와 beginDiagnosisSearch에서 함께 바꾼다.
+        var searchMode: MapSearchMode = .idle
+        var appliedFilterSource: MapFilterApplicationSource = .manual
         var markers: [MapMarkerItem] = []
         var selectedMarkerID: String?
-        var listings: [ListingItemModel] = []
 
         // 목록 밖 마커에서 필터를 적용해 조회한 카드 원본. 현재 선택 동안만 보관한다.
         var selectedListing: Listing?
         var selectedListingRequestID: UUID?
 
-        // 일반 매물 검색
-        var listingSearchResults: [Listing] = []
-        var isListingSearchLoading = false
-        var listingSearchErrorMessage: String?
-        var listingPageInfo: PageInfo?
-
-        // 진단 추천 검색
-        var activeDiagnosisID: Int?
-        var diagnosisRecommendedListings: [DiagnosisRecommendedListing] = []
-        var diagnosisRecommendationSuggestions: DiagnosisRecommendationSuggestions?
-        var diagnosisRecommendationPageInfo: PageInfo?
-        var diagnosisMapRequestID: UUID?
-        var diagnosisMapTotal: Int?
-        var diagnosisMapErrorMessage: String?
-        var isDiagnosisDetailLoading = false
-        var isRecommendationsLoading = false
-        var diagnosisErrorMessage: String?
-        var recommendationsErrorMessage: String?
-
         // 지도 viewport / 카메라 요청
         var currentViewport: MapViewport?
-        var lastSearchedViewport: MapViewport?
-        var pendingViewportSearchTarget: MapPendingViewportSearchTarget?
+        var viewportSearchTrigger: MapViewportSearchTrigger = .onFirstIdle
         var selectedPlaceSearchTitle: String?
         var showsResearchButton = false
         var cameraMoveRequest: MapCameraMoveRequest?
@@ -58,7 +47,6 @@ extension MapFeature {
         var isFilterPresented = false
         var appliedFilter = MapFilterState()
         var editingFilter = MapFilterState()
-        var appliedFilterSource: MapFilterApplicationSource = .manual
 
         // 즐겨찾기 / 환율
         var favoriteUpdatingIDs: Set<String> = []
@@ -95,7 +83,7 @@ extension MapFeature {
         case diagnosisResultRequested(diagnosisID: Int, filter: MapFilterState)
         case diagnosisDetailResponse(Result<DiagnosisDetail, Error>)
         case diagnosisRecommendationsResponse(Result<DiagnosisRecommendations, Error>, isFirstPage: Bool)
-        case diagnosisMapResponse(requestID: UUID, Result<DiagnosisRecommendationMap, DataError>)
+        case diagnosisMarkersResponse(Result<DiagnosisRecommendationMap, DataError>)
 
         // 지도 viewport / 카메라
         case viewportChanged(MapViewport)
@@ -132,10 +120,6 @@ extension MapFeature {
     }
 }
 
-struct MapPendingViewportSearchTarget: Equatable {
-    let coordinate: MapCoordinate
-}
-
 extension MapFeature.State {
     var canUseFavoriteFeatures: Bool {
         userType == .tenant
@@ -143,5 +127,62 @@ extension MapFeature.State {
 
     var showsFavoriteControls: Bool {
         userType != .landlord
+    }
+}
+
+// MARK: - 검색 모드 접근자
+
+extension MapFeature.State {
+    /// 현재 모드의 종류. 읽기 전용이다. 모드 전환은 `searchMode`에 새 값을 넣는 것으로만 한다.
+    var listingSource: MapListingSource {
+        switch searchMode {
+        case .idle: .idle
+        case .locationSearch: .locationSearch
+        case .diagnosis: .diagnosis
+        }
+    }
+
+    /// 현재 모드의 목록 요청이 진행 중인지. 시트의 빈 상태 판정에 쓴다.
+    var isListLoading: Bool {
+        switch searchMode {
+        case .idle: false
+        case let .locationSearch(search): search.results.isLoading
+        case let .diagnosis(diagnosis): diagnosis.recommendations.isLoading
+        }
+    }
+
+    /// 화면용 카드 목록. 현재 모드의 원본에 환율·언어·찜 상태를 입혀 매번 계산한다.
+    var listings: [ListingItemModel] {
+        // 순수 계산이라 의존성 주입 없이 live 구현을 쓴다. (State 계산 프로퍼티에서는 리듀서 의존성에 접근할 수 없다)
+        let convertCurrency = ConvertMonthlyRentCurrencyUseCase.liveValue
+        var items: [ListingItemModel]
+        switch searchMode {
+        case .idle:
+            return []
+        case let .locationSearch(search):
+            items = search.results.items.map {
+                ListingItemModel(
+                    listing: $0,
+                    exchangeRate: krwToUSDExchangeRate,
+                    convertMonthlyRentCurrencyUseCase: convertCurrency,
+                    language: appLanguage
+                )
+            }
+        case let .diagnosis(diagnosis):
+            items = diagnosis.recommendations.items.map {
+                ListingItemModel(
+                    recommendation: $0,
+                    exchangeRate: krwToUSDExchangeRate,
+                    convertMonthlyRentCurrencyUseCase: convertCurrency,
+                    language: appLanguage
+                )
+            }
+        }
+        for index in items.indices {
+            guard let status = favoriteStatusesByListingID[items[index].listingID] else { continue }
+            items[index].isLiked = status.isFavorited
+            items[index].favoriteCount = status.favoriteCount
+        }
+        return items
     }
 }

@@ -89,8 +89,8 @@ struct MapFeature {
                     state: &state
                 )
 
-            case let .diagnosisMapResponse(requestID, result):
-                return handleDiagnosisMapResponse(requestID: requestID, result: result, state: &state)
+            case let .diagnosisMarkersResponse(result):
+                return handleDiagnosisMarkersResponse(result, state: &state)
 
             case .diagnosisButtonTapped:
                 state.path.append(.chatBot(ChatBotFeature.State()))
