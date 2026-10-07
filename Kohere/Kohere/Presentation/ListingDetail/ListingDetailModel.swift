@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 struct ListingDetailModel: Equatable, Identifiable {
     let id: String

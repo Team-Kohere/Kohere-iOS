@@ -5,6 +5,7 @@
 //  Created by soomin on 6/29/26.
 //
 
+import KohereCore
 import SwiftUI
 
 struct ChatRoomRowCell: View {

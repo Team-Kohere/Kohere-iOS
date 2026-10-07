@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 enum ListingApplicationStep: Equatable {
     case dateSelection

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 enum MonthlyRentPriceFormatter {
     nonisolated static func rangeTitle(

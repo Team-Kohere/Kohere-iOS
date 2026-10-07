@@ -5,6 +5,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 extension RootFeature {
     func defaultLanguage(for userType: OnboardingUserType) -> AppLanguage {

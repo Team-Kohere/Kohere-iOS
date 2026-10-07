@@ -1,4 +1,5 @@
 import Foundation
+import KohereCore
 
 extension ListingDetailModel {
     init(

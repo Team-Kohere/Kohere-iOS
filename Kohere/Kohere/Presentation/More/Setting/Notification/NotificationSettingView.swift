@@ -4,6 +4,7 @@
 //
 
 import ComposableArchitecture
+import KohereCore
 import SwiftUI
 import UIKit
 

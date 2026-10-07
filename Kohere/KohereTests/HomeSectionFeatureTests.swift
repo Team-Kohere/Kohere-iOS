@@ -6,6 +6,7 @@
 import ComposableArchitecture
 import XCTest
 @testable import Kohere
+import KohereCore
 
 @MainActor
 final class HomeQuizFeatureTests: XCTestCase {

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 enum SavedListingsDelegate: Equatable {
     case listingDetailRequested(String)

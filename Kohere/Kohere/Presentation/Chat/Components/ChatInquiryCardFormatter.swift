@@ -1,4 +1,5 @@
 import Foundation
+import KohereCore
 
 struct ChatInquiryCardFormatter {
     let item: ChatInquiryCard

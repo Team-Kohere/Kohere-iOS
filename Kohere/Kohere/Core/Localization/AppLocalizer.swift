@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 nonisolated enum AppLocalizer {
     nonisolated static func resolve(_ resource: LocalizedStringResource, language: AppLanguage) -> String {

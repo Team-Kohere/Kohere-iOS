@@ -3,6 +3,7 @@
 //  Kohere
 //
 
+import KohereCore
 import SwiftUI
 
 struct MoreProfileCard: View {

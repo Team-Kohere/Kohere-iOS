@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import SwiftUI
+import KohereCore
 
 struct TenantOnboardingView: View {
 

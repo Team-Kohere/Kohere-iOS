@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 extension ChatRoomRole {
     var userType: UserType {

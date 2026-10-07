@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereCore
 import SwiftUI
 
 struct MoreView: View {

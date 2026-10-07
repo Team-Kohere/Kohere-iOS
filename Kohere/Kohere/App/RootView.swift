@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import SwiftUI
 import UIKit
+import KohereCore
 
 struct RootView: View {
     @Bindable var store: StoreOf<RootFeature>

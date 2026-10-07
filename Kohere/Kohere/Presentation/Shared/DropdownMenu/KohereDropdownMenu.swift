@@ -5,6 +5,7 @@
 //  Created by Codex on 6/27/26.
 //
 
+import KohereCore
 import SwiftUI
 
 struct KohereDropdownMenu<Field: Hashable>: View {

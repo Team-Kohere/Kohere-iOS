@@ -19,7 +19,7 @@ extension Array where Element: Identifiable {
     ///   변하는 값이 섞여 있어 값 비교로는 같은 항목을 걸러내지 못하기 때문이다.
     /// - `contains`가 아니라 `insert(_:).inserted`를 쓰는 이유는, 필터를 도는 동안 `Set`이 자라므로
     ///   기존 목록과의 중복뿐 아니라 `newElements` 내부의 중복까지 함께 걸러지기 때문이다.
-    nonisolated mutating func appendUnique(contentsOf newElements: [Element]) {
+    nonisolated mutating public func appendUnique(contentsOf newElements: [Element]) {
         var existingIDs = Set(map(\.id))
         append(contentsOf: newElements.filter { existingIDs.insert($0.id).inserted })
     }

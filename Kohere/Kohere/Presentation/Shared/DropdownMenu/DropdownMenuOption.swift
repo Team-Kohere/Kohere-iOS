@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 struct DropdownMenuOption: Identifiable, Equatable {
     let option: String

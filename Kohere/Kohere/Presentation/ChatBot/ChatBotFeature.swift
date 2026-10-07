@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 @Reducer
 struct ChatBotFeature {

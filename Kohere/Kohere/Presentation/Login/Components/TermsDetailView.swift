@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 import SwiftUI
 
 enum TermsDetailKind: String, Equatable, Identifiable {

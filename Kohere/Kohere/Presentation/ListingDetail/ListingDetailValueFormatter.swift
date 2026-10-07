@@ -1,4 +1,5 @@
 import Foundation
+import KohereCore
 
 enum ListingDetailValueFormatter {
     static func monthlyRentTitle(min: Int?, max: Int?, language: AppLanguage) -> String {

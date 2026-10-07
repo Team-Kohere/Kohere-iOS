@@ -5,6 +5,7 @@
 //  Created by Codex on 7/7/26.
 //
 
+import KohereCore
 import SwiftUI
 
 struct MapTopControlsView: View {

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 struct MapListingFilterChipItem: Identifiable {
     enum Kind: Hashable {

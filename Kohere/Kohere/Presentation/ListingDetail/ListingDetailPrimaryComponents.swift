@@ -5,6 +5,7 @@
 //  Created by Codex on 6/29/26.
 //
 
+import KohereCore
 import SwiftUI
 
 struct ListingDetailOverviewSection: View {

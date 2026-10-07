@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 private nonisolated enum LandlordOnboardingEffectID: Hashable, Sendable {
     case sendPhoneVerificationCode

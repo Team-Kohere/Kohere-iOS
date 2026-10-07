@@ -1,6 +1,7 @@
 import ComposableArchitecture
-import XCTest
 @testable import Kohere
+import KohereCore
+import XCTest
 
 @MainActor
 final class DiagnosisMapTests: XCTestCase {

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 enum ListingDetailDelegate: Equatable {
     case applicationRequested(
