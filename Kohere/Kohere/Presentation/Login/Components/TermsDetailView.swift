@@ -7,6 +7,7 @@
 
 import Foundation
 import KohereCore
+import KohereLocalization
 import SwiftUI
 
 enum TermsDetailKind: String, Equatable, Identifiable {

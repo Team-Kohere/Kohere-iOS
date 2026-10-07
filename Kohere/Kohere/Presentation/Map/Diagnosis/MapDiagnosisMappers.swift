@@ -7,6 +7,7 @@
 
 import Foundation
 import KohereCore
+import KohereLocalization
 
 extension ListingItemModel {
     init(

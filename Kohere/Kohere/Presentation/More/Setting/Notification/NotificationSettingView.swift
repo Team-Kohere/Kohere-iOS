@@ -5,6 +5,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereLocalization
 import SwiftUI
 import UIKit
 

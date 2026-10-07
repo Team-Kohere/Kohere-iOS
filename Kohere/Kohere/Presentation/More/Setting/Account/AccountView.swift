@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct AccountView: View {

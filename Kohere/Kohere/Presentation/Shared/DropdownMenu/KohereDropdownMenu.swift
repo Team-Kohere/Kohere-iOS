@@ -6,6 +6,7 @@
 //
 
 import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct KohereDropdownMenu<Field: Hashable>: View {

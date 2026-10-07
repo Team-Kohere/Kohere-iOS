@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct ChatBotOptionsView: View {

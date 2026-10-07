@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereLocalization
 import SwiftUI
 
 struct ChatView: View {

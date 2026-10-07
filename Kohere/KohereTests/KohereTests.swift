@@ -8,6 +8,7 @@
 import ComposableArchitecture
 @testable import Kohere
 @testable import KohereCore
+import KohereLocalization
 import XCTest
 
 final class QuizAnswerResponseMappingTests: XCTestCase {

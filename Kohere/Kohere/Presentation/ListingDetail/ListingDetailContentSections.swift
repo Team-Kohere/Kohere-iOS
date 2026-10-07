@@ -4,6 +4,7 @@
 //
 
 import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct ListingDetailContentSections: View {

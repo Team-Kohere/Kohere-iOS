@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import KohereLocalization
 
 extension MapFeature {
     func selectMarker(_ listingID: String, state: inout State) -> Effect<Action> {

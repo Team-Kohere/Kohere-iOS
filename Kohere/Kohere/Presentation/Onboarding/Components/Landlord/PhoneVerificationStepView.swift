@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereLocalization
 import SwiftUI
 
 struct PhoneVerificationStepView: View {

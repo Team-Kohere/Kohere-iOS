@@ -7,6 +7,7 @@
 
 import Foundation
 import KohereCore
+import KohereLocalization
 
 enum MapFilterPriceFormatter {
     static func amountText(_ tenThousandWon: Int, locale: Locale) -> String {

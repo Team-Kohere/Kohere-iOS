@@ -6,8 +6,9 @@
 //
 
 import ComposableArchitecture
-import SwiftUI
 import KohereCore
+import KohereLocalization
+import SwiftUI
 
 struct LandlordOnboardingView: View {
 

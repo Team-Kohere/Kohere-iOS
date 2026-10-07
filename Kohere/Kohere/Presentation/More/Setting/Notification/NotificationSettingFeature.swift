@@ -5,6 +5,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereLocalization
 
 @Reducer
 struct NotificationSettingFeature {

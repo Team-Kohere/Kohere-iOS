@@ -6,6 +6,7 @@
 //
 
 import KohereCore
+import KohereLocalization
 
 extension ChatFeature {
     static func errorPopup(message: String, language: AppLanguage) -> AppPopup {
