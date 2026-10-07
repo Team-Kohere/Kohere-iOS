@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereCore
 
 struct UserProfile: Equatable, Sendable {
     let id: Int

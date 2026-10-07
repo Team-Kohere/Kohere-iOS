@@ -7,6 +7,8 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
+import KohereLocalization
 
 enum ListingDetailDelegate: Equatable {
     case applicationRequested(

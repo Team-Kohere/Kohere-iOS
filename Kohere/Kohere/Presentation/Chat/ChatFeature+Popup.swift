@@ -5,6 +5,9 @@
 //  Created by soomin on 8/9/26.
 //
 
+import KohereCore
+import KohereLocalization
+
 extension ChatFeature {
     static func errorPopup(message: String, language: AppLanguage) -> AppPopup {
         .notice(

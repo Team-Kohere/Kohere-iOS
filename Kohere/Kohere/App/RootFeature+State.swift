@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import KohereCore
 
 extension RootFeature {
     @ObservableState

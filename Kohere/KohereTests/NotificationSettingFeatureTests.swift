@@ -1,6 +1,8 @@
 import ComposableArchitecture
-import XCTest
 @testable import Kohere
+import KohereCore
+import KohereLocalization
+import XCTest
 
 @MainActor
 final class NotificationSettingFeatureTests: XCTestCase {

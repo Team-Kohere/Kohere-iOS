@@ -1,4 +1,6 @@
 import Foundation
+import KohereCore
+import KohereLocalization
 
 extension ListingDetailModel {
     init(

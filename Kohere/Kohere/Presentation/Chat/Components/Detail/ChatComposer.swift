@@ -5,6 +5,8 @@
 //  Created by soomin on 8/21/26.
 //
 
+import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct ChatComposer: View {

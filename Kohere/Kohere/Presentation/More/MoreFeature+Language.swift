@@ -4,6 +4,8 @@
 //
 
 import ComposableArchitecture
+import KohereCore
+import KohereLocalization
 
 extension MoreFeature {
     func reduceLanguage(_ action: Action, state: inout State) -> Effect<Action> {

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereCore
 
 private extension HomeRecentlyViewedFeature {
     nonisolated enum EffectID: Hashable, Sendable {

@@ -6,6 +6,8 @@
 //
 
 import ComposableArchitecture
+import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct SearchView: View {

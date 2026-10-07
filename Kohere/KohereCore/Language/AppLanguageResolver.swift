@@ -7,7 +7,7 @@
 
 import Foundation
 
-nonisolated enum AppLanguageResolver {
+nonisolated public enum AppLanguageResolver {
     nonisolated static func resolve(from locale: Locale) -> AppLanguage {
         switch locale.language.languageCode?.identifier {
         case AppLanguage.korean.apiCode:
@@ -17,7 +17,7 @@ nonisolated enum AppLanguageResolver {
         }
     }
 
-    nonisolated static func resolveSystemLanguage(bundle: Bundle = .main) -> AppLanguage {
+    nonisolated static public func resolveSystemLanguage(bundle: Bundle = .main) -> AppLanguage {
         guard let preferredLocalization = bundle.preferredLocalizations.first else {
             return .english
         }
@@ -27,7 +27,7 @@ nonisolated enum AppLanguageResolver {
 }
 
 extension AppLanguage {
-    nonisolated init(locale: Locale) {
+    nonisolated public init(locale: Locale) {
         self = AppLanguageResolver.resolve(from: locale)
     }
 }

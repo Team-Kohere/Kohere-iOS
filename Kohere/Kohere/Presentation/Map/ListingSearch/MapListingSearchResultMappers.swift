@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import KohereCore
+import KohereLocalization
 
 extension ListingItemModel {
     init(listing: Listing, language: AppLanguage) {

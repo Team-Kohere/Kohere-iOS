@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import KohereCore
+import KohereLocalization
 
 extension DataError {
     static func from(_ error: Error) -> DataError {

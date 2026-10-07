@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import KohereCore
+import KohereLocalization
 
 struct MapFilterState: Equatable, Sendable {
     var selectedOptions: Set<RoomCondition> = []

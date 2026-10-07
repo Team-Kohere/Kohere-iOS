@@ -5,9 +5,11 @@
 //  Created by 송규섭 on 6/11/26.
 //
 
-import XCTest
 import ComposableArchitecture
 @testable import Kohere
+@testable import KohereCore
+import KohereLocalization
+import XCTest
 
 final class QuizAnswerResponseMappingTests: XCTestCase {
     func testCorrectAnswerUsesSelectedChoiceWhenCorrectChoiceIsOmitted() throws {

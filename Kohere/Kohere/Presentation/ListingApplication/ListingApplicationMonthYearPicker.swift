@@ -5,6 +5,8 @@
 //  Created by Codex on 7/9/26.
 //
 
+import KohereCore
+import KohereLocalization
 import SwiftUI
 import UIKit
 

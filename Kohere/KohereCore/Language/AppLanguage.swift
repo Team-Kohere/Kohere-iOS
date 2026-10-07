@@ -7,11 +7,11 @@
 
 import Foundation
 
-nonisolated enum AppLanguage: CaseIterable, Codable, Equatable, Sendable {
+nonisolated public enum AppLanguage: CaseIterable, Codable, Equatable, Sendable {
     case korean
     case english
 
-    var apiCode: String {
+    public var apiCode: String {
         switch self {
         case .korean:
             "ko"
@@ -29,11 +29,11 @@ nonisolated enum AppLanguage: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    var locale: Locale {
+    public var locale: Locale {
         Locale(identifier: localeIdentifier)
     }
 
-    var nativeDisplayName: String {
+    public var nativeDisplayName: String {
         switch self {
         case .korean:
             "한국어"
@@ -42,7 +42,7 @@ nonisolated enum AppLanguage: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    init?(apiCode: String) {
+    public init?(apiCode: String) {
         switch apiCode.lowercased() {
         case "ko":
             self = .korean
@@ -53,7 +53,7 @@ nonisolated enum AppLanguage: CaseIterable, Codable, Equatable, Sendable {
         }
     }
 
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.singleValueContainer()
         let apiCode = try container.decode(String.self)
 
@@ -64,7 +64,7 @@ nonisolated enum AppLanguage: CaseIterable, Codable, Equatable, Sendable {
         self = language
     }
 
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var container = encoder.singleValueContainer()
         try container.encode(apiCode)
     }

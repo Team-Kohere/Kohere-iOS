@@ -5,6 +5,8 @@
 //  Created by Codex on 6/30/26.
 //
 
+import KohereCore
+import KohereLocalization
 import SwiftUI
 
 struct RangeSliderValue: Equatable, Sendable {

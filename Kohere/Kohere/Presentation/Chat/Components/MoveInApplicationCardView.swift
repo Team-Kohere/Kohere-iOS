@@ -5,6 +5,8 @@
 //  Created by soomin on 6/29/26.
 //
 
+import KohereCore
+import KohereLocalization
 import SwiftUI
 import UIKit
 

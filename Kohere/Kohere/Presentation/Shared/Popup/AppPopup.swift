@@ -5,6 +5,8 @@
 //  Created by soomin on 7/8/26.
 //
 
+import KohereCore
+
 enum AppPopup: Equatable {
     case notice(Notice)
     case action(Action)

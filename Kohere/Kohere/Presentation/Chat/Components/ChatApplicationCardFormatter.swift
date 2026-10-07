@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import KohereCore
+import KohereLocalization
 
 struct ChatApplicationCardFormatter {
     let item: ChatApplicationCard
