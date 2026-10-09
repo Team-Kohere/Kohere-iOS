@@ -5,6 +5,8 @@
 //  Created by Codex on 7/12/26.
 //
 
+import KohereDomain
+
 extension RootFeature {
     func synchronizeFavoriteStatus(
         _ status: ListingFavoriteStatus,

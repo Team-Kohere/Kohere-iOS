@@ -2,6 +2,7 @@ import ComposableArchitecture
 import XCTest
 @testable import Kohere
 import KohereCore
+import KohereDomain
 
 @MainActor
 final class MapSelectedListingTests: XCTestCase {

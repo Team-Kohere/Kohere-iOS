@@ -7,6 +7,7 @@
 
 import Foundation
 import KohereCore
+import KohereDomain
 import KohereLocalization
 
 enum ListingApplicationStep: Equatable {

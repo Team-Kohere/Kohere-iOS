@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 import OSLog
 
 private enum PushRegistrationLogger {

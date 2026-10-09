@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 nonisolated struct ChatApplicationCard: Equatable {
     let listingID: String

@@ -1,3 +1,5 @@
+import KohereDomain
+
 //
 //  MapListingSearchInputMapper.swift
 //  Kohere

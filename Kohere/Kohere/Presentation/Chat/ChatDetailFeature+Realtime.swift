@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDomain
 
 extension ChatDetailFeature {
     func connectRealtime(roomID: Int) -> Effect<Action> {

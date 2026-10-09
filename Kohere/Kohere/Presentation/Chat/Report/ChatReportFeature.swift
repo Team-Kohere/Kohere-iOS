@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereDomain
 
 @Reducer
 struct ChatReportFeature {

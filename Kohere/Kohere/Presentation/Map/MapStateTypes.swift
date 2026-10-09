@@ -7,6 +7,7 @@
 
 import Foundation
 import KohereCore
+import KohereDomain
 
 enum MapSheetMode: Equatable {
     case listingList

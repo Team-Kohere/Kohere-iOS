@@ -5,6 +5,7 @@
 //  Created by soomin on 6/25/26.
 //
 
+import KohereDomain
 import SwiftUI
 
 struct LivingGuideItemView: View {

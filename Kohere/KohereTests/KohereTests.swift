@@ -8,6 +8,7 @@
 import ComposableArchitecture
 @testable import Kohere
 @testable import KohereCore
+import KohereDomain
 import KohereLocalization
 import XCTest
 

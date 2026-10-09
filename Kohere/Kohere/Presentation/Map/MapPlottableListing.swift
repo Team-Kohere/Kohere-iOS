@@ -1,3 +1,5 @@
+import KohereDomain
+
 //
 //  MapPlottableListing.swift
 //  Kohere

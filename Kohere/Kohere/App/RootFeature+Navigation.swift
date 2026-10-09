@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDomain
 
 extension RootFeature {
     func openInquiryChat(roomID: Int, listingID: String, state: inout State) -> Effect<Action> {

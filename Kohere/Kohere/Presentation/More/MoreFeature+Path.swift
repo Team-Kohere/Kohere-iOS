@@ -4,6 +4,7 @@
 //
 
 import ComposableArchitecture
+import KohereDomain
 
 extension MoreFeature {
     func reducePath(_ action: StackActionOf<Path>, state: inout State) -> Effect<Action> {

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 import Security
 
 struct KeychainClient: Sendable {

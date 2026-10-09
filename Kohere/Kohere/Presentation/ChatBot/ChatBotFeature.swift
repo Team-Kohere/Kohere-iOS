@@ -1,6 +1,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereCore
+import KohereDomain
 import KohereLocalization
 
 @Reducer

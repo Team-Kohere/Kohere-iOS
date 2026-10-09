@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereCore
+import KohereDomain
 
 enum RecentlyViewedDelegate: Equatable {
     case listingDetailRequested(String)

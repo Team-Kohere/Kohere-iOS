@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 final class DiagnosisRepository: DiagnosisInterface {
     private let networkService: NetworkService

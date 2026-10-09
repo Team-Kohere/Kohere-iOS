@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 final class PushDeviceRepository: PushDeviceInterface {
     private let authenticatedNetworkService: NetworkService

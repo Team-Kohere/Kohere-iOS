@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import FirebaseMessaging
+import KohereDomain
 import os
 import OSLog
 import UIKit

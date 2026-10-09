@@ -5,6 +5,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereDomain
 import KohereLocalization
 
 @Reducer

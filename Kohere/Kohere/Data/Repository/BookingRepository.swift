@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 final class BookingRepository: BookingInterface {
     private let authenticatedNetworkService: NetworkService

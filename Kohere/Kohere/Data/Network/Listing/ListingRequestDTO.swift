@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 nonisolated struct ListingListQueryDTO {
     let swLat: Double?

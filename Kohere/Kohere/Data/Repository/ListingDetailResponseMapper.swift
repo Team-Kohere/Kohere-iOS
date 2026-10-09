@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 extension ListingDetailResponseDTO {
     func toEntity() throws -> ListingDetail {
