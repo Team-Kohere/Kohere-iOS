@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 struct ChatAccessTokenProvider: Sendable {
     private let keychainClient: KeychainClient

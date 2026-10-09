@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDomain
 
 // MARK: - Repository
 

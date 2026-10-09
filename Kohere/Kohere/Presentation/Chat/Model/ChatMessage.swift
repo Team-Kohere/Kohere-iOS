@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 enum ChatMessageDeliveryStatus: Equatable {
     case queued

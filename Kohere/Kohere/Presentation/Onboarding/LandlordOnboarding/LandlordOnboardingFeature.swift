@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereCore
+import KohereDomain
 import KohereLocalization
 
 private nonisolated enum LandlordOnboardingEffectID: Hashable, Sendable {

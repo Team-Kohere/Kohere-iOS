@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereDomain
 
 extension HomeFeature {
     func handlePathAction(_ action: StackActionOf<Path>, state: inout State) -> Effect<Action> {

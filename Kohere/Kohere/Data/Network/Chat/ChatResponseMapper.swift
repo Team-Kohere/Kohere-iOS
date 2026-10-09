@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 extension ChatRoomPageResponseDTO {
     func toEntity() throws -> ChatRoomPage {

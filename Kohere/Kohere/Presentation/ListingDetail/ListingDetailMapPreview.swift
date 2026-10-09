@@ -5,6 +5,7 @@
 //  Created by Codex on 7/9/26.
 //
 
+import KohereDomain
 import NMapsMap
 import SwiftUI
 

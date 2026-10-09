@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereCore
+import KohereDomain
 
 extension MapFeature {
     @ObservableState

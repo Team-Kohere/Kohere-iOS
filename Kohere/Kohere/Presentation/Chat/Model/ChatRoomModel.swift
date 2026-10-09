@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 nonisolated struct ChatRoomModel: Equatable, Identifiable {
     let roomID: Int

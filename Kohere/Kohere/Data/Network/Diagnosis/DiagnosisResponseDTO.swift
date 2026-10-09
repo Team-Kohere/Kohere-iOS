@@ -1,3 +1,5 @@
+import KohereDomain
+
 //
 //  DiagnosisResponseDTO.swift
 //  Kohere

@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDomain
 import SwiftUI
 
 struct HomeQuizView: View {

@@ -5,6 +5,7 @@
 //  Created by soomin on 8/21/26.
 //
 
+import KohereDomain
 import SwiftUI
 
 struct ChatMessageRow: View {

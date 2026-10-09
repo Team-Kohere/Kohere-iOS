@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 import OSLog
 
 nonisolated func debugLogListingSearchRequest(_ input: ListingSearchInput) {

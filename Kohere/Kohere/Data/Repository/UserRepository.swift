@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 final class UserRepository: UserInterface {
     private let authenticatedNetworkService: NetworkService

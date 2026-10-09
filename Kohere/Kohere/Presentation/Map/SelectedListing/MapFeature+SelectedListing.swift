@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 import KohereLocalization
 
 extension MapFeature {

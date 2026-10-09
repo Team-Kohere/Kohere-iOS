@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 final class AuthRepository: AuthInterface {
     private let networkService: NetworkService
@@ -213,7 +214,7 @@ extension AuthClient: DependencyKey {
 }
 
 private extension SocialLoginRequestDTO {
-    init(_ credential: SocialLoginCredential) {
+    nonisolated init(_ credential: SocialLoginCredential) {
         switch credential {
         case let .google(idToken, email, name):
             self = .google(idToken: idToken, email: email, name: name)
@@ -227,7 +228,7 @@ private extension SocialLoginRequestDTO {
 // MARK: - Mapper
 
 private extension SocialLoginResponseDTO {
-    func toEntity(fallbackEmail: String?, fallbackName: String?) -> Auth {
+    nonisolated func toEntity(fallbackEmail: String?, fallbackName: String?) -> Auth {
         return Auth(
             onboardingRequired: onboardingRequired,
             status: AuthStatus(rawValue: status) ?? .unknown,
@@ -250,7 +251,7 @@ private extension String {
 }
 
 private extension SocialLoginCredential {
-    var email: String? {
+    nonisolated var email: String? {
         switch self {
         case let .google(_, email, _):
             return email
@@ -259,7 +260,7 @@ private extension SocialLoginCredential {
         }
     }
 
-    var name: String? {
+    nonisolated var name: String? {
         switch self {
         case let .google(_, _, name):
             return name

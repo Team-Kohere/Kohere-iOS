@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDomain
 
 actor CurrencyRepository: CurrencyInterface {
     private let networkService: ExternalNetworkService

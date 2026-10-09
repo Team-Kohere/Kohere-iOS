@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 extension ChatDetailFeature {
     func fetchMessages(roomID: Int, cursor: String?, isInitial: Bool) -> Effect<Action> {

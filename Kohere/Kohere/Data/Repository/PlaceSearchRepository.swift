@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 actor PlaceSearchRepository: PlaceSearchInterface {
     private let networkService: NetworkService

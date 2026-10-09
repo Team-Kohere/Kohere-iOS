@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import KohereDomain
 
 nonisolated struct UpdateNotificationPreferencesRequestDTO: Encodable, Sendable {
     let chatPushEnabled: Bool

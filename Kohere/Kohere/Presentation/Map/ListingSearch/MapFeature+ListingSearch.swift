@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 enum MapLocationSearchIntent {
     /// 지도 탭의 최초 진입이다. 현재 viewport가 없으면 첫 camera idle까지 검색을 기다린다.

@@ -7,6 +7,7 @@
 
 import Alamofire
 import Foundation
+import KohereDomain
 import OSLog
 
 final class AuthInterceptor: RequestInterceptor, @unchecked Sendable {

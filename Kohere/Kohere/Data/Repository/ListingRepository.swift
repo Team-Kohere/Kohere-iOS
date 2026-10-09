@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereDomain
 
 final class ListingRepository: ListingInterface {
     private let authenticatedNetworkService: NetworkService

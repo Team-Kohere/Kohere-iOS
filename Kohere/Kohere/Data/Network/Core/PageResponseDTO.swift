@@ -1,3 +1,5 @@
+import KohereDomain
+
 //
 //  PageResponseDTO.swift
 //  Kohere

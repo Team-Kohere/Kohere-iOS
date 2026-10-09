@@ -1,5 +1,6 @@
 import Alamofire
 import ComposableArchitecture
+import KohereDomain
 import XCTest
 @testable import Kohere
 
