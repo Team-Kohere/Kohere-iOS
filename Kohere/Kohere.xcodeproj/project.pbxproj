@@ -10,6 +10,25 @@
 		772FBCF62FF3A3F200336CF6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 772FBCF72FF3A3F200336CF6 /* Alamofire */; };
 		772FBCF82FF3A40100336CF6 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 772FBCF92FF3A40100336CF6 /* GoogleSignIn */; };
 		778F3DF32FDAA3000AFF730 /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 778F3DF42FDAA3000AFF730 /* ComposableArchitecture */; };
+		77FCA4073078AF320091C00D /* KohereDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FCA4013078AF320091C00D /* KohereDomain.framework */; };
+		77FCA4083078AF320091C00D /* KohereDomain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 77FCA4013078AF320091C00D /* KohereDomain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		77FCA4113078B1740091C00D /* KohereCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; };
+		77FCA4123078B1740091C00D /* KohereCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		77FCA4163078B1740091C00D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 778F3DF42FDAA3000AFF730 /* ComposableArchitecture */; };
+		77FCA4183078B1740091C00D /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4173078B1740091C00D /* Dependencies */; };
+		77FCA4193078B1740091C00D /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4173078B1740091C00D /* Dependencies */; };
+		77FCA41B3078B1740091C00D /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA41A3078B1740091C00D /* OrderedCollections */; };
+		77FCA41D3078B1740091C00D /* CasePaths in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA41C3078B1740091C00D /* CasePaths */; };
+		77FCA41F3078B1740091C00D /* CasePathsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA41E3078B1740091C00D /* CasePathsCore */; };
+		77FCA4213078B1740091C00D /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4203078B1740091C00D /* ConcurrencyExtras */; };
+		77FCA4233078B1740091C00D /* CustomDump in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4223078B1740091C00D /* CustomDump */; };
+		77FCA4253078B1740091C00D /* IdentifiedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4243078B1740091C00D /* IdentifiedCollections */; };
+		77FCA4293078B1740091C00D /* IssueReporting in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4283078B1740091C00D /* IssueReporting */; };
+		77FCA42B3078B1740091C00D /* Perception in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA42A3078B1740091C00D /* Perception */; };
+		77FCA42D3078B1740091C00D /* PerceptionCore in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA42C3078B1740091C00D /* PerceptionCore */; };
+		77FCA42F3078B1740091C00D /* SwiftNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA42E3078B1740091C00D /* SwiftNavigation */; };
+		77FCA4313078B1740091C00D /* UIKitNavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4303078B1740091C00D /* UIKitNavigation */; };
+		77FCA4333078B1740091C00D /* XCTestDynamicOverlay in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4323078B1740091C00D /* XCTestDynamicOverlay */; };
 		951921A53049CCB300666ACA /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 951921A43049CCB300666ACA /* FirebaseMessaging */; };
 		952FEC09307528E300DB907E /* KohereCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; };
 		952FEC0A307528E300DB907E /* KohereCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -22,6 +41,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		77FCA4053078AF320091C00D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9570C2922FD9DA9D002FA6DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 77FCA4003078AF320091C00D;
+			remoteInfo = KohereDomain;
+		};
+		77FCA4133078B1740091C00D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9570C2922FD9DA9D002FA6DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 952FEC02307528E300DB907E;
+			remoteInfo = KohereCore;
+		};
 		952FEC07307528E300DB907E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 9570C2922FD9DA9D002FA6DE /* Project object */;
@@ -60,6 +93,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		77FCA4153078B1740091C00D /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				77FCA4123078B1740091C00D /* KohereCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		952FEC0B307528E300DB907E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -67,6 +111,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				952FEC0A307528E300DB907E /* KohereCore.framework in Embed Frameworks */,
+				77FCA4083078AF320091C00D /* KohereDomain.framework in Embed Frameworks */,
 				952FED11307528E300DB907E /* KohereLocalization.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -76,6 +121,7 @@
 
 /* Begin PBXFileReference section */
 		778F3DF02FDA7D0D00AFF730 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		77FCA4013078AF320091C00D /* KohereDomain.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KohereDomain.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		952FEC03307528E300DB907E /* KohereCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KohereCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		952FED17307528E300DB907E /* KohereLocalization.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KohereLocalization.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9570C29A2FD9DA9D002FA6DE /* Kohere.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kohere.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -96,6 +142,11 @@
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		77FCA4023078AF320091C00D /* KohereDomain */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = KohereDomain;
+			sourceTree = "<group>";
+		};
 		952FEC04307528E300DB907E /* KohereCore */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = KohereCore;
@@ -127,6 +178,16 @@
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		77FCA3FE3078AF320091C00D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				77FCA4163078B1740091C00D /* ComposableArchitecture in Frameworks */,
+				77FCA4183078B1740091C00D /* Dependencies in Frameworks */,
+				77FCA4113078B1740091C00D /* KohereCore.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		952FEC00307528E300DB907E /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -146,7 +207,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				77FCA4073078AF320091C00D /* KohereDomain.framework in Frameworks */,
 				778F3DF32FDAA3000AFF730 /* ComposableArchitecture in Frameworks */,
+				77FCA41D3078B1740091C00D /* CasePaths in Frameworks */,
+				77FCA41F3078B1740091C00D /* CasePathsCore in Frameworks */,
+				77FCA4213078B1740091C00D /* ConcurrencyExtras in Frameworks */,
+				77FCA4233078B1740091C00D /* CustomDump in Frameworks */,
+				77FCA4193078B1740091C00D /* Dependencies in Frameworks */,
+				77FCA4253078B1740091C00D /* IdentifiedCollections in Frameworks */,
+				77FCA4293078B1740091C00D /* IssueReporting in Frameworks */,
+				77FCA41B3078B1740091C00D /* OrderedCollections in Frameworks */,
+				77FCA42B3078B1740091C00D /* Perception in Frameworks */,
+				77FCA42D3078B1740091C00D /* PerceptionCore in Frameworks */,
+				77FCA42F3078B1740091C00D /* SwiftNavigation in Frameworks */,
+				77FCA4313078B1740091C00D /* UIKitNavigation in Frameworks */,
+				77FCA4333078B1740091C00D /* XCTestDynamicOverlay in Frameworks */,
 				772FBCF62FF3A3F200336CF6 /* Alamofire in Frameworks */,
 				951921A53049CCB300666ACA /* FirebaseMessaging in Frameworks */,
 				772FBCF82FF3A40100336CF6 /* GoogleSignIn in Frameworks */,
@@ -175,6 +250,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		77FCA4103078B1740091C00D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		9570C2912FD9DA9D002FA6DE = {
 			isa = PBXGroup;
 			children = (
@@ -185,6 +267,8 @@
 				9570C2B42FD9DA9E002FA6DE /* KohereUITests */,
 				952FEC04307528E300DB907E /* KohereCore */,
 				952FED18307528E300DB907E /* KohereLocalization */,
+				77FCA4023078AF320091C00D /* KohereDomain */,
+				77FCA4103078B1740091C00D /* Frameworks */,
 				9570C29B2FD9DA9D002FA6DE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -197,6 +281,7 @@
 				9570C2B12FD9DA9E002FA6DE /* KohereUITests.xctest */,
 				952FEC03307528E300DB907E /* KohereCore.framework */,
 				952FED17307528E300DB907E /* KohereLocalization.framework */,
+				77FCA4013078AF320091C00D /* KohereDomain.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -213,6 +298,13 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		77FCA3FC3078AF320091C00D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		952FEBFE307528E300DB907E /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -230,6 +322,33 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		77FCA4003078AF320091C00D /* KohereDomain */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 77FCA40B3078AF320091C00D /* Build configuration list for PBXNativeTarget "KohereDomain" */;
+			buildPhases = (
+				77FCA3FC3078AF320091C00D /* Headers */,
+				77FCA3FD3078AF320091C00D /* Sources */,
+				77FCA3FE3078AF320091C00D /* Frameworks */,
+				77FCA3FF3078AF320091C00D /* Resources */,
+				77FCA4153078B1740091C00D /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				77FCA4143078B1740091C00D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				77FCA4023078AF320091C00D /* KohereDomain */,
+			);
+			name = KohereDomain;
+			packageProductDependencies = (
+				778F3DF42FDAA3000AFF730 /* ComposableArchitecture */,
+				77FCA4173078B1740091C00D /* Dependencies */,
+			);
+			productName = KohereDomain;
+			productReference = 77FCA4013078AF320091C00D /* KohereDomain.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		952FEC02307528E300DB907E /* KohereCore */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 952FEC0E307528E300DB907E /* Build configuration list for PBXNativeTarget "KohereCore" */;
@@ -292,6 +411,7 @@
 			dependencies = (
 				952FEC08307528E300DB907E /* PBXTargetDependency */,
 				952FED15307528E300DB907E /* PBXTargetDependency */,
+				77FCA4063078AF320091C00D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				9570C29C2FD9DA9D002FA6DE /* Kohere */,
@@ -299,6 +419,19 @@
 			name = Kohere;
 			packageProductDependencies = (
 				778F3DF42FDAA3000AFF730 /* ComposableArchitecture */,
+				77FCA41C3078B1740091C00D /* CasePaths */,
+				77FCA41E3078B1740091C00D /* CasePathsCore */,
+				77FCA4203078B1740091C00D /* ConcurrencyExtras */,
+				77FCA4223078B1740091C00D /* CustomDump */,
+				77FCA4173078B1740091C00D /* Dependencies */,
+				77FCA4243078B1740091C00D /* IdentifiedCollections */,
+				77FCA4283078B1740091C00D /* IssueReporting */,
+				77FCA41A3078B1740091C00D /* OrderedCollections */,
+				77FCA42A3078B1740091C00D /* Perception */,
+				77FCA42C3078B1740091C00D /* PerceptionCore */,
+				77FCA42E3078B1740091C00D /* SwiftNavigation */,
+				77FCA4303078B1740091C00D /* UIKitNavigation */,
+				77FCA4323078B1740091C00D /* XCTestDynamicOverlay */,
 				772FBCF72FF3A3F200336CF6 /* Alamofire */,
 				772FBCF92FF3A40100336CF6 /* GoogleSignIn */,
 				9570E47E2FE45C37002FA6DE /* NMapsMap */,
@@ -363,9 +496,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 2700;
+				LastSwiftUpdateCheck = 2600;
 				LastUpgradeCheck = 2620;
 				TargetAttributes = {
+					77FCA4003078AF320091C00D = {
+						CreatedOnToolsVersion = 26.0;
+					};
 					952FEC02307528E300DB907E = {
 						CreatedOnToolsVersion = 27.0;
 					};
@@ -419,11 +555,19 @@
 				9570C2B02FD9DA9E002FA6DE /* KohereUITests */,
 				952FEC02307528E300DB907E /* KohereCore */,
 				952FED1D307528E300DB907E /* KohereLocalization */,
+				77FCA4003078AF320091C00D /* KohereDomain */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		77FCA3FF3078AF320091C00D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		952FEC01307528E300DB907E /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -483,6 +627,13 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		77FCA3FD3078AF320091C00D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		952FEBFF307528E300DB907E /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -521,6 +672,16 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		77FCA4063078AF320091C00D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 77FCA4003078AF320091C00D /* KohereDomain */;
+			targetProxy = 77FCA4053078AF320091C00D /* PBXContainerItemProxy */;
+		};
+		77FCA4143078B1740091C00D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 952FEC02307528E300DB907E /* KohereCore */;
+			targetProxy = 77FCA4133078B1740091C00D /* PBXContainerItemProxy */;
+		};
 		952FEC08307528E300DB907E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 952FEC02307528E300DB907E /* KohereCore */;
@@ -549,6 +710,86 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		77FCA4093078AF320091C00D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2YTVA7GW5S;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohere.KohereDomain;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		77FCA40A3078AF320091C00D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2YTVA7GW5S;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.kohere.KohereDomain;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_MODULE = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		952FEC0C307528E300DB907E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -993,6 +1234,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		77FCA40B3078AF320091C00D /* Build configuration list for PBXNativeTarget "KohereDomain" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				77FCA4093078AF320091C00D /* Debug */,
+				77FCA40A3078AF320091C00D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		952FEC0E307528E300DB907E /* Build configuration list for PBXNativeTarget "KohereCore" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -1123,6 +1373,71 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = ComposableArchitecture;
+		};
+		77FCA4173078B1740091C00D /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
+		};
+		77FCA41A3078B1740091C00D /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = OrderedCollections;
+		};
+		77FCA41C3078B1740091C00D /* CasePaths */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = CasePaths;
+		};
+		77FCA41E3078B1740091C00D /* CasePathsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = CasePathsCore;
+		};
+		77FCA4203078B1740091C00D /* ConcurrencyExtras */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ConcurrencyExtras;
+		};
+		77FCA4223078B1740091C00D /* CustomDump */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = CustomDump;
+		};
+		77FCA4243078B1740091C00D /* IdentifiedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = IdentifiedCollections;
+		};
+		77FCA4283078B1740091C00D /* IssueReporting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = IssueReporting;
+		};
+		77FCA42A3078B1740091C00D /* Perception */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Perception;
+		};
+		77FCA42C3078B1740091C00D /* PerceptionCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = PerceptionCore;
+		};
+		77FCA42E3078B1740091C00D /* SwiftNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = SwiftNavigation;
+		};
+		77FCA4303078B1740091C00D /* UIKitNavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = UIKitNavigation;
+		};
+		77FCA4323078B1740091C00D /* XCTestDynamicOverlay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = XCTestDynamicOverlay;
 		};
 		951921A43049CCB300666ACA /* FirebaseMessaging */ = {
 			isa = XCSwiftPackageProductDependency;
