@@ -11,12 +11,13 @@ import SwiftUI
 
 @main
 struct KohereApp: App {
-    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self)
+    private var appDelegate
 
     init() {
         TabBarAppearanceConfigurator.configure()
     }
-    
+
     var body: some Scene {
         WindowGroup {
             RootView(
@@ -29,7 +30,7 @@ struct KohereApp: App {
             }
         }
     }
-    
+
     private func makeInitialState() -> RootFeature.State {
         return RootFeature.State()
     }
