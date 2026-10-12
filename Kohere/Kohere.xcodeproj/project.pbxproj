@@ -37,14 +37,14 @@
 		952FED10307528E300DB907E /* KohereLocalization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FED17307528E300DB907E /* KohereLocalization.framework */; };
 		952FED11307528E300DB907E /* KohereLocalization.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 952FED17307528E300DB907E /* KohereLocalization.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		952FED12307528E300DB907E /* KohereCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; };
-		9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 9570E47E2FE45C37002FA6DE /* NMapsMap */; };
-		D4A1B2C32FF4A10000AA0001 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D4A1B2C32FF4A10000AA0003 /* Kingfisher */; };
-		E6B4C0013011000000000001 /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = E6B4C0013011000000000003 /* SwiftStomp */; };
 		952FEE21307528E300DB907E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE20307528E300DB907E /* ComposableArchitecture */; };
 		952FEE23307528E300DB907E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE22307528E300DB907E /* Dependencies */; };
 		952FEE25307528E300DB907E /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE24307528E300DB907E /* ConcurrencyExtras */; };
 		952FEE27307528E300DB907E /* Clocks in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE26307528E300DB907E /* Clocks */; };
 		952FEE31307528E300DB907E /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE30307528E300DB907E /* OrderedCollections */; };
+		9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 9570E47E2FE45C37002FA6DE /* NMapsMap */; };
+		95C549D6307D538200387F6D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 95C549D5307D538200387F6D /* Kingfisher */; };
+		E6B4C0013011000000000001 /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = E6B4C0013011000000000003 /* SwiftStomp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -209,6 +209,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				95C549D6307D538200387F6D /* Kingfisher in Frameworks */,
 				952F0472307D410E00DB907E /* KohereCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -252,7 +253,6 @@
 				951921A53049CCB300666ACA /* FirebaseMessaging in Frameworks */,
 				772FBCF82FF3A40100336CF6 /* GoogleSignIn in Frameworks */,
 				9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */,
-				D4A1B2C32FF4A10000AA0001 /* Kingfisher in Frameworks */,
 				E6B4C0013011000000000001 /* SwiftStomp in Frameworks */,
 				952FEC09307528E300DB907E /* KohereCore.framework in Frameworks */,
 				952FED10307528E300DB907E /* KohereLocalization.framework in Frameworks */,
@@ -407,6 +407,7 @@
 			);
 			name = KohereDesignSystem;
 			packageProductDependencies = (
+				95C549D5307D538200387F6D /* Kingfisher */,
 			);
 			productName = KohereDesignSystem;
 			productReference = 952F0467307D3F3400DB907E /* KohereDesignSystem.framework */;
@@ -499,7 +500,6 @@
 				772FBCF72FF3A3F200336CF6 /* Alamofire */,
 				772FBCF92FF3A40100336CF6 /* GoogleSignIn */,
 				9570E47E2FE45C37002FA6DE /* NMapsMap */,
-				D4A1B2C32FF4A10000AA0003 /* Kingfisher */,
 				E6B4C0013011000000000003 /* SwiftStomp */,
 				951921A43049CCB300666ACA /* FirebaseMessaging */,
 			);
@@ -890,6 +890,7 @@
 		952F046F307D3F3400DB907E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -931,6 +932,7 @@
 		952F0470307D3F3400DB907E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS = NO;
 				BUILD_LIBRARY_FOR_DISTRIBUTION = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1632,21 +1634,6 @@
 			package = 951921A33049CCB300666ACA /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseMessaging;
 		};
-		9570E47E2FE45C37002FA6DE /* NMapsMap */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9570E47D2FE45C37002FA6DE /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
-			productName = NMapsMap;
-		};
-		D4A1B2C32FF4A10000AA0003 /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D4A1B2C32FF4A10000AA0002 /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		E6B4C0013011000000000003 /* SwiftStomp */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E6B4C0013011000000000002 /* XCRemoteSwiftPackageReference "SwiftStomp" */;
-			productName = SwiftStomp;
-		};
 		952FEE20307528E300DB907E /* ComposableArchitecture */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
@@ -1671,6 +1658,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
 			productName = OrderedCollections;
+		};
+		9570E47E2FE45C37002FA6DE /* NMapsMap */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9570E47D2FE45C37002FA6DE /* XCRemoteSwiftPackageReference "SPM-NMapsMap" */;
+			productName = NMapsMap;
+		};
+		95C549D5307D538200387F6D /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4A1B2C32FF4A10000AA0002 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		E6B4C0013011000000000003 /* SwiftStomp */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E6B4C0013011000000000002 /* XCRemoteSwiftPackageReference "SwiftStomp" */;
+			productName = SwiftStomp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

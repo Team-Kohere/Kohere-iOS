@@ -5,10 +5,9 @@
 //  Created by soomin on 8/14/26.
 //
 
-import KohereDesignSystem
 import SwiftUI
 
-struct NotificationCell: View {
+public struct NotificationCell: View {
 
     // MARK: - Properties
 
@@ -20,7 +19,7 @@ struct NotificationCell: View {
 
     // MARK: - Initializer
     
-    init(
+    public init(
         icon: ImageResource,
         category: String,
         title: String,
@@ -36,7 +35,7 @@ struct NotificationCell: View {
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         Button(action: onTap) {
             HStack(alignment: .top, spacing: 4) {
                 Image(icon)

@@ -7,10 +7,11 @@
 
 import Foundation
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 
-struct DropdownMenuOption: Identifiable, Equatable {
+struct DropdownMenuOption: KohereDropdownMenuOption {
     let option: String
     var id: String { option }
 

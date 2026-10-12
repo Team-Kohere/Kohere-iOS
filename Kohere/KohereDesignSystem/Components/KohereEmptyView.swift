@@ -5,20 +5,31 @@
 //  Created by soomin on 6/24/26.
 //
 
-import KohereDesignSystem
 import SwiftUI
 
-struct KohereEmptyView: View {
+public struct KohereEmptyView: View {
     
     // MARK: - Property
     
     let title: String
     var fontStyle: KohereTextStyle = .body2Regular
     var fontColor: Color = .labelNeutral
+
+    // MARK: - Init
+
+    public init(
+        title: String,
+        fontStyle: KohereTextStyle = .body2Regular,
+        fontColor: Color = .labelNeutral
+    ) {
+        self.title = title
+        self.fontStyle = fontStyle
+        self.fontColor = fontColor
+    }
     
     // MARK: - Body
     
-    var body: some View {
+    public var body: some View {
         VStack(alignment: .center, spacing: 12) {
             Image(.typoLogo)
                 .resizable()

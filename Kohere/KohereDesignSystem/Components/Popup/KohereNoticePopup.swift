@@ -5,16 +5,27 @@
 //  Created by soomin on 7/8/26.
 //
 
-import KohereDesignSystem
 import SwiftUI
 
-struct KohereNoticePopup: View {
+public struct KohereNoticePopup: View {
     let message: String
     let confirmTitle: String
     var confirmStyle: AppPopup.ConfirmStyle = .neutral
     let onConfirmTapped: () -> Void
 
-    var body: some View {
+    public init(
+        message: String,
+        confirmTitle: String,
+        confirmStyle: AppPopup.ConfirmStyle = .neutral,
+        onConfirmTapped: @escaping () -> Void
+    ) {
+        self.message = message
+        self.confirmTitle = confirmTitle
+        self.confirmStyle = confirmStyle
+        self.onConfirmTapped = onConfirmTapped
+    }
+
+    public var body: some View {
         VStack(spacing: 16) {
             Text(message)
                 .kohereTextStyle(.body2Regular)

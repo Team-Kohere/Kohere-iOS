@@ -7,6 +7,7 @@
 
 import Foundation
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 

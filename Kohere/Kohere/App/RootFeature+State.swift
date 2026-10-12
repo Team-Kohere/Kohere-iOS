@@ -1,5 +1,6 @@
 import ComposableArchitecture
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 
 extension RootFeature {

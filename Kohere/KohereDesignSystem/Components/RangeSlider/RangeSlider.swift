@@ -5,15 +5,13 @@
 //  Created by Codex on 6/30/26.
 //
 
-import KohereCore
-import KohereLocalization
 import SwiftUI
 
-struct RangeSliderValue: Equatable, Sendable {
-    var minimum: Int
-    var maximum: Int
+public struct RangeSliderValue: Equatable, Sendable {
+    public var minimum: Int
+    public var maximum: Int
 
-    init(minimum: Int, maximum: Int, bounds: ClosedRange<Int>) {
+    public init(minimum: Int, maximum: Int, bounds: ClosedRange<Int>) {
         let clampedMinimum = min(max(minimum, bounds.lowerBound), bounds.upperBound)
         let clampedMaximum = min(max(maximum, bounds.lowerBound), bounds.upperBound)
 
@@ -21,16 +19,16 @@ struct RangeSliderValue: Equatable, Sendable {
         self.maximum = max(clampedMinimum, clampedMaximum)
     }
 
-    mutating func updateMinimum(_ value: Int, bounds: ClosedRange<Int>) {
+    public mutating func updateMinimum(_ value: Int, bounds: ClosedRange<Int>) {
         minimum = min(max(value, bounds.lowerBound), maximum)
     }
 
-    mutating func updateMaximum(_ value: Int, bounds: ClosedRange<Int>) {
+    public mutating func updateMaximum(_ value: Int, bounds: ClosedRange<Int>) {
         maximum = max(min(value, bounds.upperBound), minimum)
     }
 }
 
-struct RangeSlider: View {
+public struct RangeSlider: View {
     @Environment(\.locale)
     private var locale
     @State private var activeThumb: SliderThumb?
@@ -43,7 +41,19 @@ struct RangeSlider: View {
     let onMinimumChange: (Int) -> Void
     let onMaximumChange: (Int) -> Void
 
-    var body: some View {
+    public init(
+        value: RangeSliderValue,
+        bounds: ClosedRange<Int>,
+        onMinimumChange: @escaping (Int) -> Void,
+        onMaximumChange: @escaping (Int) -> Void
+    ) {
+        self.value = value
+        self.bounds = bounds
+        self.onMinimumChange = onMinimumChange
+        self.onMaximumChange = onMaximumChange
+    }
+
+    public var body: some View {
         GeometryReader { proxy in
             let width = proxy.size.width
             let minimumX = position(for: value.minimum, width: width)
@@ -169,9 +179,9 @@ struct RangeSlider: View {
         func accessibilityLabel(locale: Locale) -> String {
             switch self {
             case .minimum:
-                AppLanguage(locale: locale).localized(.rangeSliderAccessibilityMinimum)
+                LocalizedStringResource.rangeSliderAccessibilityMinimum.resolved(in: locale)
             case .maximum:
-                AppLanguage(locale: locale).localized(.rangeSliderAccessibilityMaximum)
+                LocalizedStringResource.rangeSliderAccessibilityMaximum.resolved(in: locale)
             }
         }
 

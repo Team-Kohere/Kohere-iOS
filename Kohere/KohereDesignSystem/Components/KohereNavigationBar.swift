@@ -5,12 +5,11 @@
 //  Created by soomin on 6/19/26.
 //
 
-import KohereDesignSystem
 import SwiftUI
 
 // MARK: - Navigation Types
 
-enum NavigationLeft {
+public enum NavigationLeft {
     case none
     case bigLogo
     case smallLogo
@@ -18,18 +17,28 @@ enum NavigationLeft {
     case closeButton(() -> Void)
 }
 
-enum NavigationCenter {
+public enum NavigationCenter {
     case none
     case text(String, style: KohereTextStyle = .heading3Semibold)
 }
 
-struct NavigationPopover {
+public struct NavigationPopover {
     let isPresented: Bool
     let onPresentationChanged: (Bool) -> Void
     let content: AnyView
+
+    public init(
+        isPresented: Bool,
+        onPresentationChanged: @escaping (Bool) -> Void,
+        content: AnyView
+    ) {
+        self.isPresented = isPresented
+        self.onPresentationChanged = onPresentationChanged
+        self.content = content
+    }
 }
 
-enum NavigationRight {
+public enum NavigationRight {
     case none
     case closeButton(() -> Void)
     case homeTab(showsHeart: Bool = true, onSearch: () -> Void, onHeart: () -> Void)
@@ -44,7 +53,7 @@ enum NavigationRight {
     case checkButton(isEnabled: Bool, action: () -> Void)
 }
 
-struct KohereNavigationBar: View {
+public struct KohereNavigationBar: View {
     
     // MARK: - Properties
     
@@ -59,7 +68,7 @@ struct KohereNavigationBar: View {
     
     // MARK: - Init
     
-    init(
+    public init(
         left: NavigationLeft,
         center: NavigationCenter = .none,
         right: NavigationRight = .none,
@@ -79,7 +88,7 @@ struct KohereNavigationBar: View {
     
     // MARK: - Body
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             centerView
             

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct KohereImageFallbackView: View {
+public struct KohereImageFallbackView: View {
     let backgroundColor: Color
     let iconColor: Color
     let iconSize: CGFloat
@@ -25,7 +25,7 @@ struct KohereImageFallbackView: View {
         self.accessibilityLabel = accessibilityLabel
     }
 
-    var body: some View {
+    public var body: some View {
         Rectangle()
             .fill(backgroundColor)
             .overlay {

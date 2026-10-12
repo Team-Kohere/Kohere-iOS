@@ -7,29 +7,41 @@
 
 import KohereCore
 
-enum AppPopup: Equatable {
+public enum AppPopup: Equatable {
     case notice(Notice)
     case action(Action)
 
-    struct Notice: Equatable {
-        let message: String
-        let confirmTitle: String
-        var confirmRoute: Route?
-        var confirmStyle: ConfirmStyle = .neutral
+    public struct Notice: Equatable {
+        public let message: String
+        public let confirmTitle: String
+        public var confirmRoute: Route?
+        public var confirmStyle: ConfirmStyle = .neutral
+
+        public init(
+            message: String,
+            confirmTitle: String,
+            confirmRoute: Route? = nil,
+            confirmStyle: ConfirmStyle = .neutral
+        ) {
+            self.message = message
+            self.confirmTitle = confirmTitle
+            self.confirmRoute = confirmRoute
+            self.confirmStyle = confirmStyle
+        }
     }
 
-    enum ConfirmStyle: Equatable {
+    public enum ConfirmStyle: Equatable {
         case neutral, primary
     }
 
-    struct Action: Equatable {
-        let message: String
-        let primaryTitle: String
-        let secondaryTitle: String
-        var primaryRoute: Route?
-        var secondaryRoute: Route?
+    public struct Action: Equatable {
+        public let message: String
+        public let primaryTitle: String
+        public let secondaryTitle: String
+        public var primaryRoute: Route?
+        public var secondaryRoute: Route?
 
-        init(
+        public init(
             message: String,
             primaryTitle: String,
             secondaryTitle: String,
@@ -43,7 +55,7 @@ enum AppPopup: Equatable {
             self.secondaryRoute = secondaryRoute
         }
 
-        init(
+        public init(
             message: String,
             primaryTitle: String,
             secondaryTitle: String,
@@ -58,7 +70,7 @@ enum AppPopup: Equatable {
         }
     }
 
-    enum Route: Equatable {
+    public enum Route: Equatable {
         case signIn
         case home
         case logout

@@ -9,13 +9,13 @@ import Foundation
 import Kingfisher
 import SwiftUI
 
-struct KohereRemoteImageView<Placeholder: View>: View {
+public struct KohereRemoteImageView<Placeholder: View>: View {
     let urlString: String?
     let contentMode: SwiftUI.ContentMode
     let placeholder: () -> Placeholder
     let onImageLoaded: (() -> Void)?
 
-    init(
+    public init(
         urlString: String?,
         contentMode: SwiftUI.ContentMode = .fill,
         onImageLoaded: (() -> Void)? = nil,
@@ -27,7 +27,7 @@ struct KohereRemoteImageView<Placeholder: View>: View {
         self.placeholder = placeholder
     }
 
-    var body: some View {
+    public var body: some View {
         Group {
             if let remoteURL {
                 KFImage.url(remoteURL)
@@ -61,7 +61,7 @@ struct KohereRemoteImageView<Placeholder: View>: View {
 }
 
 extension KohereRemoteImageView where Placeholder == KohereImageFallbackView {
-    init(
+    public init(
         urlString: String?,
         contentMode: SwiftUI.ContentMode = .fill,
         onImageLoaded: (() -> Void)? = nil

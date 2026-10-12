@@ -5,6 +5,7 @@
 //  Created by soomin on 6/27/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct BotMessageRow: View {
