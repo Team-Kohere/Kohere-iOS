@@ -84,7 +84,7 @@ private extension ProfileEditView {
 
     var profileHeader: some View {
         VStack(spacing: 3) {
-            Image("tenantProfileIcon")
+            Image(.tenantProfileIcon)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 73, height: 73)

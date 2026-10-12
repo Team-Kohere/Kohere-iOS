@@ -64,7 +64,7 @@ struct MapListingSheetView: View {
                             .fill(.coolNeutral5)
                             .frame(width: 32, height: 32)
 
-                        Image("tune_24")
+                        Image(.tune24)
                             .renderingMode(.template)
                             .resizable()
                             .frame(width: 16, height: 16)

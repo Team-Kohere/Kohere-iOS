@@ -89,7 +89,7 @@ struct MapSelectedListingSheetView: View {
             Button {
                 onCloseButtonTapped()
             } label: {
-                Image("close_24")
+                Image(.close24)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 24, height: 24)

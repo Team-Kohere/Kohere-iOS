@@ -311,7 +311,7 @@ private struct MoreMenuRow: View {
 
                 Spacer(minLength: 8)
 
-                Image("chevron_right_16")
+                Image(.chevronRight16)
                     .renderingMode(.template)
                     .foregroundStyle(.coolNeutral40)
                     .frame(width: 16, height: 16)

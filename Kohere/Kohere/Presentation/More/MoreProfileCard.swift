@@ -58,7 +58,7 @@ struct MoreProfileCard: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 if userType != .landlord {
-                    Image("pencil_write_24")
+                    Image(.pencilWrite24)
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()

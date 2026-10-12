@@ -110,7 +110,7 @@ struct ChatDetailView: View {
             }
             
             if store.isMoreMenuPresented {
-                Color("materialDimmer")
+                Color(.materialDimmer)
                     .ignoresSafeArea()
                     .onTapGesture {
                         withAnimation(.easeInOut) {

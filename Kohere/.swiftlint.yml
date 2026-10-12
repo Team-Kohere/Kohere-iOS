@@ -34,6 +34,7 @@ opt_in_rules:
   - lower_acl_than_parent
 
 excluded:
+  - KohereDesignSystem/Resources/GeneratedAssetSymbols.swift
   - Pods
   - Carthage
   - KohereTests

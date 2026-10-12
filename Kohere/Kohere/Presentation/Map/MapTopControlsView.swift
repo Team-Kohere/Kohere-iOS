@@ -86,7 +86,7 @@ struct MapTopControlsView: View {
     private var researchButton: some View {
         Button(action: onResearchTapped) {
             HStack(spacing: 12) {
-                Image("refresh_16")
+                Image(.refresh16)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 16, height: 16)

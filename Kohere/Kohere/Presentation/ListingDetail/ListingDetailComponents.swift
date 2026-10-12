@@ -28,7 +28,7 @@ struct ListingDetailSectionHeader: View {
             Spacer()
 
             if showsChevron {
-                Image("chevron_right_16")
+                Image(.chevronRight16)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 16, height: 16)
