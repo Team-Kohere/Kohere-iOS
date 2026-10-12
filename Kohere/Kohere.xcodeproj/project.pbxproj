@@ -13,7 +13,6 @@
 		77FCA4073078AF320091C00D /* KohereDomain.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 77FCA4013078AF320091C00D /* KohereDomain.framework */; };
 		77FCA4083078AF320091C00D /* KohereDomain.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 77FCA4013078AF320091C00D /* KohereDomain.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		77FCA4113078B1740091C00D /* KohereCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; };
-		77FCA4123078B1740091C00D /* KohereCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 952FEC03307528E300DB907E /* KohereCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		77FCA4163078B1740091C00D /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 778F3DF42FDAA3000AFF730 /* ComposableArchitecture */; };
 		77FCA4183078B1740091C00D /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4173078B1740091C00D /* Dependencies */; };
 		77FCA4193078B1740091C00D /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 77FCA4173078B1740091C00D /* Dependencies */; };
@@ -41,6 +40,11 @@
 		9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 9570E47E2FE45C37002FA6DE /* NMapsMap */; };
 		D4A1B2C32FF4A10000AA0001 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D4A1B2C32FF4A10000AA0003 /* Kingfisher */; };
 		E6B4C0013011000000000001 /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = E6B4C0013011000000000003 /* SwiftStomp */; };
+		952FEE21307528E300DB907E /* ComposableArchitecture in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE20307528E300DB907E /* ComposableArchitecture */; };
+		952FEE23307528E300DB907E /* Dependencies in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE22307528E300DB907E /* Dependencies */; };
+		952FEE25307528E300DB907E /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE24307528E300DB907E /* ConcurrencyExtras */; };
+		952FEE27307528E300DB907E /* Clocks in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE26307528E300DB907E /* Clocks */; };
+		952FEE31307528E300DB907E /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE30307528E300DB907E /* OrderedCollections */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,17 +114,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		77FCA4153078B1740091C00D /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				77FCA4123078B1740091C00D /* KohereCore.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		952FEC0B307528E300DB907E /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,6 +263,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				952FEE31307528E300DB907E /* OrderedCollections in Frameworks */,
+				952FEE21307528E300DB907E /* ComposableArchitecture in Frameworks */,
+				952FEE23307528E300DB907E /* Dependencies in Frameworks */,
+				952FEE25307528E300DB907E /* ConcurrencyExtras in Frameworks */,
+				952FEE27307528E300DB907E /* Clocks in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +370,6 @@
 				77FCA3FD3078AF320091C00D /* Sources */,
 				77FCA3FE3078AF320091C00D /* Frameworks */,
 				77FCA3FF3078AF320091C00D /* Resources */,
-				77FCA4153078B1740091C00D /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -528,6 +525,11 @@
 			);
 			name = KohereTests;
 			packageProductDependencies = (
+				952FEE30307528E300DB907E /* OrderedCollections */,
+				952FEE20307528E300DB907E /* ComposableArchitecture */,
+				952FEE22307528E300DB907E /* Dependencies */,
+				952FEE24307528E300DB907E /* ConcurrencyExtras */,
+				952FEE26307528E300DB907E /* Clocks */,
 			);
 			productName = KohereTests;
 			productReference = 9570C2A72FD9DA9E002FA6DE /* KohereTests.xctest */;
@@ -1644,6 +1646,31 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E6B4C0013011000000000002 /* XCRemoteSwiftPackageReference "SwiftStomp" */;
 			productName = SwiftStomp;
+		};
+		952FEE20307528E300DB907E /* ComposableArchitecture */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ComposableArchitecture;
+		};
+		952FEE22307528E300DB907E /* Dependencies */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Dependencies;
+		};
+		952FEE24307528E300DB907E /* ConcurrencyExtras */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = ConcurrencyExtras;
+		};
+		952FEE26307528E300DB907E /* Clocks */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = Clocks;
+		};
+		952FEE30307528E300DB907E /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 778F3DF52FDAA3000AFF730 /* XCRemoteSwiftPackageReference "swift-composable-architecture" */;
+			productName = OrderedCollections;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
