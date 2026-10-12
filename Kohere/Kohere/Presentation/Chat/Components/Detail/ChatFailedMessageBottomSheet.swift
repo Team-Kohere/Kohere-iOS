@@ -5,6 +5,7 @@
 //  Created by soomin on 9/2/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct ChatFailedMessageBottomSheet: View {

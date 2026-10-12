@@ -5,6 +5,7 @@
 //  Created by soomin on 6/21/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct OnboardingTextField: View {

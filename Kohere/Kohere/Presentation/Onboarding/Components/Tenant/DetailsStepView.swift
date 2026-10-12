@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDesignSystem
 import SwiftUI
 
 struct DetailsStepView: View {

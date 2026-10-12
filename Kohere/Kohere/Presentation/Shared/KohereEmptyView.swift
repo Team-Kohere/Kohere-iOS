@@ -5,6 +5,7 @@
 //  Created by soomin on 6/24/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct KohereEmptyView: View {

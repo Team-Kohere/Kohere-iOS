@@ -9,7 +9,7 @@ import SwiftUI
 import UIKit
 
 extension View {
-    func interactivePopGestureEnabled() -> some View {
+    public func interactivePopGestureEnabled() -> some View {
         background {
             InteractivePopGestureEnabler()
                 .frame(width: 0, height: 0)
@@ -17,7 +17,7 @@ extension View {
     }
 }
 
-private struct InteractivePopGestureEnabler: UIViewRepresentable {
+struct InteractivePopGestureEnabler: UIViewRepresentable {
     func makeCoordinator() -> Coordinator {
         Coordinator()
     }

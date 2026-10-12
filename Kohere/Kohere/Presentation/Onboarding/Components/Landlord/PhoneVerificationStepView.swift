@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 

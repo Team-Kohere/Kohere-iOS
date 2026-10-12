@@ -5,6 +5,7 @@
 //  Created by soomin on 8/14/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct NotificationCell: View {

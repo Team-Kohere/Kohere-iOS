@@ -5,6 +5,7 @@
 //  Created by Codex on 6/18/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct PlaceholderTabView: View {

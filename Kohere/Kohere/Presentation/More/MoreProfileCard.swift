@@ -4,6 +4,7 @@
 //
 
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 import SwiftUI

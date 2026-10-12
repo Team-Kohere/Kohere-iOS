@@ -5,6 +5,7 @@
 //  Created by Codex on 6/27/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct ProfileEditTextField: View {

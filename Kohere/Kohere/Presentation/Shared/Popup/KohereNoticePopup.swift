@@ -5,6 +5,7 @@
 //  Created by soomin on 7/8/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct KohereNoticePopup: View {

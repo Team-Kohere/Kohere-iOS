@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum KohereElevation: CaseIterable {
+public enum KohereElevation: CaseIterable {
     case normalXSmall
     case normalSmall
     case normalMedium

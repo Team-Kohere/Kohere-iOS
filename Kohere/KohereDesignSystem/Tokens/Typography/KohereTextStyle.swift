@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum KohereTextStyle: CaseIterable {
+public enum KohereTextStyle: CaseIterable {
     case display1Bold
     case display2Bold
     case heading1Bold
@@ -52,7 +52,7 @@ enum KohereTextStyle: CaseIterable {
         }
     }
 
-    var fontName: String {
+    public var fontName: String {
         switch self {
         case .display1Bold, .display2Bold, .heading1Bold, .heading2Bold:
             "PretendardJP-Bold"
@@ -70,7 +70,7 @@ enum KohereTextStyle: CaseIterable {
         }
     }
 
-    var fontSize: CGFloat {
+    public var fontSize: CGFloat {
         switch self {
         case .display1Bold: 32
         case .display2Bold: 28
@@ -103,7 +103,7 @@ enum KohereTextStyle: CaseIterable {
         }
     }
 
-    var lineHeight: CGFloat {
+    public var lineHeight: CGFloat {
         switch self {
         case .display1Bold: 40
         case .display2Bold: 36
@@ -121,15 +121,15 @@ enum KohereTextStyle: CaseIterable {
         0
     }
 
-    var font: Font {
+    public var font: Font {
         .custom(fontName, size: fontSize)
     }
 
-    var lineSpacing: CGFloat {
+    public var lineSpacing: CGFloat {
         max(lineHeight - fontSize, 0)
     }
 
-    var letterSpacing: CGFloat {
+    public var letterSpacing: CGFloat {
         fontSize * letterSpacingPercentage / 100
     }
 }
@@ -146,7 +146,7 @@ private struct KohereTextStyleModifier: ViewModifier {
 }
 
 extension View {
-    func kohereTextStyle(_ style: KohereTextStyle) -> some View {
+    public func kohereTextStyle(_ style: KohereTextStyle) -> some View {
         modifier(KohereTextStyleModifier(style: style))
     }
 }

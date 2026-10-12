@@ -68,11 +68,11 @@ private struct KohereElevationShadow: View {
 }
 
 extension View {
-    func kohereElevation(_ elevation: KohereElevation, shape: KohereShadowShape) -> some View {
+    public func kohereElevation(_ elevation: KohereElevation, shape: KohereShadowShape) -> some View {
         modifier(KohereElevationModifier(elevation: elevation, shadowShape: shape))
     }
 
-    func kohereSurface(
+    public func kohereSurface(
         background: Color,
         shape: KohereShadowShape,
         elevation: KohereElevation
