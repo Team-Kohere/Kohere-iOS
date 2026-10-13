@@ -78,8 +78,8 @@ final class UserRepository: UserInterface {
     }
 }
 
-extension UserClient: DependencyKey {
-    static let liveValue: UserClient = {
+extension UserClient: @retroactive DependencyKey {
+    public static let liveValue: UserClient = {
         let repository: any UserInterface = UserRepository()
         return UserClient(repository: repository)
     }()

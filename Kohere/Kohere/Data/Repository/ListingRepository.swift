@@ -98,8 +98,8 @@ final class ListingRepository: ListingInterface {
     }
 }
 
-extension ListingClient: DependencyKey {
-    static let liveValue: ListingClient = {
+extension ListingClient: @retroactive DependencyKey {
+    public static let liveValue: ListingClient = {
         let repository: any ListingInterface = ListingRepository()
         return ListingClient(repository: repository)
     }()

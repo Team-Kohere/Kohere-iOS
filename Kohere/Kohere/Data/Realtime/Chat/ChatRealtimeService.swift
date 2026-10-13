@@ -6,6 +6,7 @@
 //
 
 import Combine
+import ComposableArchitecture
 import Foundation
 import KohereDomain
 import OSLog
@@ -369,4 +370,17 @@ private extension JSONDecoder {
         }
         return decoder
     }
+}
+
+// MARK: - Dependency
+
+extension ChatRealtimeClient: @retroactive DependencyKey {
+    public static let liveValue: ChatRealtimeClient = {
+        let service = ChatRealtimeService()
+        return ChatRealtimeClient(
+            connect: { try await service.connect(roomID: $0) },
+            disconnect: { await service.disconnect() },
+            sendText: { try await service.sendText(roomID: $0, clientMessageID: $1, content: $2) }
+        )
+    }()
 }

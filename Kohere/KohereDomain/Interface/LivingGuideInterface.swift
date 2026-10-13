@@ -36,12 +36,7 @@ extension LivingGuideClient {
 
 // MARK: - Dependency
 
-extension LivingGuideClient: DependencyKey {
-    public static let liveValue = LivingGuideClient(
-        fetchTopics: { throw CancellationError() },
-        fetchTips: { _ in throw CancellationError() }
-    )
-
+extension LivingGuideClient: TestDependencyKey {
     public static let testValue = LivingGuideClient(
         fetchTopics: { throw CancellationError() },
         fetchTips: { _ in throw CancellationError() }

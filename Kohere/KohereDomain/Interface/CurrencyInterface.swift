@@ -25,11 +25,7 @@ extension CurrencyClient {
     }
 }
 
-extension CurrencyClient: DependencyKey {
-    public static let liveValue = CurrencyClient(
-        fetchKRWToUSDExchangeRate: { throw CancellationError() }
-    )
-
+extension CurrencyClient: TestDependencyKey {
     public static let testValue = CurrencyClient(
         fetchKRWToUSDExchangeRate: { throw CancellationError() }
     )

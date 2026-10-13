@@ -60,18 +60,7 @@ extension ListingClient {
     }
 }
 
-extension ListingClient: DependencyKey {
-    public static let liveValue = ListingClient(
-        fetchListings: { _ in throw CancellationError() },
-        fetchMapMarkers: { _ in throw CancellationError() },
-        fetchDetail: { _ in throw CancellationError() },
-        fetchFavoriteListings: { _, _ in throw CancellationError() },
-        fetchRecentListings: { throw CancellationError() },
-        addFavorite: { _ in throw CancellationError() },
-        removeFavorite: { _ in throw CancellationError() },
-        createBooking: { _, _ in throw CancellationError() }
-    )
-
+extension ListingClient: TestDependencyKey {
     public static let testValue = ListingClient(
         fetchListings: { _ in throw CancellationError() },
         fetchMapMarkers: { _ in throw CancellationError() },

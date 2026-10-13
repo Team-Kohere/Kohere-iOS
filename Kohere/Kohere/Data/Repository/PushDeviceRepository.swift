@@ -39,8 +39,8 @@ final class PushDeviceRepository: PushDeviceInterface {
     }
 }
 
-extension PushDeviceClient: DependencyKey {
-    static let liveValue: PushDeviceClient = {
+extension PushDeviceClient: @retroactive DependencyKey {
+    public static let liveValue: PushDeviceClient = {
         let repository: any PushDeviceInterface = PushDeviceRepository()
         return PushDeviceClient(repository: repository)
     }()

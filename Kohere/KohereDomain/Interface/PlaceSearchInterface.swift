@@ -25,11 +25,7 @@ extension PlaceSearchClient {
     }
 }
 
-extension PlaceSearchClient: DependencyKey {
-    public static let liveValue = PlaceSearchClient(
-        searchPlaces: { _ in throw CancellationError() }
-    )
-
+extension PlaceSearchClient: TestDependencyKey {
     public static let testValue = PlaceSearchClient(
         searchPlaces: { _ in throw CancellationError() }
     )

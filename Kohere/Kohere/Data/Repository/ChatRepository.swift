@@ -86,6 +86,6 @@ final class ChatRepository: ChatInterface {
     }
 }
 
-extension ChatClient: DependencyKey {
-    static let liveValue = ChatClient(repository: ChatRepository())
+extension ChatClient: @retroactive DependencyKey {
+    public static let liveValue = ChatClient(repository: ChatRepository())
 }

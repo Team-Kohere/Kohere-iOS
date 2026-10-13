@@ -111,8 +111,8 @@ private actor DiagnosisGuestSessionStore {
     }
 }
 
-extension DiagnosisClient: DependencyKey {
-    static let liveValue: DiagnosisClient = {
+extension DiagnosisClient: @retroactive DependencyKey {
+    public static let liveValue: DiagnosisClient = {
         let repository: any DiagnosisInterface = DiagnosisRepository()
         return DiagnosisClient(repository: repository)
     }()

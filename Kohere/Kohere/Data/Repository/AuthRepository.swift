@@ -206,8 +206,8 @@ final class AuthRepository: AuthInterface {
     }
 }
 
-extension AuthClient: DependencyKey {
-    static let liveValue: AuthClient = {
+extension AuthClient: @retroactive DependencyKey {
+    public static let liveValue: AuthClient = {
         let repository: any AuthInterface = AuthRepository()
         return AuthClient(repository: repository)
     }()

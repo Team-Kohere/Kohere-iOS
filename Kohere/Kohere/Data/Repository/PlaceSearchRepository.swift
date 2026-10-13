@@ -35,8 +35,8 @@ actor PlaceSearchRepository: PlaceSearchInterface {
     }
 }
 
-extension PlaceSearchClient: DependencyKey {
-    static let liveValue: PlaceSearchClient = {
+extension PlaceSearchClient: @retroactive DependencyKey {
+    public static let liveValue: PlaceSearchClient = {
         let repository: any PlaceSearchInterface = PlaceSearchRepository()
         return PlaceSearchClient(repository: repository)
     }()

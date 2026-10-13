@@ -36,12 +36,7 @@ extension QuizClient {
 
 // MARK: - Dependency
 
-extension QuizClient: DependencyKey {
-    public static let liveValue = QuizClient(
-        fetchRandomQuiz: { throw CancellationError() },
-        submitAnswer: { _, _ in throw CancellationError() }
-    )
-
+extension QuizClient: TestDependencyKey {
     public static let testValue = QuizClient(
         fetchRandomQuiz: { throw CancellationError() },
         submitAnswer: { _, _ in throw CancellationError() }
