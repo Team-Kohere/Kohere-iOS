@@ -145,7 +145,7 @@ struct LivingGuideDetailView: View {
     
     private var header: some View {
         ZStack(alignment: .topLeading) {
-            Image(store.guide.theme.bannerImageName)
+            Image(store.guide.theme.bannerImage)
                 .resizable()
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
@@ -217,19 +217,19 @@ private struct LivingGuideTipCard: View {
 }
 
 private extension LivingGuideTheme {
-    var bannerImageName: String {
+    var bannerImage: ImageResource {
         switch self {
         case .housingScams:
-            "korean_tip_1"
+            .koreanTip1
             
         case .bankAccount:
-            "korean_tip_2"
+            .koreanTip2
             
         case .publicTransit:
-            "korean_tip_3"
+            .koreanTip3
             
         case .healthInsurance:
-            "korean_tip_4"
+            .koreanTip4
         }
     }
 }

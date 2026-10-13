@@ -20,7 +20,7 @@ struct LivingGuideItemView: View {
     var body: some View {
         Button(action: onTap) {
             HStack(spacing: 16) {
-                Image(item.iconName)
+                Image(item.theme.icon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 32, height: 32)
@@ -54,4 +54,22 @@ struct LivingGuideItemView: View {
         }
     }
 
+}
+
+private extension LivingGuideTheme {
+    var icon: ImageResource {
+        switch self {
+        case .housingScams:
+            .contractChecklist
+
+        case .bankAccount:
+            .bankAccountGuide
+
+        case .publicTransit:
+            .train
+
+        case .healthInsurance:
+            .healthInsurance
+        }
+    }
 }

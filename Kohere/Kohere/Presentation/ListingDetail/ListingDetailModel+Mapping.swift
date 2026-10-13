@@ -1,5 +1,6 @@
 import Foundation
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 
@@ -277,7 +278,7 @@ extension ListingDetailModel {
                 ListingTransitInfoModel(
                     id: transit.name,
                     lineText: transitLineText(transit),
-                    lineColorName: "green60",
+                    lineColor: .green60,
                     description: ListingDetailValueFormatter.transitTitle(
                         transit,
                         includesFrom: true,

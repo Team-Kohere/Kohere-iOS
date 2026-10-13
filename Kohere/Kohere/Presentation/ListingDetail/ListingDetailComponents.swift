@@ -285,7 +285,7 @@ struct ListingDetailTransitView: View {
                 .kohereTextStyle(.caption2Regular)
                 .foregroundStyle(.common0)
                 .frame(width: 16, height: 16)
-                .background(Color(transit.lineColorName))
+                .background(Color(transit.lineColor))
                 .clipShape(Circle())
 
             Text(transit.description)

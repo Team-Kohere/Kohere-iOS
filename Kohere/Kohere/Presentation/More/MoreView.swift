@@ -155,12 +155,12 @@ struct MoreView: View {
             items: [
                 .init(
                     title: .moreActivitySavedListings,
-                    iconName: "heart_24",
+                    icon: .heart24,
                     action: .savedListings
                 ),
                 .init(
                     title: .moreActivityRecentlyViewed,
-                    iconName: "thunder_24",
+                    icon: .thunder24,
                     action: .recentlyViewedListings
                 )
             ],
@@ -175,25 +175,25 @@ struct MoreView: View {
             items: [
                 .init(
                     title: .homeLivingGuideFraudTitle,
-                    iconName: "contractChecklist",
+                    icon: .contractChecklist,
                     rendersAsTemplate: false,
                     action: .livingGuide(.housingScams)
                 ),
                 .init(
                     title: .homeLivingGuideBankAccountTitle,
-                    iconName: "bankAccountGuide",
+                    icon: .bankAccountGuide,
                     rendersAsTemplate: false,
                     action: .livingGuide(.bankAccount)
                 ),
                 .init(
                     title: .homeLivingGuideTransportationTitle,
-                    iconName: "train",
+                    icon: .train,
                     rendersAsTemplate: false,
                     action: .livingGuide(.publicTransit)
                 ),
                 .init(
                     title: .homeLivingGuideHealthInsuranceTitle,
-                    iconName: "healthInsurance",
+                    icon: .healthInsurance,
                     rendersAsTemplate: false,
                     action: .livingGuide(.healthInsurance)
                 )
@@ -210,7 +210,7 @@ struct MoreView: View {
                 .init(
                     title: .moreLandlordServicePromoteRoom,
                     subtitle: .moreLandlordServicePromoteRoomSubtitle,
-                    iconName: "external_link_24",
+                    icon: .externalLink24,
                     action: .promoteRoom
                 )
             ],
@@ -225,17 +225,17 @@ struct MoreView: View {
             items: [
                 .init(
                     title: .moreSupportAnnouncements,
-                    iconName: "megaphone_24",
+                    icon: .megaphone24,
                     action: .announcements
                 ),
                 .init(
                     title: .moreSupportFeedback,
-                    iconName: "mail_24",
+                    icon: .mail24,
                     action: .feedback
                 ),
                 .init(
                     title: .moreSupportPartner,
-                    iconName: "send_24",
+                    icon: .send24,
                     action: .collaboration
                 )
             ],
@@ -288,8 +288,8 @@ private struct MoreMenuRow: View {
         } label: {
             HStack {
                 HStack(spacing: 4) {
-                    if let iconName = item.iconName {
-                        Image(iconName)
+                    if let icon = item.icon {
+                        Image(icon)
                             .renderingMode(item.rendersAsTemplate ? .template : .original)
                             .resizable()
                             .foregroundStyle(.coolNeutral40)
@@ -326,7 +326,7 @@ private struct MoreMenuRow: View {
 private struct MoreMenuItem: Identifiable, Equatable {
     let title: LocalizedStringResource
     var subtitle: LocalizedStringResource?
-    let iconName: String?
+    let icon: ImageResource?
     var rendersAsTemplate = true
     var action: MoreMenuAction?
 

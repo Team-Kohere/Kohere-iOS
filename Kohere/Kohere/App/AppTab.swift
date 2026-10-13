@@ -5,6 +5,7 @@
 //  Created by Codex on 6/18/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 enum AppTab: Hashable {
@@ -14,18 +15,18 @@ enum AppTab: Hashable {
     case chat
     case more
 
-    var iconName: String {
+    var icon: ImageResource {
         switch self {
         case .home:
-            "home_fill_24"
+            .homeFill24
         case .community:
-            "persons_fill_24"
+            .personsFill24
         case .map:
-            "location_fill_24"
+            .locationFill24
         case .chat:
-            "message_fill_24"
+            .messageFill24
         case .more:
-            "circle_more_fill_24"
+            .circleMoreFill24
         }
     }
 

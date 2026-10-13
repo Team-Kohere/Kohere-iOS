@@ -175,7 +175,7 @@ struct RootView: View {
     }
     
     private func tabIcon(_ tab: AppTab) -> some View {
-        Image(tab.iconName)
+        Image(tab.icon)
             .renderingMode(.template)
             .accessibilityLabel(tab.accessibilityLabel)
     }
