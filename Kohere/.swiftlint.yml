@@ -52,3 +52,9 @@ custom_rules:
     regex: 'Text\("[a-z][A-Za-z0-9]*(\.[A-Za-z0-9-]+)+"\)'
     message: "문자열 카탈로그 키는 생성 심볼(.x)로 접근한다. 키 문자열은 앱 번들에서 찾으므로 KohereLocalization으로 옮긴 뒤에는 키가 그대로 보인다."
     severity: warning
+  domain_live_value:
+    name: "Domain Live Value"
+    included: ".*/KohereDomain/Interface/.*\\.swift"
+    regex: 'static (let|var) liveValue|: DependencyKey \{'
+    message: "Domain의 Client는 TestDependencyKey(testValue)만 채택한다. liveValue는 Data(앱)가 @retroactive DependencyKey로 붙인다. Domain에 두면 Data의 실제 구현이 무시된다."
+    severity: error
