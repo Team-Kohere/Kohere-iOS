@@ -84,9 +84,9 @@ struct ListingApplicationBottomButton: View {
         guard isEnabled else { return .interactionDisable }
 
         switch style {
-        case .primary: return Color.primaryNormal
-        case .secondary: return Color.statusRed5
-        case .icon: return Color.common0
+        case .primary: return .primaryNormal
+        case .secondary: return .statusRed5
+        case .icon: return .common0
         }
     }
 
@@ -94,16 +94,16 @@ struct ListingApplicationBottomButton: View {
         guard isEnabled else { return .labelDisable }
 
         switch style {
-        case .primary: return Color.staticWhite
-        case .secondary: return Color.primaryNormal
-        case .icon: return Color.labelNeutral
+        case .primary: return .staticWhite
+        case .secondary: return .primaryNormal
+        case .icon: return .labelNeutral
         }
     }
 
     private var borderColor: Color {
         switch style {
-        case .primary, .secondary: return Color.lineAlternative
-        case .icon: return Color.lineNormal
+        case .primary, .secondary: return .lineAlternative
+        case .icon: return .lineNormal
         }
     }
 }

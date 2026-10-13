@@ -38,10 +38,10 @@ public struct KohereNoticePopup: View {
             } label: {
                 Text(confirmTitle)
                     .kohereTextStyle(.label1Semibold)
-                    .foregroundStyle(confirmStyle == .primary ? Color.staticWhite : Color.labelNormal)
+                    .foregroundStyle(confirmStyle == .primary ? .staticWhite : .labelNormal)
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
-                    .background(confirmStyle == .primary ? Color.primary50 : Color.fillStrong)
+                    .background(confirmStyle == .primary ? .primary50 : .fillStrong)
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
             .buttonStyle(.plain)

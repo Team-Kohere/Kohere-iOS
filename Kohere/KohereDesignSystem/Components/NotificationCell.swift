@@ -71,7 +71,7 @@ public struct NotificationCell: View {
 private struct NotificationCellButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .background(configuration.isPressed ? Color.backgroundNormalAlternative : Color.backgroundNormalNormal)
+            .background(configuration.isPressed ? .backgroundNormalAlternative : .backgroundNormalNormal)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }
