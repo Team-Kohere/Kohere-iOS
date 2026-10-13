@@ -40,3 +40,15 @@ excluded:
   - Carthage
   - KohereTests
   - KohereUITests
+
+custom_rules:
+  asset_string_lookup:
+    name: "Asset String Lookup"
+    regex: '(?<![A-Za-z])(Image|Color|UIImage|UIColor)\((named: ?)?"[^"]+"\)'
+    message: "에셋은 생성 심볼(.x)로 접근한다. 이름 문자열은 앱 번들에서 찾으므로 KohereDesignSystem으로 옮긴 뒤에는 빈 이미지·색이 된다."
+    severity: warning
+  string_catalog_key_literal:
+    name: "String Catalog Key Literal"
+    regex: 'Text\("[a-z][A-Za-z0-9]*(\.[A-Za-z0-9-]+)+"\)'
+    message: "문자열 카탈로그 키는 생성 심볼(.x)로 접근한다. 키 문자열은 앱 번들에서 찾으므로 KohereLocalization으로 옮긴 뒤에는 키가 그대로 보인다."
+    severity: warning
