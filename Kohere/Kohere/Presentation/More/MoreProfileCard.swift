@@ -32,7 +32,7 @@ struct MoreProfileCard: View {
 
     private var content: some View {
         ZStack {
-            Image(userType == .landlord ? "landlordProfileBackground" : "tenantProfileBackground")
+            Image(userType == .landlord ? .landlordProfileBackground : .tenantProfileBackground)
                 .resizable()
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
@@ -41,7 +41,7 @@ struct MoreProfileCard: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
             HStack(spacing: 8) {
-                Image(userType == .landlord ? "landlordProfileIcon" : "tenantProfileIcon")
+                Image(userType == .landlord ? .landlordProfileIcon : .tenantProfileIcon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24)

@@ -107,7 +107,7 @@ struct ListingDetailBottomBar: View {
         HStack(spacing: 8) {
             if showsLikeButton {
                 Button(action: onLikeTap) {
-                    Image(isLiked ? "heart_fill_24" : "heart_24")
+                    Image(isLiked ? .heartFill24 : .heart24)
                         .renderingMode(.template)
                         .resizable()
                         .frame(width: 24, height: 24)

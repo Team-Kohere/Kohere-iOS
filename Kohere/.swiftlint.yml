@@ -44,7 +44,7 @@ excluded:
 custom_rules:
   asset_string_lookup:
     name: "Asset String Lookup"
-    regex: '(?<![A-Za-z])(Image|Color)\("[^"]+"\)|(UIImage|UIColor)\(\s*named:'
+    regex: '(?<![A-Za-z])(Image|Color)\((?![^)]*(systemName|bundle:|uiImage|uiColor))[^)\n]*"[^"\n]+"[^)\n]*\)|(UIImage|UIColor)\(\s*named:'
     message: "에셋은 생성 심볼(.x)로 접근한다. 이름 문자열은 앱 번들에서 찾으므로 KohereDesignSystem으로 옮긴 뒤에는 빈 이미지·색이 된다."
     severity: warning
   string_catalog_key_literal:
