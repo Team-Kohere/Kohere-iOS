@@ -7,9 +7,12 @@ public 접근자가 따로 필요하다. 이름 규칙은 Xcode 생성 심볼과
 (`typo_logo` → `typoLogo`, `StatusRed50` → `statusRed50`).
 
 사용법:
-    python3 scripts/generate_asset_symbols.py
+    python3 scripts/generate_asset_symbols.py            # 둘 다
+    python3 scripts/generate_asset_symbols.py assets     # 에셋만 (KohereDesignSystem 빌드 단계)
+    python3 scripts/generate_asset_symbols.py strings    # 문자열만 (KohereLocalization 빌드 단계)
 
-에셋을 추가·삭제·이름 변경한 뒤 실행하고 결과 파일을 함께 커밋한다.
+KohereDesignSystem·KohereLocalization 타깃의 "Generate Resource Symbols" 빌드 단계가 컴파일 전에 자동으로 실행한다.
+직접 실행해도 되고, 결과 파일은 저장소에 커밋한다.
 Tuist 도입 후 리소스 접근자 생성을 Tuist에 맡기면 이 스크립트와 결과 파일을 지운다.
 """
 
@@ -53,6 +56,12 @@ def identifier(name: str) -> str:
     if ident in SWIFT_KEYWORDS:
         ident = f"`{ident}`"
     return ident
+
+
+def write_if_changed(path: Path, content: str) -> None:
+    if path.exists() and path.read_text(encoding="utf-8") == content:
+        return
+    path.write_text(content, encoding="utf-8")
 
 
 def collect(kind: str) -> list[tuple[str, str]]:
@@ -149,11 +158,21 @@ def generate_strings() -> None:
             ]
         lines.append("")
     lines += ["}", ""]
-    STRINGS_OUTPUT.write_text("\n".join(lines), encoding="utf-8")
+    write_if_changed(STRINGS_OUTPUT, "\n".join(lines))
     print(f"문자열 {len(seen)}개 → {STRINGS_OUTPUT.relative_to(ROOT)}")
 
 
 def main() -> None:
+    import sys
+
+    targets = set(sys.argv[1:]) or {"assets", "strings"}
+    if "assets" in targets:
+        generate_assets()
+    if "strings" in targets:
+        generate_strings()
+
+
+def generate_assets() -> None:
     colors = collect("colorset")
     images = collect("imageset")
 
@@ -216,9 +235,8 @@ def main() -> None:
     lines += ["}", ""]
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    OUTPUT.write_text("\n".join(lines), encoding="utf-8")
+    write_if_changed(OUTPUT, "\n".join(lines))
     print(f"색 {len(colors)}개, 이미지 {len(images)}개 → {OUTPUT.relative_to(ROOT)}")
-    generate_strings()
 
 
 if __name__ == "__main__":
