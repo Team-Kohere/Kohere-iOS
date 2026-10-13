@@ -35,6 +35,7 @@ opt_in_rules:
 
 excluded:
   - KohereDesignSystem/Resources/GeneratedAssetSymbols.swift
+  - KohereLocalization/Resources/GeneratedStringSymbols.swift
   - Pods
   - Carthage
   - KohereTests

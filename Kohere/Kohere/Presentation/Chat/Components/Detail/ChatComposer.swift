@@ -79,7 +79,7 @@ struct ChatComposer: View {
                 .tint(.coolNeutral30)
                 .focused($isMessageFieldFocused)
                 .disabled(isDisabled)
-                .accessibilityLabel(Text("chat.detail.messagePlaceholder"))
+                .accessibilityLabel(Text(.chatDetailMessagePlaceholder))
 
                 Button(action: onSendTapped) {
                     Image(.chatSend)

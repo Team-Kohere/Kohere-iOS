@@ -5,6 +5,8 @@
 //  Created by Codex on 6/30/26.
 //
 
+import KohereCore
+import KohereLocalization
 import SwiftUI
 
 public struct RangeSliderValue: Equatable, Sendable {
@@ -179,9 +181,9 @@ public struct RangeSlider: View {
         func accessibilityLabel(locale: Locale) -> String {
             switch self {
             case .minimum:
-                LocalizedStringResource.rangeSliderAccessibilityMinimum.resolved(in: locale)
+                AppLanguage(locale: locale).localized(.rangeSliderAccessibilityMinimum)
             case .maximum:
-                LocalizedStringResource.rangeSliderAccessibilityMaximum.resolved(in: locale)
+                AppLanguage(locale: locale).localized(.rangeSliderAccessibilityMaximum)
             }
         }
 

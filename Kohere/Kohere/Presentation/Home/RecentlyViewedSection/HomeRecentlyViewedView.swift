@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct HomeRecentlyViewedView: View {

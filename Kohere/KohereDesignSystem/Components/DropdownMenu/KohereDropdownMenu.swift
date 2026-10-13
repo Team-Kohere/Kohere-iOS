@@ -5,6 +5,8 @@
 //  Created by Codex on 6/27/26.
 //
 
+import KohereCore
+import KohereLocalization
 import SwiftUI
 
 /// 드롭다운에 들어가는 선택지. 표시 문구는 선택지 쪽이 locale에 맞게 만든다.
@@ -65,7 +67,7 @@ public struct KohereDropdownMenu<Field: Hashable, Option: KohereDropdownMenuOpti
             HStack {
                 Text(
                     selectedOption?.localizedTitle(locale: locale)
-                        ?? LocalizedStringResource.commonSelect.resolved(in: locale)
+                        ?? AppLanguage(locale: locale).localized(.commonSelect)
                 )
                     .kohereTextStyle(.label2Medium)
                     .foregroundColor(

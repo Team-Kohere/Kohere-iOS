@@ -6,6 +6,7 @@
 //
 
 import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct MapDiagnosisButton: View {

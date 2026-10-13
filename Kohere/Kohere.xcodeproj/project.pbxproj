@@ -42,6 +42,7 @@
 		952FEE25307528E300DB907E /* ConcurrencyExtras in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE24307528E300DB907E /* ConcurrencyExtras */; };
 		952FEE27307528E300DB907E /* Clocks in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE26307528E300DB907E /* Clocks */; };
 		952FEE31307528E300DB907E /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 952FEE30307528E300DB907E /* OrderedCollections */; };
+		952FEF40307528E300DB907E /* KohereLocalization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FED17307528E300DB907E /* KohereLocalization.framework */; };
 		9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 9570E47E2FE45C37002FA6DE /* NMapsMap */; };
 		95C549D6307D538200387F6D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 95C549D5307D538200387F6D /* Kingfisher */; };
 		E6B4C0013011000000000001 /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = E6B4C0013011000000000003 /* SwiftStomp */; };
@@ -96,6 +97,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 952FEC02307528E300DB907E;
 			remoteInfo = KohereCore;
+		};
+		952FEF41307528E300DB907E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9570C2922FD9DA9D002FA6DE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 952FED1D307528E300DB907E;
+			remoteInfo = KohereLocalization;
 		};
 		9570C2A82FD9DA9E002FA6DE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -209,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				952FEF40307528E300DB907E /* KohereLocalization.framework in Frameworks */,
 				95C549D6307D538200387F6D /* Kingfisher in Frameworks */,
 				952F0472307D410E00DB907E /* KohereCore.framework in Frameworks */,
 			);
@@ -400,6 +409,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				952FEF42307528E300DB907E /* PBXTargetDependency */,
 				952F0475307D410E00DB907E /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
@@ -794,6 +804,11 @@
 			target = 952FEC02307528E300DB907E /* KohereCore */;
 			targetProxy = 952FED14307528E300DB907E /* PBXContainerItemProxy */;
 		};
+		952FEF42307528E300DB907E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 952FED1D307528E300DB907E /* KohereLocalization */;
+			targetProxy = 952FEF41307528E300DB907E /* PBXContainerItemProxy */;
+		};
 		9570C2A92FD9DA9E002FA6DE /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 9570C2992FD9DA9D002FA6DE /* Kohere */;
@@ -1080,7 +1095,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kohere.KohereLocalization;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1121,7 +1136,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.kohere.KohereLocalization;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = NO;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -7,6 +7,7 @@
 
 import KohereDesignSystem
 import KohereDomain
+import KohereLocalization
 import SwiftUI
 
 struct ChatMessageRow: View {
@@ -36,7 +37,7 @@ struct ChatMessageRow: View {
                 inquiryCardView(inquiryCard)
             }
         } else if message.type == .inquiryCard {
-            Text("chat.inquiryCard.unavailable")
+            Text(.chatInquiryCardUnavailable)
                 .kohereTextStyle(.label2Medium)
                 .foregroundStyle(.neutral40)
                 .frame(maxWidth: .infinity)
