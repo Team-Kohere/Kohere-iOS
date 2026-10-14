@@ -47,8 +47,8 @@ final class LivingGuideRepository: LivingGuideInterface {
 
 // MARK: - Dependency
 
-extension LivingGuideClient: DependencyKey {
-    static let liveValue: LivingGuideClient = {
+extension LivingGuideClient: @retroactive DependencyKey {
+    public static let liveValue: LivingGuideClient = {
         let repository: any LivingGuideInterface = LivingGuideRepository()
         return LivingGuideClient(repository: repository)
     }()

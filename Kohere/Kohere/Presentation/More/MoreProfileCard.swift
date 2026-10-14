@@ -4,6 +4,7 @@
 //
 
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 import SwiftUI
@@ -31,7 +32,7 @@ struct MoreProfileCard: View {
 
     private var content: some View {
         ZStack {
-            Image(userType == .landlord ? "landlordProfileBackground" : "tenantProfileBackground")
+            Image(userType == .landlord ? .landlordProfileBackground : .tenantProfileBackground)
                 .resizable()
                 .scaledToFill()
                 .frame(maxWidth: .infinity)
@@ -40,7 +41,7 @@ struct MoreProfileCard: View {
                 .clipShape(RoundedRectangle(cornerRadius: 16))
 
             HStack(spacing: 8) {
-                Image(userType == .landlord ? "landlordProfileIcon" : "tenantProfileIcon")
+                Image(userType == .landlord ? .landlordProfileIcon : .tenantProfileIcon)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 24, height: 24)
@@ -57,7 +58,7 @@ struct MoreProfileCard: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
 
                 if userType != .landlord {
-                    Image("pencil_write_24")
+                    Image(.pencilWrite24)
                         .renderingMode(.template)
                         .resizable()
                         .scaledToFit()

@@ -5,6 +5,7 @@
 //  Created by soomin on 6/23/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct ListingCardView: View {

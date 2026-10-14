@@ -5,6 +5,8 @@
 //  Created by soomin on 8/21/26.
 //
 
+import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct ChatApplicationBanner: View {
@@ -25,7 +27,7 @@ struct ChatApplicationBanner: View {
                     .frame(width: 16, height: 16)
                     .foregroundStyle(.statusBlue80)
 
-                Text("chat.detail.applicationBanner")
+                Text(.chatDetailApplicationBanner)
                     .kohereTextStyle(.label2Semibold)
                     .foregroundStyle(.statusBlue80)
 

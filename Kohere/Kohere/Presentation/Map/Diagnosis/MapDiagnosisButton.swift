@@ -5,6 +5,8 @@
 //  Created by Codex on 7/4/26.
 //
 
+import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct MapDiagnosisButton: View {

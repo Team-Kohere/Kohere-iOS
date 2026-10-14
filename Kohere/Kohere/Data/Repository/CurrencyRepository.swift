@@ -51,8 +51,8 @@ actor CurrencyRepository: CurrencyInterface {
     }
 }
 
-extension CurrencyClient: DependencyKey {
-    static let liveValue: CurrencyClient = {
+extension CurrencyClient: @retroactive DependencyKey {
+    public static let liveValue: CurrencyClient = {
         let repository: any CurrencyInterface = CurrencyRepository()
         return CurrencyClient(repository: repository)
     }()

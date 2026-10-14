@@ -5,6 +5,7 @@
 //  Created by Codex on 6/27/26.
 //
 
+import DeveloperToolsSupport
 import Foundation
 import KohereCore
 import KohereDomain
@@ -109,7 +110,7 @@ struct ListingLocationInfoModel: Equatable {
 struct ListingTransitInfoModel: Equatable, Identifiable {
     let id: String
     let lineText: String
-    let lineColorName: String
+    let lineColor: ColorResource
     let description: String
 }
 

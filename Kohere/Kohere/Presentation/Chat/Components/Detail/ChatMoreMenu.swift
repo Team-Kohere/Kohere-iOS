@@ -5,6 +5,8 @@
 //  Created by soomin on 8/21/26.
 //
 
+import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct ChatMoreMenu: View {
@@ -44,7 +46,7 @@ struct ChatMoreMenu: View {
                     .scaledToFit()
                     .frame(width: 16, height: 16)
                 
-                Text(String(localized: String.LocalizationValue(key)))
+                Text(String(localized: String.LocalizationValue(key), bundle: KohereLocalizationBundle.value))
                     .kohereTextStyle(.body3Regular)
             }
             .foregroundStyle(.labelNormal)

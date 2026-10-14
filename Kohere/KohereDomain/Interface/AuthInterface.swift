@@ -74,20 +74,7 @@ extension AuthClient {
     }
 }
 
-extension AuthClient: DependencyKey {
-    public static let liveValue = AuthClient(
-        socialLogin: { _ in throw CancellationError() },
-        reissue: { _ in throw CancellationError() },
-        logout: { },
-        sendPhoneVerificationCode: { _ in throw CancellationError() },
-        verifyPhone: { _, _ in throw CancellationError() },
-        sendEmailVerificationCode: { _ in throw CancellationError() },
-        verifyEmail: { _, _ in throw CancellationError() },
-        agreeTerms: { _, _, _ in throw CancellationError() },
-        completeOnboarding: { _ in throw CancellationError() },
-        completeLandlordOnboarding: { _ in throw CancellationError() }
-    )
-
+extension AuthClient: TestDependencyKey {
     public static let testValue = AuthClient(
         socialLogin: { _ in throw CancellationError() },
         reissue: { _ in throw CancellationError() },

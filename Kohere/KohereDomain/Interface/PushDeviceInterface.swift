@@ -33,12 +33,7 @@ extension PushDeviceClient {
     }
 }
 
-extension PushDeviceClient: DependencyKey {
-    public static let liveValue = PushDeviceClient(
-        registerDevice: { _, _ in },
-        unregisterDevice: { _ in }
-    )
-
+extension PushDeviceClient: TestDependencyKey {
     public static let testValue = PushDeviceClient(
         registerDevice: { _, _ in },
         unregisterDevice: { _ in }

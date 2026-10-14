@@ -45,15 +45,7 @@ extension UserClient {
     }
 }
 
-extension UserClient: DependencyKey {
-    public static let liveValue = UserClient(
-        fetchCurrentUser: { throw CancellationError() },
-        fetchNotificationPreferences: { throw CancellationError() },
-        updateNotificationPreferences: { _ in throw CancellationError() },
-        updateProfile: { _ in throw CancellationError() },
-        deleteCurrentUser: { }
-    )
-
+extension UserClient: TestDependencyKey {
     public static let testValue = UserClient(
         fetchCurrentUser: { throw CancellationError() },
         fetchNotificationPreferences: { throw CancellationError() },

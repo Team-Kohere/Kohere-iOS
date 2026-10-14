@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import SwiftUI
 import UIKit
@@ -109,7 +110,7 @@ struct ChatDetailView: View {
             }
             
             if store.isMoreMenuPresented {
-                Color("materialDimmer")
+                Color.materialDimmer
                     .ignoresSafeArea()
                     .onTapGesture {
                         withAnimation(.easeInOut) {

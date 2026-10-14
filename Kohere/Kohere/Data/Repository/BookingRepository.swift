@@ -57,8 +57,8 @@ final class BookingRepository: BookingInterface {
     }
 }
 
-extension BookingClient: DependencyKey {
-    static let liveValue: BookingClient = {
+extension BookingClient: @retroactive DependencyKey {
+    public static let liveValue: BookingClient = {
         let repository: any BookingInterface = BookingRepository()
         return BookingClient(repository: repository)
     }()

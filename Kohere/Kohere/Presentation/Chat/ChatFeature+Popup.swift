@@ -6,6 +6,7 @@
 //
 
 import KohereCore
+import KohereDesignSystem
 import KohereLocalization
 
 extension ChatFeature {

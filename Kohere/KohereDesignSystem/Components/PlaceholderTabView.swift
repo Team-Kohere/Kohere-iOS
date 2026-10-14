@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct PlaceholderTabView: View {
+public struct PlaceholderTabView: View {
     let title: String
 
-    var body: some View {
+    public init(title: String) {
+        self.title = title
+    }
+
+    public var body: some View {
         ZStack {
             Color.backgroundNormalAlternative
                 .ignoresSafeArea()

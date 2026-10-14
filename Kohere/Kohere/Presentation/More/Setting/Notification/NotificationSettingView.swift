@@ -5,6 +5,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 import SwiftUI
@@ -156,7 +157,7 @@ private struct NotificationSettingToggleStyle: ToggleStyle {
                 Spacer(minLength: 0)
 
                 Capsule()
-                    .fill(configuration.isOn ? Color.basePrimary : Color.gray400)
+                    .fill(configuration.isOn ? .basePrimary : .gray400)
                     .frame(width: 36, height: 20)
                     .overlay(alignment: configuration.isOn ? .trailing : .leading) {
                         Circle()

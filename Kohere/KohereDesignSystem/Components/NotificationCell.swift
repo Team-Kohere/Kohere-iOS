@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct NotificationCell: View {
+public struct NotificationCell: View {
 
     // MARK: - Properties
 
@@ -19,7 +19,7 @@ struct NotificationCell: View {
 
     // MARK: - Initializer
     
-    init(
+    public init(
         icon: ImageResource,
         category: String,
         title: String,
@@ -35,7 +35,7 @@ struct NotificationCell: View {
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         Button(action: onTap) {
             HStack(alignment: .top, spacing: 4) {
                 Image(icon)
@@ -71,7 +71,7 @@ struct NotificationCell: View {
 private struct NotificationCellButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
-            .background(configuration.isPressed ? Color.backgroundNormalAlternative : Color.backgroundNormalNormal)
+            .background(configuration.isPressed ? .backgroundNormalAlternative : .backgroundNormalNormal)
             .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
     }
 }

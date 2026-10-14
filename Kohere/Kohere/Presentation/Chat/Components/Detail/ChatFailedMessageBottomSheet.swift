@@ -5,6 +5,8 @@
 //  Created by soomin on 9/2/26.
 //
 
+import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct ChatFailedMessageBottomSheet: View {
@@ -29,7 +31,7 @@ struct ChatFailedMessageBottomSheet: View {
 
     private var actionCard: some View {
         VStack(spacing: 0) {
-            Text("chat.failedMessage.dialog.title")
+            Text(.chatFailedMessageDialogTitle)
                 .kohereTextStyle(.caption1Regular)
                 .foregroundStyle(.labelNeutral)
                 .frame(maxWidth: .infinity)
@@ -57,7 +59,7 @@ struct ChatFailedMessageBottomSheet: View {
 
     private var cancelButton: some View {
         Button(action: onCancelTapped) {
-            Text("common.cancel")
+            Text(.commonCancel)
                 .kohereTextStyle(.label1Semibold)
                 .foregroundStyle(.staticWhite)
                 .frame(maxWidth: .infinity)

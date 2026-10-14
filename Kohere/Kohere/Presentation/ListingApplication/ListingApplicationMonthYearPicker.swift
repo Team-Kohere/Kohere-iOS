@@ -6,6 +6,7 @@
 //
 
 import KohereCore
+import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 import UIKit
@@ -204,9 +205,7 @@ struct UIKitMonthYearPicker: UIViewRepresentable {
             label.textAlignment = .center
             label.backgroundColor = .clear
             label.font = Self.font
-            label.textColor = UIColor(
-                named: isSelected ? "coolNeutral90" : "coolNeutral20"
-            ) ?? .label
+            label.textColor = isSelected ? .coolNeutral90 : .coolNeutral20
             label.isUserInteractionEnabled = false
             return label
         }

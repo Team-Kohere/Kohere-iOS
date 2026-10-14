@@ -5,22 +5,14 @@
 //  Created by Codex on 6/26/26.
 //
 
+import KohereDesignSystem
 import UIKit
 
 enum TabBarAppearanceConfigurator {
     static func configure() {
-        let selectedColor = tabBarColor(
-            name: "primary50",
-            fallback: .systemBlue
-        )
-        let normalColor = tabBarColor(
-            name: "coolNeutral50",
-            fallback: .secondaryLabel
-        )
-        let backgroundColor = tabBarColor(
-            name: "backgroundNormalNormal",
-            fallback: .white
-        )
+        let selectedColor = UIColor.primary50
+        let normalColor = UIColor.coolNeutral50
+        let backgroundColor = UIColor.backgroundNormalNormal
 
         let appearance = UITabBarAppearance()
 
@@ -67,11 +59,4 @@ enum TabBarAppearanceConfigurator {
         appearance.normal.iconColor = normalColor
     }
 
-    private static func tabBarColor(name: String, fallback: UIColor) -> UIColor {
-        guard let color = UIColor(named: name) else {
-            assertionFailure("\(name) color is missing from the asset catalog.")
-            return fallback
-        }
-        return color
-    }
 }

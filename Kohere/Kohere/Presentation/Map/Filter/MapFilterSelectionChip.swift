@@ -5,6 +5,7 @@
 //  Created by Codex on 6/26/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct MapFilterSelectionChip: View {

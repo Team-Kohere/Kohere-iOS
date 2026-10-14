@@ -8,12 +8,22 @@
 import SwiftUI
 import WebKit
 
-struct KohereWebPageView: UIViewRepresentable {
+public struct KohereWebPageView: UIViewRepresentable {
     let url: URL
     let onLoadingStarted: () -> Void
     let onLoadingFinished: () -> Void
 
-    func makeUIView(context: Context) -> WKWebView {
+    public init(
+        url: URL,
+        onLoadingStarted: @escaping () -> Void,
+        onLoadingFinished: @escaping () -> Void
+    ) {
+        self.url = url
+        self.onLoadingStarted = onLoadingStarted
+        self.onLoadingFinished = onLoadingFinished
+    }
+
+    public func makeUIView(context: Context) -> WKWebView {
         let webView = WKWebView()
         webView.navigationDelegate = context.coordinator
         webView.allowsBackForwardNavigationGestures = true
@@ -22,17 +32,17 @@ struct KohereWebPageView: UIViewRepresentable {
         return webView
     }
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
+    public func updateUIView(_ webView: WKWebView, context: Context) {
     }
 
-    func makeCoordinator() -> Coordinator {
+    public func makeCoordinator() -> Coordinator {
         Coordinator(
             onLoadingStarted: onLoadingStarted,
             onLoadingFinished: onLoadingFinished
         )
     }
 
-    final class Coordinator: NSObject, WKNavigationDelegate {
+    public final class Coordinator: NSObject, WKNavigationDelegate {
         private let onLoadingStarted: () -> Void
         private let onLoadingFinished: () -> Void
 
@@ -44,15 +54,15 @@ struct KohereWebPageView: UIViewRepresentable {
             self.onLoadingFinished = onLoadingFinished
         }
 
-        func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        public func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
             onLoadingStarted()
         }
 
-        func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        public func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
             onLoadingFinished()
         }
 
-        func webView(
+        public func webView(
             _ webView: WKWebView,
             didFail navigation: WKNavigation!,
             withError error: Error
@@ -60,7 +70,7 @@ struct KohereWebPageView: UIViewRepresentable {
             onLoadingFinished()
         }
 
-        func webView(
+        public func webView(
             _ webView: WKWebView,
             didFailProvisionalNavigation navigation: WKNavigation!,
             withError error: Error

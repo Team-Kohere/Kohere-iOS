@@ -6,7 +6,9 @@
 //
 
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
+import KohereLocalization
 import SwiftUI
 
 struct ChatInquiryListingCard: View {
@@ -46,7 +48,7 @@ struct ChatInquiryListingCard: View {
             .frame(maxWidth: .infinity, alignment: .leading)
 
             Button(action: action) {
-                Text("chat.detail.viewDetails")
+                Text(.chatDetailViewDetails)
                     .kohereTextStyle(.label1Semibold)
                     .foregroundStyle(.statusInfo)
                     .frame(maxWidth: .infinity)

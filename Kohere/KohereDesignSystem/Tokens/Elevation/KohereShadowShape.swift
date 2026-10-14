@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum KohereShadowShape {
+public enum KohereShadowShape {
     case rectangle
     case roundedRectangle(cornerRadius: CGFloat)
     case topRoundedRectangle(cornerRadius: CGFloat)

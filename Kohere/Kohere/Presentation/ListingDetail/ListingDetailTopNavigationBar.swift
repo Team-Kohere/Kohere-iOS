@@ -5,6 +5,8 @@
 //  Created by Codex on 6/30/26.
 //
 
+import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct ListingDetailTopNavigationBar: View {
@@ -15,7 +17,7 @@ struct ListingDetailTopNavigationBar: View {
     var body: some View {
         HStack {
             chromeButton(
-                imageName: "chevron_left_24",
+                image: .chevronLeft24,
                 accessibilityLabel: String(localized: .commonAccessibilityBack),
                 action: onBackTap
             )
@@ -30,20 +32,20 @@ struct ListingDetailTopNavigationBar: View {
     }
 
     private func chromeButton(
-        imageName: String,
+        image: ImageResource,
         accessibilityLabel: String,
         action: @escaping () -> Void
     ) -> some View {
         Button(action: action) {
             ZStack {
-                Image(imageName)
+                Image(image)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 24, height: 24)
                     .foregroundStyle(.common0)
                     .opacity(1 - progress)
 
-                Image(imageName)
+                Image(image)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 24, height: 24)

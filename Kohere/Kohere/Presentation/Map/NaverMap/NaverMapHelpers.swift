@@ -5,6 +5,7 @@
 //  Created by Codex on 6/23/26.
 //
 
+import KohereDesignSystem
 import KohereDomain
 import NMapsMap
 
@@ -12,15 +13,15 @@ import NMapsMap
 
 enum MapMarkerImageFactory {
     static let propertyMarker = NMFOverlayImage(
-        name: "MapPropertyMarker",
+        image: .mapPropertyMarker,
         reuseIdentifier: "MapPropertyMarker"
     )
     static let clusterMarkerSingle = NMFOverlayImage(
-        name: "MapClusterMarkerSingle",
+        image: .mapClusterMarkerSingle,
         reuseIdentifier: "MapClusterMarkerSingle"
     )
     static let clusterMarkerDouble = NMFOverlayImage(
-        name: "MapClusterMarkerDouble",
+        image: .mapClusterMarkerDouble,
         reuseIdentifier: "MapClusterMarkerDouble"
     )
 }

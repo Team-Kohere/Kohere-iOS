@@ -5,6 +5,8 @@
 //  Created by soomin on 7/2/26.
 //
 
+import KohereDesignSystem
+import KohereLocalization
 import SwiftUI
 
 struct UserTypeSelectBottomSheet: View {

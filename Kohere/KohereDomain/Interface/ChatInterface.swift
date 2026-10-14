@@ -60,18 +60,7 @@ extension ChatClient {
     }
 }
 
-extension ChatClient: DependencyKey {
-    public static let liveValue = ChatClient(
-        fetchStompGuide: { throw CancellationError() },
-        fetchChatRooms: { _, _ in throw CancellationError() },
-        fetchChatRoom: { _ in throw CancellationError() },
-        createInquiry: { _ in throw CancellationError() },
-        fetchMessages: { _, _, _, _ in throw CancellationError() },
-        hideRoom: { _ in },
-        blockRoom: { _ in },
-        reportRoom: { _, _ in throw CancellationError() }
-    )
-
+extension ChatClient: TestDependencyKey {
     public static let testValue = ChatClient(
         fetchStompGuide: { throw CancellationError() },
         fetchChatRooms: { _, _ in throw CancellationError() },

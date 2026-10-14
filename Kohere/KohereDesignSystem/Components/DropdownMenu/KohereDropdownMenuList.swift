@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct KohereDropdownMenuList: View {
+struct KohereDropdownMenuList<Option: KohereDropdownMenuOption>: View {
     @Environment(\.locale)
     private var locale
 
     // MARK: - Properties
 
-    let options: [DropdownMenuOption]
+    let options: [Option]
     let listHeight: CGFloat
-    let onSelectedAction: (_ option: DropdownMenuOption) -> Void
+    let onSelectedAction: (_ option: Option) -> Void
 
     // MARK: - Body
 
@@ -43,13 +43,13 @@ struct KohereDropdownMenuList: View {
     }
 }
 
-private struct KohereDropdownMenuListRow: View {
+private struct KohereDropdownMenuListRow<Option: KohereDropdownMenuOption>: View {
 
     // MARK: - Properties
 
-    let option: DropdownMenuOption
+    let option: Option
     let locale: Locale
-    let onSelectedAction: (_ option: DropdownMenuOption) -> Void
+    let onSelectedAction: (_ option: Option) -> Void
 
     // MARK: - Body
 

@@ -44,8 +44,8 @@ final class QuizRepository: QuizInterface {
 
 // MARK: - Dependency
 
-extension QuizClient: DependencyKey {
-    static let liveValue: QuizClient = {
+extension QuizClient: @retroactive DependencyKey {
+    public static let liveValue: QuizClient = {
         let repository: any QuizInterface = QuizRepository()
         return QuizClient(repository: repository)
     }()

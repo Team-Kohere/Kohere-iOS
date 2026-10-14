@@ -45,15 +45,7 @@ extension DiagnosisClient {
     }
 }
 
-extension DiagnosisClient: DependencyKey {
-    public static let liveValue = DiagnosisClient(
-        startFlow: { throw CancellationError() },
-        advanceFlow: { _ in throw CancellationError() },
-        fetchDetail: { _ in throw CancellationError() },
-        fetchRecommendations: { _ in throw CancellationError() },
-        fetchRecommendationMap: { _ in throw CancellationError() }
-    )
-
+extension DiagnosisClient: TestDependencyKey {
     public static let testValue = DiagnosisClient(
         startFlow: { throw CancellationError() },
         advanceFlow: { _ in throw CancellationError() },

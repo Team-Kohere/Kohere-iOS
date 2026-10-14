@@ -7,13 +7,25 @@
 
 import SwiftUI
 
-struct KohereNoticePopup: View {
+public struct KohereNoticePopup: View {
     let message: String
     let confirmTitle: String
     var confirmStyle: AppPopup.ConfirmStyle = .neutral
     let onConfirmTapped: () -> Void
 
-    var body: some View {
+    public init(
+        message: String,
+        confirmTitle: String,
+        confirmStyle: AppPopup.ConfirmStyle = .neutral,
+        onConfirmTapped: @escaping () -> Void
+    ) {
+        self.message = message
+        self.confirmTitle = confirmTitle
+        self.confirmStyle = confirmStyle
+        self.onConfirmTapped = onConfirmTapped
+    }
+
+    public var body: some View {
         VStack(spacing: 16) {
             Text(message)
                 .kohereTextStyle(.body2Regular)
@@ -26,10 +38,10 @@ struct KohereNoticePopup: View {
             } label: {
                 Text(confirmTitle)
                     .kohereTextStyle(.label1Semibold)
-                    .foregroundStyle(confirmStyle == .primary ? Color.staticWhite : Color.labelNormal)
+                    .foregroundStyle(confirmStyle == .primary ? .staticWhite : .labelNormal)
                     .frame(maxWidth: .infinity)
                     .frame(height: 48)
-                    .background(confirmStyle == .primary ? Color.primary50 : Color.fillStrong)
+                    .background(confirmStyle == .primary ? .primary50 : .fillStrong)
                     .clipShape(RoundedRectangle(cornerRadius: 16, style: .continuous))
             }
             .buttonStyle(.plain)

@@ -41,13 +41,7 @@ extension BookingClient {
     }
 }
 
-extension BookingClient: DependencyKey {
-    public static let liveValue = BookingClient(
-        fetchBookings: { _, _ in throw CancellationError() },
-        fetchBookingDetail: { _ in throw CancellationError() },
-        mutateBooking: { _, _ in }
-    )
-
+extension BookingClient: TestDependencyKey {
     public static let testValue = BookingClient(
         fetchBookings: { _, _ in throw CancellationError() },
         fetchBookingDetail: { _ in throw CancellationError() },

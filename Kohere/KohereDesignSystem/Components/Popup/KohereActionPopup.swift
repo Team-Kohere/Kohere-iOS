@@ -7,14 +7,28 @@
 
 import SwiftUI
 
-struct KohereActionPopup: View {
+public struct KohereActionPopup: View {
     let message: String
     let primaryTitle: String
     let secondaryTitle: String
     let onPrimaryTapped: () -> Void
     let onSecondaryTapped: () -> Void
 
-    var body: some View {
+    public init(
+        message: String,
+        primaryTitle: String,
+        secondaryTitle: String,
+        onPrimaryTapped: @escaping () -> Void,
+        onSecondaryTapped: @escaping () -> Void
+    ) {
+        self.message = message
+        self.primaryTitle = primaryTitle
+        self.secondaryTitle = secondaryTitle
+        self.onPrimaryTapped = onPrimaryTapped
+        self.onSecondaryTapped = onSecondaryTapped
+    }
+
+    public var body: some View {
         VStack(spacing: 16) {
             Text(message)
                 .kohereTextStyle(.body2Regular)

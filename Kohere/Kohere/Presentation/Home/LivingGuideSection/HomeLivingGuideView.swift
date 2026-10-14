@@ -6,7 +6,9 @@
 //
 
 import ComposableArchitecture
+import KohereDesignSystem
 import KohereDomain
+import KohereLocalization
 import SwiftUI
 
 struct HomeLivingGuideView: View {

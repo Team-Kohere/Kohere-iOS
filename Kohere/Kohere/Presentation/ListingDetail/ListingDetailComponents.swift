@@ -5,6 +5,7 @@
 //  Created by Codex on 6/27/26.
 //
 
+import KohereDesignSystem
 import SwiftUI
 
 struct ListingDetailSectionHeader: View {
@@ -27,7 +28,7 @@ struct ListingDetailSectionHeader: View {
             Spacer()
 
             if showsChevron {
-                Image("chevron_right_16")
+                Image(.chevronRight16)
                     .renderingMode(.template)
                     .resizable()
                     .frame(width: 16, height: 16)
@@ -284,7 +285,7 @@ struct ListingDetailTransitView: View {
                 .kohereTextStyle(.caption2Regular)
                 .foregroundStyle(.common0)
                 .frame(width: 16, height: 16)
-                .background(Color(transit.lineColorName))
+                .background(Color(transit.lineColor))
                 .clipShape(Circle())
 
             Text(transit.description)

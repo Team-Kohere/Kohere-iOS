@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereDesignSystem
 import KohereDomain
 import SwiftUI
 import UIKit
@@ -174,7 +175,7 @@ struct RootView: View {
     }
     
     private func tabIcon(_ tab: AppTab) -> some View {
-        Image(tab.iconName)
+        Image(tab.icon)
             .renderingMode(.template)
             .accessibilityLabel(tab.accessibilityLabel)
     }

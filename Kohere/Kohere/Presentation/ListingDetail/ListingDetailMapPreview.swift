@@ -5,7 +5,9 @@
 //  Created by Codex on 7/9/26.
 //
 
+import KohereDesignSystem
 import KohereDomain
+import KohereLocalization
 import NMapsMap
 import SwiftUI
 
@@ -100,7 +102,7 @@ private struct ListingDetailMapPlaceholder: View {
                         Rectangle().fill(.lineNeutral).frame(height: 1)
                     }
 
-                    Image("MapPropertyMarker")
+                    Image(.mapPropertyMarker)
                         .resizable()
                         .frame(width: 44, height: 44)
                 }

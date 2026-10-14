@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 
@@ -69,7 +70,7 @@ struct ChatReportView: View {
             .background(.white)
             .overlay {
                 RoundedRectangle(cornerRadius: 16)
-                    .stroke(isSelected ? Color.primary40 : .clear, lineWidth: 1)
+                    .stroke(isSelected ? .primary40 : .clear, lineWidth: 1)
             }
             .clipShape(RoundedRectangle(cornerRadius: 16))
         }

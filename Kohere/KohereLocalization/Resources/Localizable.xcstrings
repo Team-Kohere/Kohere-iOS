@@ -1,9 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "" : {
-
-    },
     "account.dateOfBirth.title" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -531,40 +528,6 @@
         }
       }
     },
-    "chat.inquiryReceived.message" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Please review the inquiry and reply in the chat. 💬"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "문의 내용을 확인하고 채팅으로 답변해 주세요. 💬"
-          }
-        }
-      }
-    },
-    "chat.inquiryReceived.title" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "You’ve received a new inquiry!"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "새로운 문의가 도착했어요!"
-          }
-        }
-      }
-    },
     "chat.applicationSent.message" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -850,6 +813,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "문의 내용을 표시할 수 없습니다."
+          }
+        }
+      }
+    },
+    "chat.inquiryReceived.message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please review the inquiry and reply in the chat. 💬"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "문의 내용을 확인하고 채팅으로 답변해 주세요. 💬"
+          }
+        }
+      }
+    },
+    "chat.inquiryReceived.title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You’ve received a new inquiry!"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "새로운 문의가 도착했어요!"
           }
         }
       }

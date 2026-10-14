@@ -6,7 +6,9 @@
 //
 
 import ComposableArchitecture
+import KohereDesignSystem
 import KohereDomain
+import KohereLocalization
 import SwiftUI
 
 struct HomeQuizView: View {
@@ -47,8 +49,8 @@ struct HomeQuizView: View {
                                 
                                 Spacer()
                                 
-                                if let iconName = style.iconName {
-                                    Image(iconName)
+                                if let icon = style.icon {
+                                    Image(icon)
                                         .renderingMode(.template)
                                         .foregroundColor(style.textColor)
                                 }
@@ -109,7 +111,7 @@ struct HomeQuizView: View {
                 textColor: .statusGreen70,
                 tintColor: .statusPositive,
                 backgroundColor: .statusGreen5,
-                iconName: "check_16"
+                icon: .check16
             )
         }
 
@@ -118,7 +120,7 @@ struct HomeQuizView: View {
                 textColor: .statusDanger,
                 tintColor: .statusDanger,
                 backgroundColor: .statusRed5,
-                iconName: "close_16"
+                icon: .close16
             )
         }
 
@@ -129,13 +131,13 @@ struct HomeQuizView: View {
         let textColor: Color
         let tintColor: Color
         let backgroundColor: Color
-        let iconName: String?
+        let icon: ImageResource?
 
         static let `default` = OptionStyle(
             textColor: .labelNeutral,
             tintColor: .clear,
             backgroundColor: .backgroundNormalNormal,
-            iconName: nil
+            icon: nil
         )
     }
 }
