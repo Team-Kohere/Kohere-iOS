@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereData
 import KohereDomain
 
 extension MapFeature {

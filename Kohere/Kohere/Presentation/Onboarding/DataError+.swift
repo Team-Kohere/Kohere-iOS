@@ -7,15 +7,9 @@
 
 import Foundation
 import KohereCore
+import KohereData
 import KohereDesignSystem
 import KohereLocalization
-
-extension DataError {
-    static func from(_ error: Error) -> DataError {
-        if let dataError = error as? DataError { return dataError }
-        return .underlying(message: error.localizedDescription)
-    }
-}
 
 enum OnboardingErrorContext {
     case completeProfile

@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereData
 
 var diagnosisButtonAutoCollapseEffect: Effect<MapFeature.Action> {
     .run { send in

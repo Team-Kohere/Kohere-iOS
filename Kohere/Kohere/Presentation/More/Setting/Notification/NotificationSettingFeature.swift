@@ -5,6 +5,7 @@
 
 import ComposableArchitecture
 import KohereCore
+import KohereData
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
