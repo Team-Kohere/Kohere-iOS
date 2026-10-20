@@ -5,7 +5,7 @@
 //  Created by Codex on 7/8/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public protocol UserInterface {
     func fetchCurrentUser() async throws -> UserProfile

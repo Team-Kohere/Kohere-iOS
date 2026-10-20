@@ -5,7 +5,7 @@
 //  Created by 송규섭 on 9/1/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public protocol PushDeviceInterface {
     /// 현재 설치본(installationId)의 FCM 토큰을 서버에 등록·갱신한다. 멱등이며 성공 시 본문 없이 204를 받는다.

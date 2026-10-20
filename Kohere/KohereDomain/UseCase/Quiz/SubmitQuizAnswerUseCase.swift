@@ -5,7 +5,7 @@
 //  Created by soomin on 9/22/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct SubmitQuizAnswerUseCase: Sendable {
     public var execute: @Sendable (_ quizID: Int, _ selectedChoiceKey: String) async throws -> QuizAnswerResult

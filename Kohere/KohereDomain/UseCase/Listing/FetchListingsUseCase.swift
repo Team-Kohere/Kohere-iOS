@@ -5,7 +5,7 @@
 //  Created by Codex on 7/5/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchListingsUseCase {
     public var execute: (_ input: ListingSearchInput) async throws -> ListingSearchPage

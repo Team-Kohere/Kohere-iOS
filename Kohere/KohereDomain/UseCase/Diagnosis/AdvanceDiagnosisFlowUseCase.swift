@@ -5,7 +5,7 @@
 //  Created by soomin on 7/18/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct AdvanceDiagnosisFlowUseCase {
     public var execute: @Sendable (DiagnosisAnswer) async throws -> DiagnosisFlowResult

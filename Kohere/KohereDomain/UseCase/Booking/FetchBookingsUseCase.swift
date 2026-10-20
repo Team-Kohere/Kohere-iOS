@@ -5,7 +5,7 @@
 //  Created by Codex on 7/8/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchBookingsUseCase {
     public var execute: (_ page: Int, _ size: Int) async throws -> BookingPage

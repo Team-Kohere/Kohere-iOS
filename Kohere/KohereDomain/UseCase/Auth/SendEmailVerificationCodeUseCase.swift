@@ -5,7 +5,7 @@
 //  Created by soomin on 7/3/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct SendEmailVerificationCodeUseCase {
     public var execute: (_ email: String) async throws -> EmailVerificationCode

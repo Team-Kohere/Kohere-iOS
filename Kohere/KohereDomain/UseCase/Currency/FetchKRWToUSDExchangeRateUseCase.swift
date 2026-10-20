@@ -5,7 +5,7 @@
 //  Created by Codex on 7/6/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchKRWToUSDExchangeRateUseCase {
     public var execute: @Sendable () async throws -> KRWToUSDExchangeRate
