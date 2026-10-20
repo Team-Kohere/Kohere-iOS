@@ -1,4 +1,4 @@
-import ComposableArchitecture
+import Dependencies
 
 public struct HideChatRoomUseCase {
     public var execute: (_ roomID: Int) async throws -> Void

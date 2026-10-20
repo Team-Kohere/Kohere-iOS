@@ -5,7 +5,7 @@
 //  Created by soomin on 8/25/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchChatRoomUseCase {
     public var execute: (_ roomID: Int) async throws -> ChatRoom

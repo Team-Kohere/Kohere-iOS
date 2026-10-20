@@ -5,7 +5,7 @@
 //  Created by soomin on 7/22/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct MutateBookingUseCase {
     public var execute: (_ mutation: BookingMutation, _ bookingID: Int) async throws -> Void

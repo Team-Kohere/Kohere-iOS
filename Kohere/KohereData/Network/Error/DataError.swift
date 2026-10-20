@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum DataError: Error, Equatable {
+public nonisolated enum DataError: Error, Equatable {
     case missingBaseURL
     case invalidURL
     case emptyResponse
@@ -18,7 +18,7 @@ enum DataError: Error, Equatable {
     case underlying(message: String)
 }
 
-extension DataError {
+public extension DataError {
     nonisolated var invalidatesRefreshToken: Bool {
         switch self {
         case let .httpStatus(code, _):
@@ -45,7 +45,7 @@ extension DataError {
 }
 
 extension DataError: LocalizedError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .missingBaseURL:
             "API Base URL이 설정되지 않았습니다."
@@ -75,7 +75,7 @@ extension DataError: LocalizedError {
 }
 
 extension DataError: CustomDebugStringConvertible {
-    var debugDescription: String {
+    public var debugDescription: String {
         switch self {
         case .missingBaseURL:
             "missingBaseURL"
@@ -101,5 +101,15 @@ extension DataError: CustomDebugStringConvertible {
         case let .underlying(message):
             "underlying(message: \(message))"
         }
+    }
+}
+
+public extension DataError {
+    static func from(_ error: Error) -> DataError {
+        if let dataError = error as? DataError {
+            return dataError
+        }
+
+        return .underlying(message: error.localizedDescription)
     }
 }

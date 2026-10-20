@@ -3,7 +3,7 @@
 //  Kohere
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct CreateChatInquiryUseCase {
     public var execute: (_ listingID: String) async throws -> ChatInquiry

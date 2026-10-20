@@ -5,7 +5,7 @@
 //  Created by soomin on 9/22/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchLivingGuideTopicsUseCase: Sendable {
     public var execute: @Sendable () async throws -> [LivingGuide]

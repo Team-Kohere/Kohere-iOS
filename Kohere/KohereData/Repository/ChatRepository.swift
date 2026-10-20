@@ -5,7 +5,7 @@
 //  Created by soomin on 8/25/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 import Foundation
 import KohereDomain
 

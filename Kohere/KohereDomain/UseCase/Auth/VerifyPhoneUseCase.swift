@@ -5,7 +5,7 @@
 //  Created by soomin on 7/3/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct VerifyPhoneUseCase {
     public var execute: (_ phoneNumber: String, _ code: String) async throws -> PhoneVerification

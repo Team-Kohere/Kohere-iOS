@@ -5,7 +5,7 @@
 //  Created by Codex on 7/5/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 import Foundation
 import KohereDomain
 

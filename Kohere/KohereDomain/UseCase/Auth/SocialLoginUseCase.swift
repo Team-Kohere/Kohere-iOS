@@ -5,7 +5,7 @@
 //  Created by soomin on 6/30/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct SocialLoginUseCase {
     public var execute: (_ credential: SocialLoginCredential) async throws -> Auth

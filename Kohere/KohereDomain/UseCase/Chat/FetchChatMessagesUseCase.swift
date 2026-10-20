@@ -1,4 +1,4 @@
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchChatMessagesUseCase {
     public var execute: (_ roomID: Int, _ cursor: String?, _ afterMessageID: Int?, _ size: Int) async throws -> ChatMessagePage

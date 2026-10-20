@@ -5,7 +5,7 @@
 //  Created by Codex on 7/4/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public protocol DiagnosisInterface {
     func startFlow() async throws -> DiagnosisFlowResult

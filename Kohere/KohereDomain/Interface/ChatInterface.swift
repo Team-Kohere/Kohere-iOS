@@ -5,7 +5,7 @@
 //  Created by soomin on 8/25/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public protocol ChatInterface {
     func fetchStompGuide() async throws -> ChatStompGuide

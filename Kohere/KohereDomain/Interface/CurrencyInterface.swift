@@ -5,7 +5,7 @@
 //  Created by Codex on 7/6/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public protocol CurrencyInterface: Sendable {
     func fetchKRWToUSDExchangeRate() async throws -> KRWToUSDExchangeRate

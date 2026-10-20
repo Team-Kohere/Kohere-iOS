@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereCore
+import KohereData
 import KohereDomain
 
 enum SavedListingsDelegate: Equatable {

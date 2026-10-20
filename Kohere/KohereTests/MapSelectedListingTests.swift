@@ -2,6 +2,7 @@ import ComposableArchitecture
 import XCTest
 @testable import Kohere
 import KohereCore
+@testable import KohereData
 import KohereDesignSystem
 import KohereDomain
 

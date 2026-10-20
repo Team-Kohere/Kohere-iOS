@@ -5,7 +5,7 @@
 //  Created by Codex on 7/8/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct FetchListingDetailUseCase {
     public var execute: @MainActor @Sendable (_ listingID: String) async throws -> ListingDetail

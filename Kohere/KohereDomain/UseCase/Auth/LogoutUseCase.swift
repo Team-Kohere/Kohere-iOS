@@ -5,7 +5,7 @@
 //  Created by soomin on 6/30/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public enum LogoutError: Error {
     case remoteRequestFailed

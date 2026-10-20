@@ -5,7 +5,7 @@
 //  Created by Codex on 7/8/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public protocol BookingInterface {
     func fetchBookings(page: Int, size: Int) async throws -> BookingPage

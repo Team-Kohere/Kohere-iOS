@@ -5,7 +5,7 @@
 //  Created by Codex on 7/9/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 
 public struct CreateListingBookingUseCase {
     public var execute: (_ listingID: String, _ input: ListingBookingCreateInput) async throws -> ListingBooking

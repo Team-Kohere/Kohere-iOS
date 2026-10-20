@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereData
 
 extension MapFeature {
     func handleMapAppeared(state: inout State) -> Effect<Action> {

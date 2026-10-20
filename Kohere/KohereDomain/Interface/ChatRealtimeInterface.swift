@@ -3,7 +3,7 @@
 //  Kohere
 //
 
-import ComposableArchitecture
+import Dependencies
 import Foundation
 
 public struct ChatRealtimeClient: Sendable {
