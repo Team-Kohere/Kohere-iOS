@@ -24,7 +24,7 @@ extension DiagnosisRecommendedListing: MapPlottableListing {}
 
 extension Array where Element: MapPlottableListing {
     /// 좌표가 있는 매물만 지도 마커로 변환한다. 좌표가 없는 매물은 제외된다.
-    nonisolated var markerItems: [MapMarkerItem] {
+    var markerItems: [MapMarkerItem] {
         compactMap { listing in
             listing.coordinate.map { MapMarkerItem(id: listing.id, coordinate: $0) }
         }
