@@ -5,30 +5,37 @@
 //  Created by mandoo on 6/30/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 import Foundation
 import KohereDomain
 import Security
 
-struct KeychainClient: Sendable {
+public struct KeychainClient: Sendable {
     var save: @Sendable (_ key: String, _ data: Data) throws -> Void
     var read: @Sendable (_ key: String) throws -> Data?
     var delete: @Sendable (_ key: String) throws -> Void
+
+    public init(
+        save: @escaping @Sendable (_ key: String, _ data: Data) throws -> Void,
+        read: @escaping @Sendable (_ key: String) throws -> Data?,
+        delete: @escaping @Sendable (_ key: String) throws -> Void
+    ) {
+        self.save = save
+        self.read = read
+        self.delete = delete
+    }
 }
 
-struct KeychainKey<Value: Codable & Sendable>: Sendable {
+public struct KeychainKey<Value: Codable & Sendable>: Sendable {
     let rawValue: String
 }
 
-extension KeychainKey where Value == Auth {
+public extension KeychainKey where Value == Auth {
     nonisolated static let auth = Self(rawValue: "auth")
 }
 
-extension KeychainClient {
-    nonisolated func save<Value: Codable & Sendable>(
-        _ value: Value,
-        for key: KeychainKey<Value>
-    ) throws {
+public extension KeychainClient {
+    nonisolated func save<Value: Codable & Sendable>(_ value: Value, for key: KeychainKey<Value>) throws {
         guard let data = try? JSONEncoder().encode(value) else {
             throw KeychainError.encodingFailed
         }
@@ -36,9 +43,7 @@ extension KeychainClient {
         try save(key.rawValue, data)
     }
     
-    nonisolated func load<Value: Codable & Sendable>(
-        for key: KeychainKey<Value>
-    ) throws -> Value? {
+    nonisolated func load<Value: Codable & Sendable>(for key: KeychainKey<Value>) throws -> Value? {
         guard let data = try read(key.rawValue) else { return nil }
         
         guard let value = try? JSONDecoder().decode(Value.self, from: data) else {
@@ -48,15 +53,13 @@ extension KeychainClient {
         return value
     }
     
-    nonisolated func delete<Value: Codable & Sendable>(
-        for key: KeychainKey<Value>
-    ) throws {
+    nonisolated func delete<Value: Codable & Sendable>(for key: KeychainKey<Value>) throws {
         try delete(key.rawValue)
     }
 }
 
 extension KeychainClient: DependencyKey {
-    static let liveValue: KeychainClient = {
+    public static let liveValue: KeychainClient = {
         let store = KeychainStore()
         
         return KeychainClient(
@@ -73,21 +76,21 @@ extension KeychainClient: DependencyKey {
     }()
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var keychainClient: KeychainClient {
         get { self[KeychainClient.self] }
         set { self[KeychainClient.self] = newValue }
     }
 }
 
-enum KeychainError: Error, Equatable {
+public nonisolated enum KeychainError: Error, Equatable {
     case encodingFailed
     case decodingFailed
     case unhandledStatus(OSStatus)
 }
 
 extension KeychainError: LocalizedError {
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .encodingFailed:
             "인증 정보를 저장할 수 없습니다."

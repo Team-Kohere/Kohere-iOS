@@ -323,7 +323,7 @@ private enum AuthRefreshStage: String {
     case saveUpdatedAuth = "save_updated_auth"
 }
 
-enum AuthSessionExpirationReason: String, Sendable {
+public enum AuthSessionExpirationReason: String, Sendable {
     case retryUnauthorized = "retry_unauthorized"
     case missingRefreshToken = "missing_refresh_token"
     case refreshUnauthorized = "refresh_unauthorized"
@@ -335,12 +335,22 @@ enum AuthSessionExpirationReason: String, Sendable {
     case unknownRefreshFailure = "unknown_refresh_failure"
 }
 
-struct AuthSessionExpirationContext: Sendable {
-    let reason: AuthSessionExpirationReason
-    let attemptID: String
-    let requestPath: String
+public struct AuthSessionExpirationContext: Sendable {
+    public let reason: AuthSessionExpirationReason
+    public let attemptID: String
+    public let requestPath: String
+
+    public init(
+        reason: AuthSessionExpirationReason,
+        attemptID: String,
+        requestPath: String
+    ) {
+        self.reason = reason
+        self.attemptID = attemptID
+        self.requestPath = requestPath
+    }
 }
 
-extension Notification.Name {
+public extension Notification.Name {
     nonisolated static let authSessionExpired = Notification.Name("authSessionExpired")
 }

@@ -5,31 +5,31 @@
 //  Created by Codex on 7/3/26.
 //
 
-import ComposableArchitecture
+import Dependencies
 import Foundation
 
-enum UserDefaultsClientError: Error, Sendable {
+public enum UserDefaultsClientError: Error, Sendable {
     case typeMismatch(key: String)
 }
 
-struct UserDefaultsKey<Value: Codable & Sendable>: Sendable {
+public struct UserDefaultsKey<Value: Codable & Sendable>: Sendable {
     let rawValue: String
 }
 
-extension UserDefaultsKey where Value == Bool {
+public extension UserDefaultsKey where Value == Bool {
     nonisolated static let hasLaunchedBefore = Self(rawValue: "hasLaunchedBefore")
     nonisolated static let requiresAuthCleanup = Self(rawValue: "requiresAuthCleanup")
 }
 
-extension UserDefaultsKey where Value == Date {
+public extension UserDefaultsKey where Value == Date {
     nonisolated static let mapDiagnosisButtonLastExpandedAt = Self(rawValue: "mapDiagnosisButtonLastExpandedAt")
 }
 
-extension UserDefaultsKey where Value == [String] {
+public extension UserDefaultsKey where Value == [String] {
     nonisolated static let recentSearchKeywords = Self(rawValue: "recentSearchKeywords")
 }
 
-extension UserDefaultsKey where Value == String {
+public extension UserDefaultsKey where Value == String {
     nonisolated static let pendingOnboardingUserType = Self(rawValue: "pendingOnboardingUserType")
     nonisolated static let appLanguage = Self(rawValue: "appLanguage")
 }
@@ -45,13 +45,13 @@ enum UserDefaultsStoredValue: Sendable {
     case unsupported(String)
 }
 
-struct UserDefaultsClient: Sendable {
+public struct UserDefaultsClient: Sendable {
     var saveValue: @Sendable (_ value: UserDefaultsStoredValue, _ key: String) -> Void
     var loadValue: @Sendable (_ key: String) -> UserDefaultsStoredValue?
     var delete: @Sendable (_ key: String) -> Void
 }
 
-extension UserDefaultsClient {
+public extension UserDefaultsClient {
     nonisolated func save<Value: Codable & Sendable>(
         _ value: Value,
         for key: UserDefaultsKey<Value>
@@ -163,7 +163,7 @@ extension UserDefaultsStoredValue {
 }
 
 extension UserDefaultsClient: DependencyKey {
-    static let liveValue = UserDefaultsClient(
+    public static let liveValue = UserDefaultsClient(
         saveValue: { value, key in
             switch value {
             case let .bool(value):
@@ -197,7 +197,7 @@ extension UserDefaultsClient: DependencyKey {
     )
 }
 
-extension DependencyValues {
+public extension DependencyValues {
     var userDefaultsClient: UserDefaultsClient {
         get { self[UserDefaultsClient.self] }
         set { self[UserDefaultsClient.self] = newValue }

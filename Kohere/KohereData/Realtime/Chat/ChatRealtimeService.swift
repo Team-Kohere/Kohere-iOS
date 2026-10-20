@@ -6,7 +6,7 @@
 //
 
 import Combine
-import ComposableArchitecture
+import Dependencies
 import Foundation
 import KohereDomain
 import OSLog
@@ -266,14 +266,14 @@ final class ChatRealtimeService {
     }
 }
 
-nonisolated enum ChatRealtimeError: LocalizedError, Equatable {
+nonisolated public enum ChatRealtimeError: LocalizedError, Equatable {
     case missingAccessToken
     case invalidWebSocketURL
     case notReady
     case messageTooLong(maximum: Int)
     case encodingFailed
 
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .missingAccessToken: "로그인이 필요합니다."
         case .invalidWebSocketURL: "채팅 서버 주소가 올바르지 않습니다."
@@ -375,12 +375,20 @@ private extension JSONDecoder {
 // MARK: - Dependency
 
 extension ChatRealtimeClient: @retroactive DependencyKey {
-    public static let liveValue: ChatRealtimeClient = {
-        let service = ChatRealtimeService()
-        return ChatRealtimeClient(
-            connect: { try await service.connect(roomID: $0) },
-            disconnect: { await service.disconnect() },
-            sendText: { try await service.sendText(roomID: $0, clientMessageID: $1, content: $2) }
-        )
-    }()
+    public static let liveValue = ChatRealtimeClient(
+        connect: { try await ChatRealtimeServiceContainer.shared.connect(roomID: $0) },
+        disconnect: { await ChatRealtimeServiceContainer.shared.disconnect() },
+        sendText: {
+            try await ChatRealtimeServiceContainer.shared.sendText(
+                roomID: $0,
+                clientMessageID: $1,
+                content: $2
+            )
+        }
+    )
+}
+
+@MainActor
+private enum ChatRealtimeServiceContainer {
+    static let shared = ChatRealtimeService()
 }
