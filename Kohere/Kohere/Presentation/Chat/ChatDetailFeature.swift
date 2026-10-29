@@ -121,6 +121,7 @@ struct ChatDetailFeature {
         Reduce { state, action in
             switch action {
             case .onAppear:
+                ActiveChatRoomStore.shared.activate(state.chatRoom.roomID)
                 guard !state.isLoading else { return .none }
                 state.isLoading = true
                 state.errorMessage = nil
@@ -144,6 +145,7 @@ struct ChatDetailFeature {
 
             case .onDisappear:
                 state.isRealtimeReady = false
+                ActiveChatRoomStore.shared.deactivate(state.chatRoom.roomID)
                 let disconnect = chatRealtimeClient.disconnect
                 return .merge(
                     .cancel(id: EffectID.room),
