@@ -11,9 +11,18 @@ import KohereDomain
 extension ChatFeature {
     func handlePathAction(_ action: StackActionOf<Path>, state: inout State) -> Effect<Action> {
         switch action {
-        case .element(id: _, action: .chatDetail(.delegate(.dismissRequested))):
+        case let .element(id: id, action: .chatDetail(.delegate(.dismissRequested))):
+            if let roomID = state.path[id: id, case: \.chatDetail]?.chatRoom.roomID {
+                ActiveChatRoomStore.shared.deactivate(roomID)
+            }
             _ = state.path.popLast()
             return fetchChatRooms(page: 0, state: &state)
+
+        case let .popFrom(id):
+            if let roomID = state.path[id: id, case: \.chatDetail]?.chatRoom.roomID {
+                ActiveChatRoomStore.shared.deactivate(roomID)
+            }
+            return .none
 
         case .element(id: _, action: .chatBot(.delegate(.dismissRequested))):
             _ = state.path.popLast()
