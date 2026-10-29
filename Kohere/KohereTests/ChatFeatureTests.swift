@@ -237,6 +237,87 @@ final class ChatAccessTokenProviderTests: XCTestCase {
 
 @MainActor
 final class ChatFeatureTests: XCTestCase {
+    func testSubscriptionReadyActivatesRoomAndDisconnectDeactivatesIt() async {
+        clearActiveChatRoom()
+        defer { clearActiveChatRoom() }
+
+        let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
+        let store = TestStore(initialState: ChatDetailFeature.State(chatRoom: room)) {
+            ChatDetailFeature()
+        } withDependencies: {
+            $0.fetchChatMessagesUseCase = FetchChatMessagesUseCase { _, _, _, _ in
+                ChatMessagePage(content: [], nextCursor: nil, hasNext: false)
+            }
+        }
+
+        await store.send(
+            .realtimeEvent(
+                .subscriptionReady(.init(roomID: 1, highWatermark: nil))
+            )
+        )
+        XCTAssertEqual(ActiveChatRoomStore.shared.activeRoomID, 1)
+        await store.receive(\.missedMessagesResponse)
+
+        await store.send(.realtimeEvent(.connection(.disconnected)))
+        XCTAssertNil(ActiveChatRoomStore.shared.activeRoomID)
+    }
+
+    func testDismissRequestedDeactivatesRoomBeforeRemovingPath() async throws {
+        clearActiveChatRoom()
+        defer { clearActiveChatRoom() }
+
+        let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
+        var initialState = ChatFeature.State(chatRooms: [room])
+        initialState.path.append(.chatDetail(ChatDetailFeature.State(chatRoom: room)))
+        let detailID = try XCTUnwrap(initialState.path.ids.last)
+        ActiveChatRoomStore.shared.activate(room.roomID)
+
+        let store = TestStore(initialState: initialState) {
+            ChatFeature()
+        } withDependencies: {
+            $0.fetchChatRoomsUseCase = FetchChatRoomsUseCase { _, _ in
+                ChatRoomPage(
+                    content: [],
+                    page: PageInfo(number: 0, size: 20, totalElements: 0, totalPages: 0, hasNext: false)
+                )
+            }
+        }
+
+        await store.send(
+            .path(.element(id: detailID, action: .chatDetail(.delegate(.dismissRequested))))
+        ) {
+            $0.path.removeAll()
+            $0.isLoading = true
+        }
+        XCTAssertNil(ActiveChatRoomStore.shared.activeRoomID)
+        await store.receive(\.chatRoomListResponse) {
+            $0.chatRooms = []
+            $0.isLoading = false
+            $0.hasLoadedInitialPage = true
+            $0.nextPage = 1
+        }
+    }
+
+    func testNavigationPopDeactivatesRoom() async throws {
+        clearActiveChatRoom()
+        defer { clearActiveChatRoom() }
+
+        let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
+        var initialState = ChatFeature.State(chatRooms: [room])
+        initialState.path.append(.chatDetail(ChatDetailFeature.State(chatRoom: room)))
+        let detailID = try XCTUnwrap(initialState.path.ids.last)
+        ActiveChatRoomStore.shared.activate(room.roomID)
+
+        let store = TestStore(initialState: initialState) {
+            ChatFeature()
+        }
+
+        await store.send(.path(.popFrom(id: detailID))) {
+            $0.path.removeAll()
+        }
+        XCTAssertNil(ActiveChatRoomStore.shared.activeRoomID)
+    }
+
     func testBackButtonRequestsParentDismissal() async {
         let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
         let store = TestStore(initialState: ChatDetailFeature.State(chatRoom: room)) {
@@ -642,5 +723,10 @@ final class ChatFeatureTests: XCTestCase {
                 sentAt: Date(timeIntervalSince1970: 0)
             )
         )
+    }
+
+    private func clearActiveChatRoom() {
+        guard let roomID = ActiveChatRoomStore.shared.activeRoomID else { return }
+        ActiveChatRoomStore.shared.deactivate(roomID)
     }
 }

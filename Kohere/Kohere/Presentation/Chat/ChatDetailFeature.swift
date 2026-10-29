@@ -144,6 +144,7 @@ struct ChatDetailFeature {
 
             case .onDisappear:
                 state.isRealtimeReady = false
+                ActiveChatRoomStore.shared.deactivate(state.chatRoom.roomID)
                 let disconnect = chatRealtimeClient.disconnect
                 return .merge(
                     .cancel(id: EffectID.room),
@@ -202,6 +203,7 @@ struct ChatDetailFeature {
 
             case let .realtimeConnectionResponse(.failure(error)):
                 state.isRealtimeReady = false
+                ActiveChatRoomStore.shared.deactivate(state.chatRoom.roomID)
                 state.errorMessage = error.localizedDescription
                 return .send(.delegate(.errorMessageRequested(error.localizedDescription)))
 

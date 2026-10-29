@@ -25,6 +25,7 @@ extension ChatDetailFeature {
         case let .connection(connection):
             state.isRealtimeReady = connection == .ready
             if connection == .disconnected {
+                ActiveChatRoomStore.shared.deactivate(state.chatRoom.roomID)
                 for index in state.messages.indices where state.messages[index].deliveryStatus == .sending {
                     state.messages[index] = state.messages[index].updating(deliveryStatus: .queued)
                 }
@@ -35,6 +36,7 @@ extension ChatDetailFeature {
 
         case let .subscriptionReady(subscription):
             guard subscription.roomID == state.chatRoom.roomID else { return .none }
+            ActiveChatRoomStore.shared.activate(subscription.roomID)
             let lastConfirmedID = state.messages.compactMap(\.serverMessageID).max()
             return fetchMissedMessages(roomID: subscription.roomID, afterMessageID: lastConfirmedID)
 

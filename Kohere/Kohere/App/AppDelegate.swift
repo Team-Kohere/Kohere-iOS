@@ -30,6 +30,18 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         willPresent notification: UNNotification,
         withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void
     ) {
+        let userInfo = notification.request.content.userInfo
+        let activeChatRoomID = ActiveChatRoomStore.shared.activeRoomID
+
+        guard ForegroundNotificationPolicy.shouldPresent(
+            userInfo: userInfo,
+            activeChatRoomID: activeChatRoomID
+        ) else {
+            logger.info("event=foreground_chat_notification_suppressed")
+            completionHandler([])
+            return
+        }
+
         logger.info("event=foreground_notification_received")
         completionHandler([.banner, .sound, .badge])
     }

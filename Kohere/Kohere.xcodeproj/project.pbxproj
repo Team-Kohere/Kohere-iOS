@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		772FBCF62FF3A3F200336CF6 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 772FBCF72FF3A3F200336CF6 /* Alamofire */; };
 		772FBCF82FF3A40100336CF6 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 772FBCF92FF3A40100336CF6 /* GoogleSignIn */; };
 		778C8EBC3085A2CA008AB7A1 /* KohereData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 778C8EB63085A2CA008AB7A1 /* KohereData.framework */; };
 		778C8EBD3085A2CA008AB7A1 /* KohereData.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 778C8EB63085A2CA008AB7A1 /* KohereData.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -54,7 +53,6 @@
 		952FEF40307528E300DB907E /* KohereLocalization.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 952FED17307528E300DB907E /* KohereLocalization.framework */; };
 		9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */ = {isa = PBXBuildFile; productRef = 9570E47E2FE45C37002FA6DE /* NMapsMap */; };
 		95C549D6307D538200387F6D /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 95C549D5307D538200387F6D /* Kingfisher */; };
-		E6B4C0013011000000000001 /* SwiftStomp in Frameworks */ = {isa = PBXBuildFile; productRef = E6B4C0013011000000000003 /* SwiftStomp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -308,11 +306,9 @@
 				952F046D307D3F3400DB907E /* KohereDesignSystem.framework in Frameworks */,
 				77FCA4313078B1740091C00D /* UIKitNavigation in Frameworks */,
 				77FCA4333078B1740091C00D /* XCTestDynamicOverlay in Frameworks */,
-				772FBCF62FF3A3F200336CF6 /* Alamofire in Frameworks */,
 				951921A53049CCB300666ACA /* FirebaseMessaging in Frameworks */,
 				772FBCF82FF3A40100336CF6 /* GoogleSignIn in Frameworks */,
 				9570E47F2FE45C37002FA6DE /* NMapsMap in Frameworks */,
-				E6B4C0013011000000000001 /* SwiftStomp in Frameworks */,
 				952FEC09307528E300DB907E /* KohereCore.framework in Frameworks */,
 				952FED10307528E300DB907E /* KohereLocalization.framework in Frameworks */,
 			);
@@ -599,10 +595,8 @@
 				77FCA42E3078B1740091C00D /* SwiftNavigation */,
 				77FCA4303078B1740091C00D /* UIKitNavigation */,
 				77FCA4323078B1740091C00D /* XCTestDynamicOverlay */,
-				772FBCF72FF3A3F200336CF6 /* Alamofire */,
 				772FBCF92FF3A40100336CF6 /* GoogleSignIn */,
 				9570E47E2FE45C37002FA6DE /* NMapsMap */,
-				E6B4C0013011000000000003 /* SwiftStomp */,
 				951921A43049CCB300666ACA /* FirebaseMessaging */,
 			);
 			productName = Kohere;
@@ -1821,11 +1815,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		772FBCF72FF3A3F200336CF6 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 772FBCF52FF3981E00336CF6 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
 		772FBCF92FF3A40100336CF6 /* GoogleSignIn */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 772FBCF42FF38F2F00336CF6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
@@ -1965,11 +1954,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D4A1B2C32FF4A10000AA0002 /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
-		};
-		E6B4C0013011000000000003 /* SwiftStomp */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E6B4C0013011000000000002 /* XCRemoteSwiftPackageReference "SwiftStomp" */;
-			productName = SwiftStomp;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
