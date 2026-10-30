@@ -58,3 +58,6 @@ GoogleService-Info.plist
 
 # Personal notes
 docs/private/
+
+# mise 개인 설정 (Xcode 경로 등)
+mise.local.toml
