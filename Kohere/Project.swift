@@ -72,7 +72,10 @@ let project = Project(
                 .pre(
                     script: "python3 \"$SRCROOT/../scripts/generate_string_symbols.py\"",
                     name: "Generate String Symbols",
-                    inputPaths: ["$(SRCROOT)/KohereLocalization/Resources/Localizable.xcstrings"],
+                    inputPaths: [
+                        "$(SRCROOT)/KohereLocalization/Resources/Localizable.xcstrings",
+                        "$(SRCROOT)/../scripts/generate_string_symbols.py",
+                    ],
                     outputPaths: ["$(SRCROOT)/KohereLocalization/Resources/GeneratedStringSymbols.swift"]
                 ),
             ],
