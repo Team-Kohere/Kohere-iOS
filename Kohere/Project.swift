@@ -56,6 +56,7 @@ let project = Project(
                     "CURRENT_PROJECT_VERSION": "1",
                     "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
                     "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
+                    "OTHER_LDFLAGS": ["$(inherited)", "-force_load", "$(BUILT_PRODUCTS_DIR)/KohereData.framework/KohereData"],
                 ],
                 configurations: [
                     .debug(name: .debug, xcconfig: "Config/Base.xcconfig"),

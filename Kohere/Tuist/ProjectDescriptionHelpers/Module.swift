@@ -11,7 +11,7 @@ public extension Target {
         .target(
             name: name,
             destinations: .iOS,
-            product: .framework,
+            product: .staticFramework,
             bundleId: "com.kohere.\(name)",
             deploymentTargets: .iOS("17.0"),
             sources: ["\(name)/**/*.swift"],
