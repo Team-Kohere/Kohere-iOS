@@ -100,5 +100,29 @@ let project = Project(
             ],
             settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
         ),
+        .target(
+            name: "KohereTests",
+            destinations: [.iPhone],
+            product: .unitTests,
+            bundleId: "com.kohere.KohereTests",
+            deploymentTargets: .iOS("26.2"),
+            sources: ["KohereTests/**/*.swift"],
+            dependencies: [
+                .target(name: "Kohere"),
+                .target(name: "KohereCore"),
+                .target(name: "KohereLocalization"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereData"),
+                .external(name: "ComposableArchitecture"),
+                .external(name: "Alamofire"),
+            ],
+            settings: .settings(base: [
+                "SWIFT_VERSION": "5.0",
+                "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+                "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
+                "DEVELOPMENT_TEAM": "2YTVA7GW5S",
+            ])
+        ),
     ]
 )
