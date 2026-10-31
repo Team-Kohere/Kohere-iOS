@@ -75,7 +75,8 @@ let project = Project(
             dependencies: [
                 .target(name: "KohereCore"),
                 .external(name: "Dependencies"),
-            ]
+            ],
+            settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
         ),
         .module(
             name: "KohereDesignSystem",
@@ -96,7 +97,8 @@ let project = Project(
                 .external(name: "Dependencies"),
                 .external(name: "FirebaseMessaging"),
                 .external(name: "SwiftStomp"),
-            ]
+            ],
+            settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
         ),
     ]
 )
