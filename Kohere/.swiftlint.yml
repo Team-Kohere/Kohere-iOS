@@ -40,6 +40,8 @@ excluded:
   - Carthage
   - KohereTests
   - KohereUITests
+  - Tuist
+  - Derived
 
 custom_rules:
   asset_string_lookup:
