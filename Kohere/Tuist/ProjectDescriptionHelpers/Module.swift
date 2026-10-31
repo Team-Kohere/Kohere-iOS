@@ -4,6 +4,7 @@ public extension Target {
     static func module(
         name: String,
         resources: ResourceFileElements? = nil,
+        scripts: [TargetScript] = [],
         dependencies: [TargetDependency] = [],
         settings: SettingsDictionary = [:]
     ) -> Target {
@@ -15,6 +16,7 @@ public extension Target {
             deploymentTargets: .iOS("17.0"),
             sources: ["\(name)/**/*.swift"],
             resources: resources,
+            scripts: scripts,
             dependencies: dependencies,
             settings: .settings(base: [
                 "SWIFT_VERSION": "5.0",

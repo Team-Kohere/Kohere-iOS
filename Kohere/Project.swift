@@ -67,6 +67,14 @@ let project = Project(
         .module(
             name: "KohereLocalization",
             resources: ["KohereLocalization/Resources/Localizable.xcstrings"],
+            scripts: [
+                .pre(
+                    script: "python3 \"$SRCROOT/../scripts/generate_string_symbols.py\"",
+                    name: "Generate String Symbols",
+                    inputPaths: ["$(SRCROOT)/KohereLocalization/Resources/Localizable.xcstrings"],
+                    outputPaths: ["$(SRCROOT)/KohereLocalization/Resources/GeneratedStringSymbols.swift"]
+                ),
+            ],
             dependencies: [.target(name: "KohereCore")],
             settings: ["STRING_CATALOG_GENERATE_SYMBOLS": "NO"]
         ),
@@ -124,5 +132,6 @@ let project = Project(
                 "DEVELOPMENT_TEAM": "2YTVA7GW5S",
             ])
         ),
-    ]
+    ],
+    resourceSynthesizers: [.assets()]
 )
