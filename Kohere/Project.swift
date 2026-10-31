@@ -15,8 +15,8 @@ let project = Project(
             name: "KohereDomain",
             dependencies: [
                 .target(name: "KohereCore"),
-                .external(name: "Dependencies")
-            ],
+                .external(name: "Dependencies"),
+            ]
         ),
         .module(
             name: "KohereDesignSystem",
