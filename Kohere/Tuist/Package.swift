@@ -5,7 +5,27 @@ import PackageDescription
 import ProjectDescription
 
 let packageSettings = PackageSettings(
-    productTypes: [:]
+    productTypes: [
+        // TCA 계열: Domain·Data·앱이 같은 의존성 저장소를 써야 함
+        "ComposableArchitecture": .framework,
+        "Dependencies": .framework,
+        "Clocks": .framework,
+        "ConcurrencyExtras": .framework,
+        "CombineSchedulers": .framework,
+        "IssueReporting": .framework,
+        "XCTestDynamicOverlay": .framework,
+        // Firebase 계열: 앱과 Data가 같은 Firebase 인스턴스를 써야 함
+        "FirebaseMessaging": .framework,
+        "FirebaseCore": .framework,
+        "FirebaseCoreInternal": .framework,
+        "FirebaseInstallations": .framework,
+        "FBLPromises": .framework,
+        "GoogleUtilities-Environment": .framework,
+        "GoogleUtilities-Logger": .framework,
+        "GoogleUtilities-NSData": .framework,
+        "GoogleUtilities-UserDefaults": .framework,
+        "third-party-IsAppEncrypted": .framework,
+    ]
 )
 #endif
 
