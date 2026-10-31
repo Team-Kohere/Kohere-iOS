@@ -1,0 +1,62 @@
+// swiftlint:disable all
+// 이 파일은 Tuist/ResourceSynthesizers/Assets.stencil로 tuist generate가 만든다. 직접 수정하지 않는다.
+//
+// Xcode 기본 에셋 심볼과 같은 모양(.primary50, Image(.typoLogo))을 public으로 만든다.
+// Xcode가 만드는 심볼은 internal이라 다른 모듈에서 쓸 수 없기 때문이다.
+// 번들은 Tuist가 만든 Bundle.module을 쓴다. 정적 프레임워크에서도 리소스 번들을 정확히 가리킨다.
+{% macro identifier name suffix %}{% if name|hasSuffix:suffix and name != suffix %}{{ name|replace:suffix,""|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }}{% else %}{{ name|swiftIdentifier:"pretty"|lowerFirstWord|escapeReservedKeywords }}{% endif %}{% endmacro %}
+{% macro colorResources assets %}{% for asset in assets %}{% if asset.type == "color" and asset.name != "AccentColor" %}
+    /// The "{{ asset.name }}" asset catalog color resource.
+    nonisolated public static let{{ " " }}{% call identifier asset.name "Color" %} = ColorResource(name: "{{ asset.value }}", bundle: .module)
+{% elif asset.items %}{% call colorResources asset.items %}{% endif %}{% endfor %}{% endmacro %}
+{% macro imageResources assets %}{% for asset in assets %}{% if asset.type == "image" %}
+    /// The "{{ asset.name }}" asset catalog image resource.
+    nonisolated public static let{{ " " }}{% call identifier asset.name "Image" %} = ImageResource(name: "{{ asset.value }}", bundle: .module)
+{% elif asset.items %}{% call imageResources asset.items %}{% endif %}{% endfor %}{% endmacro %}
+{% macro colorAccessors assets type %}{% for asset in assets %}{% if asset.type == "color" and asset.name != "AccentColor" %}
+    /// The "{{ asset.name }}" asset catalog color.
+    nonisolated public static var{{ " " }}{% call identifier asset.name "Color" %}:{{ " " }}{% if type == "UIColor" %}UIColor{% else %}Color{% endif %}{{ " { " }}{% if type == "UIColor" %}UIColor(resource: ColorResource.{% call identifier asset.name "Color" %}){% else %}Color(ColorResource.{% call identifier asset.name "Color" %}){% endif %} }
+{% elif asset.items %}{% call colorAccessors asset.items type %}{% endif %}{% endfor %}{% endmacro %}
+{% macro imageAccessors assets %}{% for asset in assets %}{% if asset.type == "image" %}
+    /// The "{{ asset.name }}" asset catalog image.
+    nonisolated public static var{{ " " }}{% call identifier asset.name "Image" %}: UIImage { UIImage(resource: ImageResource.{% call identifier asset.name "Image" %}) }
+{% elif asset.items %}{% call imageAccessors asset.items %}{% endif %}{% endfor %}{% endmacro %}
+
+import DeveloperToolsSupport
+import Foundation
+import SwiftUI
+import UIKit
+{% for catalog in catalogs %}
+
+// MARK: - {{ catalog.name }} Color Symbols
+
+extension ColorResource {
+{% call colorResources catalog.assets %}
+}
+
+// MARK: - {{ catalog.name }} Image Symbols
+
+extension ImageResource {
+{% call imageResources catalog.assets %}
+}
+
+// MARK: - {{ catalog.name }} Color Symbol Extensions
+
+extension Color {
+{% call colorAccessors catalog.assets "Color" %}
+}
+
+extension ShapeStyle where Self == Color {
+{% call colorAccessors catalog.assets "ShapeStyle" %}
+}
+
+extension UIColor {
+{% call colorAccessors catalog.assets "UIColor" %}
+}
+
+// MARK: - {{ catalog.name }} Image Symbol Extensions
+
+extension UIImage {
+{% call imageAccessors catalog.assets %}
+}
+{% endfor %}

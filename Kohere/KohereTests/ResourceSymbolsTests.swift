@@ -27,7 +27,7 @@ final class ResourceSymbolsTests: XCTestCase {
     // MARK: - 에셋
 
     func testEveryColorInCatalogLoadsFromDesignSystemBundle() throws {
-        let bundle = try XCTUnwrap(Bundle(identifier: "com.kohere.KohereDesignSystem"))
+        let bundle = KohereDesignSystemResources.bundle
         let names = try Self.catalogEntryNames(suffix: "colorset")
         XCTAssertGreaterThan(names.count, 100)
 
@@ -36,7 +36,7 @@ final class ResourceSymbolsTests: XCTestCase {
     }
 
     func testEveryImageInCatalogLoadsFromDesignSystemBundle() throws {
-        let bundle = try XCTUnwrap(Bundle(identifier: "com.kohere.KohereDesignSystem"))
+        let bundle = KohereDesignSystemResources.bundle
         let names = try Self.catalogEntryNames(suffix: "imageset")
         XCTAssertGreaterThan(names.count, 100)
 

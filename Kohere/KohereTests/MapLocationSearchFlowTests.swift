@@ -117,18 +117,26 @@ final class MapLocationSearchFlowTests: XCTestCase {
         initialState.searchMode = .locationSearch(MapLocationSearchState())
         initialState.viewportSearchTrigger = .onArrival(at: target)
 
+        let listingsRequestCount = LockIsolated(0)
+        let markersRequestCount = LockIsolated(0)
         let store = TestStore(initialState: initialState) {
             MapFeature()
         } withDependencies: {
             $0.listingClient.fetchListings = { _ in
-                ListingSearchPage(content: [], page: nil)
+                listingsRequestCount.withValue { $0 += 1 }
+                return ListingSearchPage(content: [], page: nil)
             }
-            $0.listingClient.fetchMapMarkers = { _ in [] }
+            $0.listingClient.fetchMapMarkers = { _ in
+                markersRequestCount.withValue { $0 += 1 }
+                return []
+            }
         }
 
         await store.send(.viewportChanged(outsideViewport)) {
             $0.currentViewport = outsideViewport
         }
+        XCTAssertEqual(listingsRequestCount.value, 0)
+        XCTAssertEqual(markersRequestCount.value, 0)
 
         await store.send(.viewportChanged(targetViewport)) {
             $0.currentViewport = targetViewport
@@ -137,17 +145,18 @@ final class MapLocationSearchFlowTests: XCTestCase {
                 results: PagedRequest(status: .loadingFirstPage)
             ))
         }
-        await store.receive {
-            guard case .listingSearchResponse(.success, _) = $0 else { return false }
-            return true
-        } assert: {
+
+        // 목록과 마커 요청은 .merge로 동시에 나가므로 응답 도착 순서가 정해져 있지 않다.
+        // 순서 대신 두 요청이 한 번씩 나가고, 모두 끝난 뒤 목록이 로딩 완료 상태인지 확인한다.
+        store.exhaustivity = .off(showSkippedAssertions: false)
+        await store.finish()
+        await store.skipReceivedActions()
+        XCTAssertEqual(listingsRequestCount.value, 1)
+        XCTAssertEqual(markersRequestCount.value, 1)
+        store.assert {
             $0.searchMode = .locationSearch(MapLocationSearchState(
                 results: PagedRequest(status: .loaded)
             ))
-        }
-        await store.receive {
-            guard case .listingMapMarkersResponse(.success) = $0 else { return false }
-            return true
         }
     }
 
