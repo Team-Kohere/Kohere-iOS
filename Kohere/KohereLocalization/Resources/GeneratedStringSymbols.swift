@@ -1,13 +1,13 @@
-// 이 파일은 scripts/generate_asset_symbols.py가 만든다. 직접 수정하지 않는다.
+// 이 파일은 scripts/generate_string_symbols.py가 만든다. 직접 수정하지 않는다.
 
 import Foundation
 
-private final class ResourceBundleToken {}
-private let resourceBundleDescription = LocalizedStringResource.BundleDescription.forClass(ResourceBundleToken.self)
+// Bundle.module은 Tuist가 만든다. 정적 프레임워크에서도 리소스 번들을 정확히 가리킨다.
+private let resourceBundleDescription = LocalizedStringResource.BundleDescription.atURL(Bundle.module.bundleURL)
 
 /// 문자열 카탈로그가 들어 있는 번들. 키를 문자열로만 아는 경우에 쓴다.
 public enum KohereLocalizationBundle {
-    public static let value = Bundle(for: ResourceBundleToken.self)
+    public static let value = Bundle.module
 }
 
 extension LocalizedStringResource {

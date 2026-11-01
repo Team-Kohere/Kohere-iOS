@@ -34,12 +34,13 @@ opt_in_rules:
   - lower_acl_than_parent
 
 excluded:
-  - KohereDesignSystem/Resources/GeneratedAssetSymbols.swift
   - KohereLocalization/Resources/GeneratedStringSymbols.swift
   - Pods
   - Carthage
   - KohereTests
   - KohereUITests
+  - Tuist
+  - Derived
 
 custom_rules:
   asset_string_lookup:
