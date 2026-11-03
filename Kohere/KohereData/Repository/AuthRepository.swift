@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class AuthRepository: AuthInterface {
+final class AuthRepository {
     private let networkService: NetworkService
     private let authenticatedNetworkService: NetworkService
     private let keychainClient: KeychainClient
@@ -208,8 +208,43 @@ final class AuthRepository: AuthInterface {
 
 extension AuthClient: @retroactive DependencyKey {
     public static let liveValue: AuthClient = {
-        let repository: any AuthInterface = AuthRepository()
-        return AuthClient(repository: repository)
+        let repository = AuthRepository()
+        return AuthClient(
+            socialLogin: { credential in
+                try await repository.socialLogin(credential: credential)
+            },
+            reissue: { refreshToken in
+                try await repository.reissue(refreshToken: refreshToken)
+            },
+            logout: {
+                try await repository.logout()
+            },
+            sendPhoneVerificationCode: { phoneNumber in
+                try await repository.sendPhoneVerificationCode(phoneNumber: phoneNumber)
+            },
+            verifyPhone: { phoneNumber, code in
+                try await repository.verifyPhone(phoneNumber: phoneNumber, code: code)
+            },
+            sendEmailVerificationCode: { email in
+                try await repository.sendEmailVerificationCode(email: email)
+            },
+            verifyEmail: { email, code in
+                try await repository.verifyEmail(email: email, code: code)
+            },
+            agreeTerms: { termsOfServiceAgreed, privacyPolicyAgreed, marketingAgreed in
+                try await repository.agreeTerms(
+                    termsOfServiceAgreed: termsOfServiceAgreed,
+                    privacyPolicyAgreed: privacyPolicyAgreed,
+                    marketingAgreed: marketingAgreed
+                )
+            },
+            completeOnboarding: { profile in
+                try await repository.completeOnboarding(profile: profile)
+            },
+            completeLandlordOnboarding: { profile in
+                try await repository.completeLandlordOnboarding(profile: profile)
+            }
+        )
     }()
 }
 

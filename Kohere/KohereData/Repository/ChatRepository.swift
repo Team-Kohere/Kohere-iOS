@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class ChatRepository: ChatInterface {
+final class ChatRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -87,5 +87,33 @@ final class ChatRepository: ChatInterface {
 }
 
 extension ChatClient: @retroactive DependencyKey {
-    public static let liveValue = ChatClient(repository: ChatRepository())
+    public static let liveValue: ChatClient = {
+        let repository = ChatRepository()
+        return ChatClient(
+            fetchStompGuide: {
+                try await repository.fetchStompGuide()
+            },
+            fetchChatRooms: { page, size in
+                try await repository.fetchChatRooms(page: page, size: size)
+            },
+            fetchChatRoom: { roomID in
+                try await repository.fetchChatRoom(roomID: roomID)
+            },
+            createInquiry: { listingID in
+                try await repository.createInquiry(listingID: listingID)
+            },
+            fetchMessages: { roomID, cursor, afterMessageID, size in
+                try await repository.fetchMessages(roomID: roomID, cursor: cursor, afterMessageID: afterMessageID, size: size)
+            },
+            hideRoom: { roomID in
+                try await repository.hideRoom(roomID: roomID)
+            },
+            blockRoom: { roomID in
+                try await repository.blockRoom(roomID: roomID)
+            },
+            reportRoom: { roomID, reason in
+                try await repository.reportRoom(roomID: roomID, reason: reason)
+            }
+        )
+    }()
 }

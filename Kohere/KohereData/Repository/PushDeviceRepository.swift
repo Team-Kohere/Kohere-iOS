@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class PushDeviceRepository: PushDeviceInterface {
+final class PushDeviceRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -41,7 +41,14 @@ final class PushDeviceRepository: PushDeviceInterface {
 
 extension PushDeviceClient: @retroactive DependencyKey {
     public static let liveValue: PushDeviceClient = {
-        let repository: any PushDeviceInterface = PushDeviceRepository()
-        return PushDeviceClient(repository: repository)
+        let repository = PushDeviceRepository()
+        return PushDeviceClient(
+            registerDevice: { installationId, fcmToken in
+                try await repository.registerDevice(installationId: installationId, fcmToken: fcmToken)
+            },
+            unregisterDevice: { installationId in
+                try await repository.unregisterDevice(installationId: installationId)
+            }
+        )
     }()
 }

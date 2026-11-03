@@ -31,7 +31,7 @@ Kohere/
 │   │   ├── <UseCaseName>UseCase.swift
 │   │   └── <DomainName>UseCaseDependencies.swift
 │   └── Interface/
-│       └── <DomainName>RepositoryProtocol.swift
+│       └── <DomainName>Client.swift
 ├── Data/
 │   ├── Repository/
 │   │   └── <DomainName>Repository.swift
@@ -225,14 +225,14 @@ UI 프레임워크나 외부 데이터 소스(Alamofire, Keychain 등)에 의존
 구성:
 - `Entity`: 서비스의 순수 비즈니스 모델 구조체. 서버 DTO의 규격에 종속되지 않고 화면 및 로직에 필요한 형태로 정의한다.
 - `UseCase`: 단일 책임 원칙(SRP)에 따라 하나의 비즈니스 흐름당 하나의 파일로 구현하는 것을 지향한다. 인터페이스와 구현체를 포함하며, TCA Dependency 시스템에 등록하여 사용한다.
-- `Interface`:  데이터 레이어의 고립 및 의존성 역전(DIP)을 위해 Repository 프로토콜을 이 계층에 선언한다.
+- `Interface`: 데이터 레이어의 고립 및 의존성 역전(DIP)을 위해 `<DomainName>Client`(클로저 묶음 struct)를 이 계층에 선언한다. Client가 추상 역할을 하므로 별도의 Repository 프로토콜은 두지 않는다. Domain에는 `testValue`(TestDependencyKey)만 두고, 실제 구현 연결(`liveValue`)은 Data가 `@retroactive DependencyKey`로 붙인다.
 
 ### Data
 
 외부 데이터 소스 및 네트워크 통신을 처리하고, 서버 원시 데이터를 도메인 엔티티로 변환하는 계층이다.
 
 구성:
-- `Repository`: Data/Repository에 위치하며, DTO 검증, 도메인 에러 매핑, Entity 변환을 전담한다.
+- `Repository`: Data/Repository에 위치하며, DTO 검증, 도메인 에러 매핑, Entity 변환을 전담한다. 같은 파일의 `liveValue`에서 Repository 메서드를 Client 클로저에 연결한다.
 - `Network/Core`: 네트워크 서비스 인프라 및 전역 공통 응답 규격을 관리한다.
 - `Network/도메인별 폴더`: Router(URLRequestConvertible), RequestDTO, ResponseDTO 규격을 명확히 분리하여 캡슐화한다.
 

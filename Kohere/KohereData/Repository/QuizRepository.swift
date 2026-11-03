@@ -10,7 +10,7 @@ import KohereDomain
 
 // MARK: - Repository
 
-final class QuizRepository: QuizInterface {
+final class QuizRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -46,8 +46,15 @@ final class QuizRepository: QuizInterface {
 
 extension QuizClient: @retroactive DependencyKey {
     public static let liveValue: QuizClient = {
-        let repository: any QuizInterface = QuizRepository()
-        return QuizClient(repository: repository)
+        let repository = QuizRepository()
+        return QuizClient(
+            fetchRandomQuiz: {
+                try await repository.fetchRandomQuiz()
+            },
+            submitAnswer: { quizID, selectedChoiceKey in
+                try await repository.submitAnswer(quizID: quizID, selectedChoiceKey: selectedChoiceKey)
+            }
+        )
     }()
 }
 
