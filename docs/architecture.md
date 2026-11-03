@@ -11,47 +11,68 @@ Kohere는 SwiftUI와 TCA를 기반으로 구성한다.
 여러 구현 파일을 묶는 category folder도 단수형으로 이름 붙인다.
 
 ## Project Folder Structure
-프로젝트의 전체 디렉터리 계층 구조는 다음과 같은 구조적 규칙을 따른다. 특정 도메인이나 화면에 종속되지 않도록 `<FeatureName>`과 `<DomainName>`으로 추상화하여 정의한다.
+프로젝트는 Tuist로 생성하며, 앱 타깃과 기능 모듈이 `Project.swift`와 같은 폴더(`Kohere/`)에 나란히 놓인다. 모듈 소속은 폴더 위치로 정해지므로, 파일은 해당 모듈 폴더 안에 둔다. 특정 도메인이나 화면에 종속되지 않도록 `<FeatureName>`과 `<DomainName>`으로 추상화하여 정의한다.
 
 ```text
-Kohere/
-├── App/
-│   ├── KohereApp.swift
-│   └── Root/
-│       ├── RootView.swift
-│       └── RootFeature.swift
-├── Presentation/
-│   └── <FeatureName>/
-│       ├── <FeatureName>View.swift
-│       └── <FeatureName>Feature.swift
-├── Domain/
+Kohere/                                   # Tuist 프로젝트 루트
+├── Project.swift                         # 타깃·모듈 선언
+├── Tuist/
+│   ├── Package.swift                     # 외부 패키지
+│   ├── ProjectDescriptionHelpers/
+│   │   └── Module.swift                  # 모듈 공통 설정 헬퍼 (.module)
+│   └── ResourceSynthesizers/
+│       └── Assets.stencil                # 에셋 접근자 생성 템플릿
+├── Config/                               # xcconfig
+├── Kohere/                               # 앱 타깃
+│   ├── App/
+│   │   ├── KohereApp.swift
+│   │   ├── RootFeature.swift
+│   │   └── RootView.swift
+│   ├── Presentation/                     # 아직 모듈로 분리하지 않은 화면
+│   │   └── <FeatureName>/
+│   │       ├── <FeatureName>View.swift
+│   │       └── <FeatureName>Feature.swift
+│   └── Resource/                         # AppIcon, 폰트, Info.plist
+├── KohereCore/                           # 범용 extension, 앱 언어
+│   ├── Extension/
+│   └── Language/
+├── KohereLocalization/                   # 문자열 카탈로그와 문자열 해석
+│   ├── AppLocalizer.swift
+│   └── Resources/
+├── KohereDesignSystem/                   # 디자인 토큰, 공용 컴포넌트, 에셋
+│   ├── Tokens/
+│   ├── Components/
+│   ├── Extension/
+│   └── Resources/
+├── KohereDomain/
 │   ├── Entity/
-│   │   └── <EntityName>.swift
+│   │   └── <DomainName>/
 │   ├── UseCase/
-│   │   ├── <UseCaseName>UseCase.swift
-│   │   └── <DomainName>UseCaseDependencies.swift
+│   │   └── <DomainName>/
+│   │       └── <UseCaseName>UseCase.swift
 │   └── Interface/
 │       └── <DomainName>Client.swift
-├── Data/
+├── KohereData/
 │   ├── Repository/
 │   │   └── <DomainName>Repository.swift
-│   └── Network/
-│       ├── Core/
-│       │   ├── NetworkService.swift
-│       │   └── BaseResponseDTO.swift
-│       ├── Error/
-│       │   └── DataError.swift
-│       └── <DomainName>/
-│           ├── <DomainName>Router.swift
-│           ├── <DomainName>RequestDTO.swift
-│           └── <DomainName>ResponseDTO.swift
-├── Core/
-│   ├── DesignSystem/
-│   └── Extension/
-└── Resource/
-    ├── Assets.xcassets
-    └── Info.plist
+│   ├── Network/
+│   │   ├── Core/                         # NetworkService, BaseResponseDTO
+│   │   ├── Error/                        # DataError
+│   │   └── <DomainName>/                 # Router, RequestDTO, ResponseDTO
+│   ├── Local/                            # Keychain, UserDefaults
+│   ├── Push/
+│   └── Realtime/
+└── KohereTests/
 ```
+
+모듈 간 의존 방향은 다음과 같다. 화살표는 "import한다"는 뜻이며, 아래 모듈은 위 모듈을 알지 못한다.
+
+```text
+앱(Kohere) → KohereData → KohereDomain → KohereCore
+앱(Kohere) → KohereDesignSystem → KohereLocalization → KohereCore
+```
+
+화면은 `Presentation/<FeatureName>`에서 `Kohere<FeatureName>` 모듈 폴더로 하나씩 분리하는 중이다. 모듈을 추가할 때는 `Project.swift`에 `.module(name:dependencies:)`로 선언하고 `tuist generate`를 실행한다.
 
 ## Layers
 
@@ -64,15 +85,21 @@ Kohere/
 - Root feature / root reducer
 - 앱 전역 dependency 조립
 
-### Core
+### Core (KohereCore)
 
-앱 전역 기반 코드를 둔다.
+어느 모듈에서나 쓰는 기반 코드를 둔다. 다른 Kohere 모듈에 의존하지 않는다.
 
-- `Core/DesignSystem`: 색상, 타이포그래피, shadow 등 앱 디자인 시스템 API.
-- `Core/Extensions`: Foundation, SwiftUI, UIKit 등 범용 타입 extension.
+- `Extension`: Foundation, SwiftUI, UIKit 등 범용 타입 extension.
+- `Language`: 앱 언어(`AppLanguage`)와 시스템 Locale 변환(`AppLanguageResolver`).
 
-디자인 시스템을 표현하는 extension은 일반 extension으로 보지 않고 `Core/DesignSystem` 안에 둔다.
-예: `Color.primaryNormal`, `View.kohereTextStyle(_:)`.
+### DesignSystem (KohereDesignSystem)
+
+색상, 타이포그래피, shadow, 공용 컴포넌트, 에셋 카탈로그를 둔다.
+
+디자인 시스템을 표현하는 extension은 일반 extension으로 보지 않고 KohereDesignSystem 안에 둔다.
+예: `View.kohereTextStyle(_:)`, `View.kohereElevation(_:shape:)`.
+
+에셋 접근자(`.primary50`, `Image(.typoLogo)`)는 `tuist generate`가 `Tuist/ResourceSynthesizers/Assets.stencil`로 생성한다.
 
 특정 화면이나 기능에서만 쓰이는 extension은 Core에 두지 않고 해당 feature 폴더에 둔다.
 
@@ -224,7 +251,7 @@ UI 프레임워크나 외부 데이터 소스(Alamofire, Keychain 등)에 의존
 
 구성:
 - `Entity`: 서비스의 순수 비즈니스 모델 구조체. 서버 DTO의 규격에 종속되지 않고 화면 및 로직에 필요한 형태로 정의한다.
-- `UseCase`: 단일 책임 원칙(SRP)에 따라 하나의 비즈니스 흐름당 하나의 파일로 구현하는 것을 지향한다. 인터페이스와 구현체를 포함하며, TCA Dependency 시스템에 등록하여 사용한다.
+- `UseCase`: 단일 책임 원칙(SRP)에 따라 하나의 비즈니스 흐름당 하나의 파일로 구현하는 것을 지향한다. 한 파일 안에 UseCase struct, `DependencyKey` 채택(`liveValue`에서 Client 조합), `DependencyValues` 접근자를 함께 두어 TCA Dependency 시스템에 등록한다. 별도의 `UseCaseDependencies` 파일은 두지 않는다.
 - `Interface`: 데이터 레이어의 고립 및 의존성 역전(DIP)을 위해 `<DomainName>Client`(클로저 묶음 struct)를 이 계층에 선언한다. Client가 추상 역할을 하므로 별도의 Repository 프로토콜은 두지 않는다. Domain에는 `testValue`(TestDependencyKey)만 두고, 실제 구현 연결(`liveValue`)은 Data가 `@retroactive DependencyKey`로 붙인다.
 
 ### Data
@@ -232,25 +259,28 @@ UI 프레임워크나 외부 데이터 소스(Alamofire, Keychain 등)에 의존
 외부 데이터 소스 및 네트워크 통신을 처리하고, 서버 원시 데이터를 도메인 엔티티로 변환하는 계층이다.
 
 구성:
-- `Repository`: Data/Repository에 위치하며, DTO 검증, 도메인 에러 매핑, Entity 변환을 전담한다. 같은 파일의 `liveValue`에서 Repository 메서드를 Client 클로저에 연결한다.
+- `Repository`: `KohereData/Repository`에 위치하며, DTO 검증, 도메인 에러 매핑, Entity 변환을 전담한다. 같은 파일의 `liveValue`에서 Repository 메서드를 Client 클로저에 연결한다.
 - `Network/Core`: 네트워크 서비스 인프라 및 전역 공통 응답 규격을 관리한다.
 - `Network/도메인별 폴더`: Router(URLRequestConvertible), RequestDTO, ResponseDTO 규격을 명확히 분리하여 캡슐화한다.
 
 ### Resource
 
-앱 리소스를 관리한다.
+리소스는 쓰는 모듈에 둔다.
 
-예:
-- Assets
-- xcconfig
-- Info.plist
+- 앱(`Kohere/Resource`): AppIcon, AccentColor, 폰트, Info.plist, GoogleService-Info.plist
+- KohereDesignSystem(`Resources`): 색·이미지 에셋 카탈로그
+- KohereLocalization(`Resources`): 문자열 카탈로그
+- `Config`: xcconfig
+
+모듈 리소스는 정적 프레임워크 특성상 별도 리소스 번들로 들어가므로, 코드에서는 `Bundle.module`로 접근한다.
 
 ### Localization
 
-- `Domain/Entity/User/AppLanguage.swift`는 지원 언어와 서버 API 코드, Locale 식별자만 표현한다.
-- 시스템 Locale을 앱 언어로 변환하는 책임은 `Core/Localization/AppLanguageResolver.swift`에 둔다.
+- `KohereCore/Language/AppLanguage.swift`는 지원 언어와 서버 API 코드, Locale 식별자만 표현한다.
+- 시스템 Locale을 앱 언어로 변환하는 책임은 `KohereCore/Language/AppLanguageResolver.swift`에 둔다.
 - String Catalog 리소스와 문자열 Key를 실제 `String`으로 해석하는 책임은
-  `Core/Localization/AppLocalizer.swift`에 둔다.
+  `KohereLocalization/AppLocalizer.swift`에 둔다.
+- 문자열 접근자(`Text(.commonClose)`)는 KohereLocalization 빌드 단계에서 `scripts/generate_string_symbols.py`가 생성한다.
 - Feature State의 기본 언어는 결정적인 값인 영어를 사용하고, 시스템 언어 및 저장 언어 선택은
   Root lifecycle에서 한 번만 수행한다.
 - 서버 API 코드와 Apple Locale 식별자는 동일하다고 가정하지 않고 `apiCode`와
