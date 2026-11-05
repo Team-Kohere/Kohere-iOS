@@ -8,7 +8,7 @@
 import Dependencies
 import KohereDomain
 
-actor CurrencyRepository: CurrencyInterface {
+actor CurrencyRepository {
     private let networkService: ExternalNetworkService
     private var cachedKRWToUSDExchangeRate: KRWToUSDExchangeRate?
     private var inFlightKRWToUSDExchangeRateTask: Task<KRWToUSDExchangeRate, Error>?
@@ -53,8 +53,12 @@ actor CurrencyRepository: CurrencyInterface {
 
 extension CurrencyClient: @retroactive DependencyKey {
     public static let liveValue: CurrencyClient = {
-        let repository: any CurrencyInterface = CurrencyRepository()
-        return CurrencyClient(repository: repository)
+        let repository = CurrencyRepository()
+        return CurrencyClient(
+            fetchKRWToUSDExchangeRate: {
+                try await repository.fetchKRWToUSDExchangeRate()
+            }
+        )
     }()
 }
 

@@ -1,5 +1,5 @@
 //
-//  ChatRealtimeInterface.swift
+//  ChatRealtimeClient.swift
 //  Kohere
 //
 

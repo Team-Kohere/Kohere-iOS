@@ -1,17 +1,11 @@
 //
-//  BookingInterface.swift
+//  BookingClient.swift
 //  Kohere
 //
 //  Created by Codex on 7/8/26.
 //
 
 import Dependencies
-
-public protocol BookingInterface {
-    func fetchBookings(page: Int, size: Int) async throws -> BookingPage
-    func fetchBookingDetail(bookingID: Int) async throws -> BookingDetail
-    func mutateBooking(_ mutation: BookingMutation, bookingID: Int) async throws
-}
 
 public enum BookingMutation: Equatable, Sendable {
     case report
@@ -23,21 +17,15 @@ public struct BookingClient: Sendable {
     public var fetchBookings: @Sendable (_ page: Int, _ size: Int) async throws -> BookingPage
     public var fetchBookingDetail: @Sendable (_ bookingID: Int) async throws -> BookingDetail
     public var mutateBooking: @Sendable (_ mutation: BookingMutation, _ bookingID: Int) async throws -> Void
-}
 
-extension BookingClient {
-    public init(repository: any BookingInterface) {
-        self.init(
-            fetchBookings: { page, size in
-                try await repository.fetchBookings(page: page, size: size)
-            },
-            fetchBookingDetail: { bookingID in
-                try await repository.fetchBookingDetail(bookingID: bookingID)
-            },
-            mutateBooking: { mutation, bookingID in
-                try await repository.mutateBooking(mutation, bookingID: bookingID)
-            }
-        )
+    public init(
+        fetchBookings: @escaping @Sendable (_ page: Int, _ size: Int) async throws -> BookingPage,
+        fetchBookingDetail: @escaping @Sendable (_ bookingID: Int) async throws -> BookingDetail,
+        mutateBooking: @escaping @Sendable (_ mutation: BookingMutation, _ bookingID: Int) async throws -> Void
+    ) {
+        self.fetchBookings = fetchBookings
+        self.fetchBookingDetail = fetchBookingDetail
+        self.mutateBooking = mutateBooking
     }
 }
 

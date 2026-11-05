@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class BookingRepository: BookingInterface {
+final class BookingRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
     
@@ -59,8 +59,18 @@ final class BookingRepository: BookingInterface {
 
 extension BookingClient: @retroactive DependencyKey {
     public static let liveValue: BookingClient = {
-        let repository: any BookingInterface = BookingRepository()
-        return BookingClient(repository: repository)
+        let repository = BookingRepository()
+        return BookingClient(
+            fetchBookings: { page, size in
+                try await repository.fetchBookings(page: page, size: size)
+            },
+            fetchBookingDetail: { bookingID in
+                try await repository.fetchBookingDetail(bookingID: bookingID)
+            },
+            mutateBooking: { mutation, bookingID in
+                try await repository.mutateBooking(mutation, bookingID: bookingID)
+            }
+        )
     }()
 }
 

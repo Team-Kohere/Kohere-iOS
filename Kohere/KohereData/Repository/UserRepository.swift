@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class UserRepository: UserInterface {
+final class UserRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -80,8 +80,24 @@ final class UserRepository: UserInterface {
 
 extension UserClient: @retroactive DependencyKey {
     public static let liveValue: UserClient = {
-        let repository: any UserInterface = UserRepository()
-        return UserClient(repository: repository)
+        let repository = UserRepository()
+        return UserClient(
+            fetchCurrentUser: {
+                try await repository.fetchCurrentUser()
+            },
+            fetchNotificationPreferences: {
+                try await repository.fetchNotificationPreferences()
+            },
+            updateNotificationPreferences: { isEnabled in
+                try await repository.updateNotificationPreferences(chatPushEnabled: isEnabled)
+            },
+            updateProfile: { update in
+                try await repository.updateProfile(update)
+            },
+            deleteCurrentUser: {
+                try await repository.deleteCurrentUser()
+            }
+        )
     }()
 }
 

@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class ListingRepository: ListingInterface {
+final class ListingRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -100,8 +100,33 @@ final class ListingRepository: ListingInterface {
 
 extension ListingClient: @retroactive DependencyKey {
     public static let liveValue: ListingClient = {
-        let repository: any ListingInterface = ListingRepository()
-        return ListingClient(repository: repository)
+        let repository = ListingRepository()
+        return ListingClient(
+            fetchListings: { input in
+                try await repository.fetchListings(input: input)
+            },
+            fetchMapMarkers: { input in
+                try await repository.fetchMapMarkers(input: input)
+            },
+            fetchDetail: { listingID in
+                try await repository.fetchDetail(listingID: listingID)
+            },
+            fetchFavoriteListings: { page, size in
+                try await repository.fetchFavoriteListings(page: page, size: size)
+            },
+            fetchRecentListings: {
+                try await repository.fetchRecentListings()
+            },
+            addFavorite: { listingID in
+                try await repository.addFavorite(listingID: listingID)
+            },
+            removeFavorite: { listingID in
+                try await repository.removeFavorite(listingID: listingID)
+            },
+            createBooking: { listingID, input in
+                try await repository.createBooking(listingID: listingID, input: input)
+            }
+        )
     }()
 }
 
