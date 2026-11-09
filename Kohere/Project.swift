@@ -137,6 +137,7 @@ let project = Project(
                 .target(name: "KohereDesignSystem"),
                 .target(name: "KohereDomain"),
                 .target(name: "KohereData"),
+                .target(name: "KohereLivingGuide"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "Alamofire"),
             ],
