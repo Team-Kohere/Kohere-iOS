@@ -11,22 +11,26 @@ import KohereData
 import KohereDomain
 
 @Reducer
-struct LivingGuideDetailFeature {
+public struct LivingGuideDetailFeature {
     @Dependency(\.fetchLivingGuideTipsUseCase)
     var fetchLivingGuideTips
 
     // MARK: - State
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var guide: LivingGuide
         var isTipsLoading: Bool = false
         var tipsErrorMessage: String?
+
+        public init(guide: LivingGuide) {
+            self.guide = guide
+        }
     }
 
     // MARK: - Action
 
-    enum Action {
+    public enum Action {
         case onAppear
         case backButtonTapped
         case tipsResponse(Result<[LivingGuideTip], DataError>)
@@ -34,7 +38,9 @@ struct LivingGuideDetailFeature {
 
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

@@ -15,7 +15,7 @@ let project = Project(
             resources: [
                 "Kohere/Resource/Assets.xcassets",
                 "Kohere/Resource/Fonts/*.otf",
-                "Kohere/Resource/GoogleService-Info.plist",
+                "Kohere/Resource/GoogleService-Info.plist"
             ],
             entitlements: .file(path: "Kohere/Kohere.entitlements"),
             scripts: [
@@ -32,7 +32,7 @@ let project = Project(
                             """,
                     name: "SwiftLint",
                     basedOnDependencyAnalysis: false
-                ),
+                )
             ],
             dependencies: [
                 .target(name: "KohereCore"),
@@ -40,10 +40,11 @@ let project = Project(
                 .target(name: "KohereDesignSystem"),
                 .target(name: "KohereDomain"),
                 .target(name: "KohereData"),
+                .target(name: "KohereLivingGuide"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "GoogleSignIn"),
                 .external(name: "NMapsMap"),
-                .external(name: "FirebaseMessaging"),
+                .external(name: "FirebaseMessaging")
             ],
             settings: .settings(
                 base: [
@@ -56,7 +57,14 @@ let project = Project(
                     "CURRENT_PROJECT_VERSION": "1",
                     "ASSETCATALOG_COMPILER_APPICON_NAME": "AppIcon",
                     "ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME": "AccentColor",
-                    "OTHER_LDFLAGS": ["$(inherited)", "-force_load", "$(BUILT_PRODUCTS_DIR)/KohereData.framework/KohereData"],
+                    "OTHER_LDFLAGS": [
+                        "$(inherited)",
+                        "-force_load",
+                        "$(BUILT_PRODUCTS_DIR)/KohereData.framework/KohereData",
+                        // Keep the iOS authorization category used by Google Sign-In.
+                        "-force_load",
+                        "$(BUILT_PRODUCTS_DIR)/AppAuth.framework/AppAuth"
+                    ]
                 ],
                 configurations: [
                     .debug(name: .debug, xcconfig: "Config/Base.xcconfig"),
@@ -74,10 +82,10 @@ let project = Project(
                     name: "Generate String Symbols",
                     inputPaths: [
                         "$(SRCROOT)/KohereLocalization/Resources/Localizable.xcstrings",
-                        "$(SRCROOT)/../scripts/generate_string_symbols.py",
+                        "$(SRCROOT)/../scripts/generate_string_symbols.py"
                     ],
                     outputPaths: ["$(SRCROOT)/KohereLocalization/Resources/GeneratedStringSymbols.swift"]
-                ),
+                )
             ],
             dependencies: [.target(name: "KohereCore")],
             settings: ["STRING_CATALOG_GENERATE_SYMBOLS": "NO"]
@@ -86,7 +94,7 @@ let project = Project(
             name: "KohereDomain",
             dependencies: [
                 .target(name: "KohereCore"),
-                .external(name: "Dependencies"),
+                .external(name: "Dependencies")
             ],
             settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
         ),
@@ -96,7 +104,7 @@ let project = Project(
             dependencies: [
                 .target(name: "KohereCore"),
                 .target(name: "KohereLocalization"),
-                .external(name: "Kingfisher"),
+                .external(name: "Kingfisher")
             ],
             settings: ["ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS": "NO"]
         ),
@@ -108,9 +116,19 @@ let project = Project(
                 .external(name: "Alamofire"),
                 .external(name: "Dependencies"),
                 .external(name: "FirebaseMessaging"),
-                .external(name: "SwiftStomp"),
+                .external(name: "SwiftStomp")
             ],
             settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
+        ),
+        .module(
+            name: "KohereLivingGuide",
+            dependencies: [
+                .target(name: "KohereData"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization"),
+                .external(name: "ComposableArchitecture")
+            ]
         ),
         .target(
             name: "KohereTests",
@@ -126,16 +144,17 @@ let project = Project(
                 .target(name: "KohereDesignSystem"),
                 .target(name: "KohereDomain"),
                 .target(name: "KohereData"),
+                .target(name: "KohereLivingGuide"),
                 .external(name: "ComposableArchitecture"),
-                .external(name: "Alamofire"),
+                .external(name: "Alamofire")
             ],
             settings: .settings(base: [
                 "SWIFT_VERSION": "5.0",
                 "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
                 "SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY": "YES",
-                "DEVELOPMENT_TEAM": "2YTVA7GW5S",
+                "DEVELOPMENT_TEAM": "2YTVA7GW5S"
             ])
-        ),
+        )
     ],
     resourceSynthesizers: [.assets()]
 )

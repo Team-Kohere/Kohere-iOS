@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereLivingGuide
 import SwiftUI
 
 struct HomeFlowView: View {
