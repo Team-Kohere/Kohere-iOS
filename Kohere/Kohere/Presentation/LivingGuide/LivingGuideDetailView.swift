@@ -11,11 +11,11 @@ import KohereDomain
 import KohereLocalization
 import SwiftUI
 
-struct LivingGuideDetailView: View {
+public struct LivingGuideDetailView: View {
     
     // MARK: - Property
     
-    let store: StoreOf<LivingGuideDetailFeature>
+    private let store: StoreOf<LivingGuideDetailFeature>
 
     @State private var showsOpaqueNavigationBar = false
     @State private var fallbackScrollOffsetBaseline: CGFloat?
@@ -31,7 +31,11 @@ struct LivingGuideDetailView: View {
     
     // MARK: - Body
     
-    var body: some View {
+    public init(store: StoreOf<LivingGuideDetailFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         ZStack(alignment: .top) {
             guideScrollView
 
