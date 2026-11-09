@@ -10,7 +10,7 @@ import KohereDomain
 
 // MARK: - Repository
 
-final class LivingGuideRepository: LivingGuideInterface {
+final class LivingGuideRepository {
     private let authenticatedNetworkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -49,8 +49,15 @@ final class LivingGuideRepository: LivingGuideInterface {
 
 extension LivingGuideClient: @retroactive DependencyKey {
     public static let liveValue: LivingGuideClient = {
-        let repository: any LivingGuideInterface = LivingGuideRepository()
-        return LivingGuideClient(repository: repository)
+        let repository = LivingGuideRepository()
+        return LivingGuideClient(
+            fetchTopics: {
+                try await repository.fetchTopics()
+            },
+            fetchTips: { topicCode in
+                try await repository.fetchTips(topicCode: topicCode)
+            }
+        )
     }()
 }
 

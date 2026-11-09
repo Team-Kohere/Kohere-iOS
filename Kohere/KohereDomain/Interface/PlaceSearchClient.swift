@@ -1,5 +1,5 @@
 //
-//  PlaceSearchInterface.swift
+//  PlaceSearchClient.swift
 //  Kohere
 //
 //  Created by Codex on 7/8/26.
@@ -7,21 +7,13 @@
 
 import Dependencies
 
-public protocol PlaceSearchInterface: Sendable {
-    func searchPlaces(keyword: String) async throws -> [PlaceSearchResult]
-}
-
 public struct PlaceSearchClient: Sendable {
     public var searchPlaces: @Sendable (_ keyword: String) async throws -> [PlaceSearchResult]
-}
 
-extension PlaceSearchClient {
-    public init(repository: any PlaceSearchInterface) {
-        self.init(
-            searchPlaces: { keyword in
-                try await repository.searchPlaces(keyword: keyword)
-            }
-        )
+    public init(
+        searchPlaces: @escaping @Sendable (_ keyword: String) async throws -> [PlaceSearchResult]
+    ) {
+        self.searchPlaces = searchPlaces
     }
 }
 

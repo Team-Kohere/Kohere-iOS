@@ -1,5 +1,5 @@
 //
-//  CurrencyInterface.swift
+//  CurrencyClient.swift
 //  Kohere
 //
 //  Created by Codex on 7/6/26.
@@ -7,21 +7,13 @@
 
 import Dependencies
 
-public protocol CurrencyInterface: Sendable {
-    func fetchKRWToUSDExchangeRate() async throws -> KRWToUSDExchangeRate
-}
-
 public struct CurrencyClient: Sendable {
     public var fetchKRWToUSDExchangeRate: @Sendable () async throws -> KRWToUSDExchangeRate
-}
 
-extension CurrencyClient {
-    public init(repository: any CurrencyInterface) {
-        self.init(
-            fetchKRWToUSDExchangeRate: {
-                try await repository.fetchKRWToUSDExchangeRate()
-            }
-        )
+    public init(
+        fetchKRWToUSDExchangeRate: @escaping @Sendable () async throws -> KRWToUSDExchangeRate
+    ) {
+        self.fetchKRWToUSDExchangeRate = fetchKRWToUSDExchangeRate
     }
 }
 

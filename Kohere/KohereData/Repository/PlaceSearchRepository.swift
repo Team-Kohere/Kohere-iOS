@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-actor PlaceSearchRepository: PlaceSearchInterface {
+actor PlaceSearchRepository {
     private let networkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
 
@@ -37,8 +37,12 @@ actor PlaceSearchRepository: PlaceSearchInterface {
 
 extension PlaceSearchClient: @retroactive DependencyKey {
     public static let liveValue: PlaceSearchClient = {
-        let repository: any PlaceSearchInterface = PlaceSearchRepository()
-        return PlaceSearchClient(repository: repository)
+        let repository = PlaceSearchRepository()
+        return PlaceSearchClient(
+            searchPlaces: { keyword in
+                try await repository.searchPlaces(keyword: keyword)
+            }
+        )
     }()
 }
 

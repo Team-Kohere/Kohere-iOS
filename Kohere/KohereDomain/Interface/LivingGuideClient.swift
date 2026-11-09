@@ -1,5 +1,5 @@
 //
-//  LivingGuideInterface.swift
+//  LivingGuideClient.swift
 //  Kohere
 //
 //  Created by soomin on 7/8/26.
@@ -7,30 +7,18 @@
 
 import Dependencies
 
-// MARK: - Interface
-
-public protocol LivingGuideInterface {
-    func fetchTopics() async throws -> [LivingGuide]
-    func fetchTips(topicCode: String) async throws -> [LivingGuideTip]
-}
-
 // MARK: - Client
 
 public struct LivingGuideClient: Sendable {
     public var fetchTopics: @Sendable () async throws -> [LivingGuide]
     public var fetchTips: @Sendable (_ topicCode: String) async throws -> [LivingGuideTip]
-}
 
-extension LivingGuideClient {
-    public init(repository: any LivingGuideInterface) {
-        self.init(
-            fetchTopics: {
-                try await repository.fetchTopics()
-            },
-            fetchTips: { topicCode in
-                try await repository.fetchTips(topicCode: topicCode)
-            }
-        )
+    public init(
+        fetchTopics: @escaping @Sendable () async throws -> [LivingGuide],
+        fetchTips: @escaping @Sendable (_ topicCode: String) async throws -> [LivingGuideTip]
+    ) {
+        self.fetchTopics = fetchTopics
+        self.fetchTips = fetchTips
     }
 }
 

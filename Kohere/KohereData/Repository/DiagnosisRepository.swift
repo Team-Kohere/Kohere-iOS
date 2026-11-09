@@ -9,7 +9,7 @@ import Dependencies
 import Foundation
 import KohereDomain
 
-final class DiagnosisRepository: DiagnosisInterface {
+final class DiagnosisRepository {
     private let networkService: NetworkService
     private let environmentProvider: () throws -> APIEnvironment
     private let keychainClient: KeychainClient
@@ -113,8 +113,24 @@ private actor DiagnosisGuestSessionStore {
 
 extension DiagnosisClient: @retroactive DependencyKey {
     public static let liveValue: DiagnosisClient = {
-        let repository: any DiagnosisInterface = DiagnosisRepository()
-        return DiagnosisClient(repository: repository)
+        let repository = DiagnosisRepository()
+        return DiagnosisClient(
+            startFlow: {
+                try await repository.startFlow()
+            },
+            advanceFlow: { answer in
+                try await repository.advanceFlow(with: answer)
+            },
+            fetchDetail: { diagnosisID in
+                try await repository.fetchDetail(diagnosisID: diagnosisID)
+            },
+            fetchRecommendations: { input in
+                try await repository.fetchRecommendations(input: input)
+            },
+            fetchRecommendationMap: { diagnosisID in
+                try await repository.fetchRecommendationMap(diagnosisID: diagnosisID)
+            }
+        )
     }()
 }
 

@@ -57,5 +57,5 @@ custom_rules:
     name: "Domain Live Value"
     included: ".*/KohereDomain/Interface/.*\\.swift"
     regex: 'static (let|var) liveValue|: DependencyKey \{'
-    message: "Domain의 Client는 TestDependencyKey(testValue)만 채택한다. liveValue는 Data(앱)가 @retroactive DependencyKey로 붙인다. Domain에 두면 Data의 실제 구현이 무시된다."
+    message: "Domain의 Client는 TestDependencyKey(testValue)만 채택한다. liveValue는 KohereData가 @retroactive DependencyKey로 붙인다. Domain에 두면 Data의 실제 구현이 무시된다."
     severity: error
