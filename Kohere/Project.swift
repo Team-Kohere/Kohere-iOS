@@ -40,6 +40,7 @@ let project = Project(
                 .target(name: "KohereDesignSystem"),
                 .target(name: "KohereDomain"),
                 .target(name: "KohereData"),
+                .target(name: "KohereLivingGuide"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "GoogleSignIn"),
                 .external(name: "NMapsMap"),
@@ -111,6 +112,16 @@ let project = Project(
                 .external(name: "SwiftStomp"),
             ],
             settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
+        ),
+        .module(
+            name: "KohereLivingGuide",
+            dependencies: [
+                .target(name: "KohereData"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization"),
+                .external(name: "ComposableArchitecture"),
+            ]
         ),
         .target(
             name: "KohereTests",
