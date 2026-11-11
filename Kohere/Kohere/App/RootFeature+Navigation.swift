@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import KohereDesignSystem
 import KohereDomain
+import KohereMapEntry
 
 extension RootFeature {
     func openInquiryChat(roomID: Int, listingID: String, state: inout State) -> Effect<Action> {

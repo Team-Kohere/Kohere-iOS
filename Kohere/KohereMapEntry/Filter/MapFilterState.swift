@@ -11,34 +11,36 @@ import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 
-struct MapFilterState: Equatable, Sendable {
-    var selectedOptions: Set<RoomCondition> = []
+public struct MapFilterState: Equatable, Sendable {
+    public var selectedOptions: Set<RoomCondition> = []
 
-    var monthlyRentRange = MapFilterPriceRange.defaultMonthlyRent
-    var depositRange = MapFilterPriceRange.defaultDeposit
+    public var monthlyRentRange = MapFilterPriceRange.defaultMonthlyRent
+    public var depositRange = MapFilterPriceRange.defaultDeposit
 
-    var selectedPropertyTypes: Set<MapPropertyType> = []
+    public var selectedPropertyTypes: Set<MapPropertyType> = []
+
+    public init() {}
 }
 
 extension MapFilterState {
-    var isDefault: Bool {
+    public var isDefault: Bool {
         self == MapFilterState()
     }
 
-    var hasSelectedOptions: Bool {
+    public var hasSelectedOptions: Bool {
         !selectedOptions.isEmpty
     }
 
-    var hasSelectedPriceRange: Bool {
+    public var hasSelectedPriceRange: Bool {
         monthlyRentRange != MapFilterPriceRange.defaultMonthlyRent
             || depositRange != MapFilterPriceRange.defaultDeposit
     }
 
-    var hasSelectedPropertyTypes: Bool {
+    public var hasSelectedPropertyTypes: Bool {
         !selectedPropertyTypes.isEmpty
     }
 
-    mutating func toggleOption(_ option: RoomCondition) {
+    public mutating func toggleOption(_ option: RoomCondition) {
         if selectedOptions.contains(option) {
             selectedOptions.remove(option)
         } else {
@@ -46,7 +48,7 @@ extension MapFilterState {
         }
     }
 
-    mutating func togglePropertyType(_ propertyType: MapPropertyType) {
+    public mutating func togglePropertyType(_ propertyType: MapPropertyType) {
         if selectedPropertyTypes.contains(propertyType) {
             selectedPropertyTypes.remove(propertyType)
         } else {
@@ -54,46 +56,46 @@ extension MapFilterState {
         }
     }
 
-    mutating func updateMonthlyRentMinimum(_ minimum: Int) {
+    public mutating func updateMonthlyRentMinimum(_ minimum: Int) {
         monthlyRentRange.updateMinimum(minimum, bounds: MapFilterPriceRange.monthlyRent)
     }
 
-    mutating func updateMonthlyRentMaximum(_ maximum: Int) {
+    public mutating func updateMonthlyRentMaximum(_ maximum: Int) {
         monthlyRentRange.updateMaximum(maximum, bounds: MapFilterPriceRange.monthlyRent)
     }
 
-    mutating func updateDepositMinimum(_ minimum: Int) {
+    public mutating func updateDepositMinimum(_ minimum: Int) {
         depositRange.updateMinimum(minimum, bounds: MapFilterPriceRange.deposit)
     }
 
-    mutating func updateDepositMaximum(_ maximum: Int) {
+    public mutating func updateDepositMaximum(_ maximum: Int) {
         depositRange.updateMaximum(maximum, bounds: MapFilterPriceRange.deposit)
     }
 }
 
-enum MapFilterPriceRange {
-    static let monthlyRent = 0...100
-    static let deposit = 0...300
+public enum MapFilterPriceRange {
+    public static let monthlyRent = 0...100
+    public static let deposit = 0...300
 
     // 기본값은 전체다. 슬라이더 양끝은 각각 하한 없음과 상한 없음을 의미한다.
-    static let defaultMonthlyRent = RangeSliderValue(
+    public static let defaultMonthlyRent = RangeSliderValue(
         minimum: monthlyRent.lowerBound,
         maximum: monthlyRent.upperBound,
         bounds: monthlyRent
     )
-    static let defaultDeposit = RangeSliderValue(
+    public static let defaultDeposit = RangeSliderValue(
         minimum: deposit.lowerBound,
         maximum: deposit.upperBound,
         bounds: deposit
     )
 }
 
-enum MapPropertyType: CaseIterable, Hashable, Sendable {
+public enum MapPropertyType: CaseIterable, Hashable, Sendable {
     case goshiwon
     case coLiving
     case shareHouse
 
-    func displayTitle(locale: Locale) -> String {
+    public func displayTitle(locale: Locale) -> String {
         let language = AppLanguage(locale: locale)
         return switch self {
         case .goshiwon:
@@ -107,9 +109,9 @@ enum MapPropertyType: CaseIterable, Hashable, Sendable {
 }
 
 extension RoomCondition {
-    static let mapListingFilterCases = allCases.filter { $0 != .noARCRequired }
+    public static let mapListingFilterCases = allCases.filter { $0 != .noARCRequired }
 
-    func mapFilterDisplayTitle(locale: Locale) -> String {
+    public func mapFilterDisplayTitle(locale: Locale) -> String {
         let language = AppLanguage(locale: locale)
         return switch self {
         case .moveInNow:

@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Foundation
 import KohereData
 import KohereDomain
+import KohereMapEntry
 
 @Reducer
 struct MapFeature {

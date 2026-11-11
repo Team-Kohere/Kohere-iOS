@@ -11,6 +11,7 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
+import KohereMapEntry
 import SwiftUI
 
 struct ChatBotOptionsView: View {
