@@ -1,5 +1,5 @@
 //
-//  MapFilterFlowLayout.swift
+//  KohereFlowLayout.swift
 //  Kohere
 //
 //  Created by Codex on 6/26/26.
@@ -7,11 +7,17 @@
 
 import SwiftUI
 
-struct MapFilterFlowLayout: Layout {
-    var spacing: CGFloat
-    var rowSpacing: CGFloat
+/// 자식 뷰를 가로로 채우다가 넘치면 다음 줄로 넘겨 배치한다. 필터 칩, 옵션 태그처럼 개수가 바뀌는 칩 목록에 쓴다.
+public struct KohereFlowLayout: Layout {
+    public var spacing: CGFloat
+    public var rowSpacing: CGFloat
 
-    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) -> CGSize {
+    public init(spacing: CGFloat, rowSpacing: CGFloat) {
+        self.spacing = spacing
+        self.rowSpacing = rowSpacing
+    }
+
+    public func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) -> CGSize {
         let containerWidth = proposal.width ?? 0
         var currentX: CGFloat = 0
         var currentRowHeight: CGFloat = 0
@@ -33,7 +39,7 @@ struct MapFilterFlowLayout: Layout {
         return CGSize(width: containerWidth, height: totalHeight + currentRowHeight)
     }
 
-    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) {
+    public func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout Void) {
         var currentX = bounds.minX
         var currentY = bounds.minY
         var currentRowHeight: CGFloat = 0

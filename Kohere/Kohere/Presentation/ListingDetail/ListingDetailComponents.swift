@@ -178,7 +178,7 @@ struct ListingDetailPropertySection: View {
                         .foregroundStyle(.common100)
                         .frame(width: 110, alignment: .leading)
 
-                    MapFilterFlowLayout(spacing: 4, rowSpacing: 4) {
+                    KohereFlowLayout(spacing: 4, rowSpacing: 4) {
                         ForEach(features, id: \.self) { feature in
                             Text(feature)
                                 .kohereTextStyle(.caption2Regular)
