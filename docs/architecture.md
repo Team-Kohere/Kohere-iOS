@@ -62,7 +62,7 @@ Kohere/                                   # Tuist 프로젝트 루트
 │   ├── Local/                            # Keychain, UserDefaults
 │   ├── Push/
 │   └── Realtime/
-├── Kohere<FeatureName>/                  # 앱에서 분리한 화면 모듈 (예: KohereLivingGuide, KohereMapEntry)
+├── Kohere<FeatureName>/                  # 앱에서 분리한 화면 모듈 (예: KohereListing, KohereLivingGuide, KohereMapEntry)
 └── KohereTests/
 ```
 
