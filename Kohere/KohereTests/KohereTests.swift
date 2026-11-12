@@ -12,6 +12,7 @@ import ComposableArchitecture
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
+import KohereMapEntry
 import XCTest
 
 final class QuizAnswerResponseMappingTests: XCTestCase {

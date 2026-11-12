@@ -1,5 +1,6 @@
 import KohereDesignSystem
 import KohereDomain
+import KohereMapEntry
 
 //
 //  MapListingSearchInputMapper.swift

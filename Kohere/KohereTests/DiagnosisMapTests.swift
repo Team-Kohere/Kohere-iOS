@@ -3,6 +3,7 @@ import ComposableArchitecture
 import KohereCore
 @testable import KohereData
 import KohereDomain
+import KohereMapEntry
 import XCTest
 
 @MainActor

@@ -10,6 +10,7 @@ import Foundation
 import KohereCore
 import KohereDesignSystem
 import KohereDomain
+import KohereMapEntry
 
 extension ChatRoomRole {
     var userType: UserType {

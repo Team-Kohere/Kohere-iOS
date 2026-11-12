@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereMapEntry
 
 extension MapFeature {
     func handlePathAction(

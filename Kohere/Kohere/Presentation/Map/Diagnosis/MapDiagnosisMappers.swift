@@ -10,6 +10,7 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
+import KohereMapEntry
 
 extension ListingItemModel {
     init(

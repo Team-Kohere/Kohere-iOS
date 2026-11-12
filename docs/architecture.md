@@ -62,6 +62,7 @@ Kohere/                                   # Tuist 프로젝트 루트
 │   ├── Local/                            # Keychain, UserDefaults
 │   ├── Push/
 │   └── Realtime/
+├── Kohere<FeatureName>/                  # 앱에서 분리한 화면 모듈 (예: KohereLivingGuide, KohereMapEntry)
 └── KohereTests/
 ```
 
@@ -70,6 +71,7 @@ Kohere/                                   # Tuist 프로젝트 루트
 ```text
 앱(Kohere) → KohereData → KohereDomain → KohereCore
 앱(Kohere) → KohereDesignSystem → KohereLocalization → KohereCore
+앱(Kohere) → Kohere<FeatureName> → KohereDomain, KohereDesignSystem 등 필요한 하위 모듈
 ```
 
 화면은 `Presentation/<FeatureName>`에서 `Kohere<FeatureName>` 모듈 폴더로 하나씩 분리하는 중이다. 모듈을 추가할 때는 `Project.swift`에 `.module(name:dependencies:)`로 선언하고 `tuist generate`를 실행한다.

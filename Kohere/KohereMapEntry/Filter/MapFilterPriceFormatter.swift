@@ -10,8 +10,8 @@ import KohereCore
 import KohereDesignSystem
 import KohereLocalization
 
-enum MapFilterPriceFormatter {
-    static func amountText(_ tenThousandWon: Int, locale: Locale) -> String {
+public enum MapFilterPriceFormatter {
+    public static func amountText(_ tenThousandWon: Int, locale: Locale) -> String {
         if locale.language.languageCode?.identifier == AppLanguage.korean.apiCode {
             return "\(tenThousandWon)만 원"
         }
@@ -19,7 +19,7 @@ enum MapFilterPriceFormatter {
         return compactWonText(tenThousandWon)
     }
 
-    static func controlSummary(
+    public static func controlSummary(
         selection: RangeSliderValue,
         bounds: ClosedRange<Int>,
         locale: Locale
@@ -52,7 +52,7 @@ enum MapFilterPriceFormatter {
         }
     }
 
-    static func chipTitle(
+    public static func chipTitle(
         prefix: String,
         selection: RangeSliderValue,
         bounds: ClosedRange<Int>,

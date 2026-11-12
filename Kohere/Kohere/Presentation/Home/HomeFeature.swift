@@ -12,6 +12,7 @@ import KohereData
 import KohereDesignSystem
 import KohereDomain
 import KohereLivingGuide
+import KohereMapEntry
 
 @Reducer
 struct HomeFeature {
