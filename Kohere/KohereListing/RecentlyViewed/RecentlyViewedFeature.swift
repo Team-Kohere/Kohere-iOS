@@ -1,5 +1,5 @@
 //
-//  SavedListingsFeature.swift
+//  RecentlyViewedFeature.swift
 //  Kohere
 //
 //  Created by soomin on 6/24/26.
@@ -11,14 +11,18 @@ import KohereCore
 import KohereData
 import KohereDomain
 
-enum SavedListingsDelegate: Equatable {
+public enum RecentlyViewedDelegate: Equatable {
     case listingDetailRequested(String)
 }
 
 @Reducer
-struct SavedListingsFeature {
-    @Dependency(\.listingClient)
-    var listingClient
+public struct RecentlyViewedFeature {
+    public init() {}
+
+    @Dependency(\.fetchRecentListingsUseCase)
+    var fetchRecentListings
+    @Dependency(\.updateListingFavoriteUseCase)
+    var updateListingFavorite
     @Dependency(\.fetchKRWToUSDExchangeRateUseCase)
     var fetchKRWToUSDExchangeRateUseCase
     @Dependency(\.convertMonthlyRentCurrencyUseCase)
@@ -27,7 +31,7 @@ struct SavedListingsFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var userType: UserType?
         var appLanguage: AppLanguage = .english
         var listings: [Listing] = []
@@ -37,40 +41,61 @@ struct SavedListingsFeature {
         var isExchangeRateLoading = false
         var favoriteUpdatingIDs: Set<String> = []
         var errorMessage: String?
+
+        public init(
+            userType: UserType? = nil,
+            appLanguage: AppLanguage = .english,
+            listings: [Listing] = [],
+            items: [ListingItemModel] = [],
+            isLoading: Bool = false,
+            krwToUSDExchangeRate: KRWToUSDExchangeRate? = nil,
+            isExchangeRateLoading: Bool = false,
+            favoriteUpdatingIDs: Set<String> = [],
+            errorMessage: String? = nil
+        ) {
+            self.userType = userType
+            self.appLanguage = appLanguage
+            self.listings = listings
+            self.items = items
+            self.isLoading = isLoading
+            self.krwToUSDExchangeRate = krwToUSDExchangeRate
+            self.isExchangeRateLoading = isExchangeRateLoading
+            self.favoriteUpdatingIDs = favoriteUpdatingIDs
+            self.errorMessage = errorMessage
+        }
     }
     
     // MARK: - Action
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case onAppear
-        case favoriteListingsResponse(Result<ListingSearchPage, DataError>)
+        case recentListingsResponse(Result<[Listing], DataError>)
         case exchangeRateResponse(Result<KRWToUSDExchangeRate, CurrencyError>)
         case cardTapped(id: String)
         case likeButtonTapped(id: String)
         case favoriteStatusResponse(listingID: String, Result<ListingFavoriteStatus, DataError>)
         case backButtonTapped
-        case delegate(SavedListingsDelegate)
+        case delegate(RecentlyViewedDelegate)
     }
     
     // MARK: - Reducer Body
     
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
                 var effects: [Effect<Action>] = []
 
-                if state.canUseFavoriteFeatures, !state.isLoading {
+                if !state.isLoading {
                     state.isLoading = true
                     state.errorMessage = nil
                     effects.append(
-                        .run { [listingClient] send in
+                        .run { [fetchRecentListings] send in
                             do {
-                                // TODO: 고도화 때 페이지네이션 처리
-                                let page = try await listingClient.fetchFavoriteListings(0, 30)
-                                await send(.favoriteListingsResponse(.success(page)))
+                                let listings = try await fetchRecentListings.execute()
+                                await send(.recentListingsResponse(.success(listings)))
                             } catch {
-                                await send(.favoriteListingsResponse(.failure(.from(error))))
+                                await send(.recentListingsResponse(.failure(.from(error))))
                             }
                         }
                     )
@@ -92,14 +117,14 @@ struct SavedListingsFeature {
 
                 return .merge(effects)
 
-            case let .favoriteListingsResponse(.success(page)):
-                state.listings = page.content
-                state.items = listingItems(from: page.content, state: state)
+            case let .recentListingsResponse(.success(listings)):
+                state.listings = listings
+                state.items = listingItems(from: listings, state: state)
                 state.isLoading = false
                 state.errorMessage = nil
                 return .none
 
-            case let .favoriteListingsResponse(.failure(error)):
+            case let .recentListingsResponse(.failure(error)):
                 state.isLoading = false
                 state.errorMessage = error.localizedDescription
                 return .none
@@ -126,14 +151,9 @@ struct SavedListingsFeature {
                 state.favoriteUpdatingIDs.insert(id)
                 state.errorMessage = nil
 
-                return .run { [listingClient, isLiked = item.isLiked] send in
+                return .run { [updateListingFavorite, isLiked = item.isLiked] send in
                     do {
-                        let status: ListingFavoriteStatus
-                        if isLiked {
-                            status = try await listingClient.removeFavorite(id)
-                        } else {
-                            status = try await listingClient.addFavorite(id)
-                        }
+                        let status = try await updateListingFavorite.execute(id, isLiked)
                         await send(.favoriteStatusResponse(listingID: id, .success(status)))
                     } catch {
                         await send(.favoriteStatusResponse(listingID: id, .failure(.from(error))))
@@ -144,13 +164,9 @@ struct SavedListingsFeature {
                 state.favoriteUpdatingIDs.remove(listingID)
                 state.errorMessage = nil
 
-                if status.isFavorited {
-                    if let index = state.items.firstIndex(where: { $0.id == listingID }) {
-                        state.items[index].isLiked = true
-                        state.items[index].favoriteCount = status.favoriteCount
-                    }
-                } else {
-                    state.items.removeAll { $0.id == listingID }
+                if let index = state.items.firstIndex(where: { $0.id == listingID }) {
+                    state.items[index].isLiked = status.isFavorited
+                    state.items[index].favoriteCount = status.favoriteCount
                 }
                 return .none
 
@@ -180,7 +196,7 @@ struct SavedListingsFeature {
     }
 }
 
-extension SavedListingsFeature.State {
+extension RecentlyViewedFeature.State {
     var canUseFavoriteFeatures: Bool {
         userType == .tenant
     }

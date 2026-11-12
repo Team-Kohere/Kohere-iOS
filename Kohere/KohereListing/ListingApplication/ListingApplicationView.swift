@@ -11,11 +11,15 @@ import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 
-struct ListingApplicationView: View {
+public struct ListingApplicationView: View {
     @Bindable var store: StoreOf<ListingApplicationFeature>
+
+    public init(store: StoreOf<ListingApplicationFeature>) {
+        self.store = store
+    }
     @FocusState private var isPhoneNumberFocused: Bool
 
-    var body: some View {
+    public var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 navigationBar

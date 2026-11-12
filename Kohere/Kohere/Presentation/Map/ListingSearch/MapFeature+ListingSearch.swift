@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import Foundation
 import KohereDomain
+import KohereListing
 import KohereMapEntry
 
 enum MapLocationSearchIntent {

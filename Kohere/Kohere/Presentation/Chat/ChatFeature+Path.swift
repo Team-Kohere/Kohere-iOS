@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereDomain
+import KohereListing
 
 extension ChatFeature {
     func handlePathAction(_ action: StackActionOf<Path>, state: inout State) -> Effect<Action> {

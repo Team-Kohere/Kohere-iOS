@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import KohereDomain
+import KohereListing
 
 extension MapFeature.State {
     var selectedListingItem: ListingItemModel? {

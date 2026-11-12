@@ -15,11 +15,11 @@ enum ListingApplicationStep: Equatable {
     case review
 }
 
-enum ListingApplicationPrivacySection: String, CaseIterable, Equatable, Hashable, Identifiable {
+public enum ListingApplicationPrivacySection: String, CaseIterable, Equatable, Hashable, Identifiable {
     case collection
     case thirdParty
 
-    var id: String { rawValue }
+    public var id: String { rawValue }
 
     func title(language: AppLanguage) -> String {
         switch self {
@@ -40,7 +40,7 @@ enum ListingApplicationPrivacySection: String, CaseIterable, Equatable, Hashable
     }
 }
 
-enum ListingApplicationDelegate: Equatable {
+public enum ListingApplicationDelegate: Equatable {
     case listingDetailRequested(listingID: String)
     case chatRoomRequested(listingID: String)
     case privacyDocumentRequested(ListingApplicationPrivacySection)

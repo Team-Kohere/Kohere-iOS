@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereListing
 import KohereMapEntry
 
 extension MapFeature {

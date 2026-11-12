@@ -1,5 +1,5 @@
 //
-//  MapListingSearchResultMappers.swift
+//  ListingItemModel+Listing.swift
 //  Kohere
 //
 //  Created by Codex on 7/6/26.
@@ -11,7 +11,7 @@ import KohereDomain
 import KohereLocalization
 
 extension ListingItemModel {
-    init(listing: Listing, language: AppLanguage) {
+    public init(listing: Listing, language: AppLanguage) {
         self.init(
             id: listing.id,
             title: listing.title,
@@ -37,7 +37,7 @@ extension ListingItemModel {
         )
     }
 
-    init(
+    public init(
         listing: Listing,
         exchangeRate: KRWToUSDExchangeRate?,
         convertMonthlyRentCurrencyUseCase: ConvertMonthlyRentCurrencyUseCase,
@@ -134,7 +134,7 @@ extension ListingItemModel {
         return listing.address ?? ""
     }
 
-    static func transitTitle(_ transit: ListingNearestTransit?, language: AppLanguage) -> String {
+    public static func transitTitle(_ transit: ListingNearestTransit?, language: AppLanguage) -> String {
         guard let transit else { return "" }
         guard let walkMinutes = transit.walkMinutes else { return transit.name }
 

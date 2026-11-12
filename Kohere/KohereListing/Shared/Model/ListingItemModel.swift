@@ -7,22 +7,22 @@
 
 import Foundation
 
-struct ListingItemModel: Equatable, Identifiable {
-    let id: String
-    let title: String
-    let thumbnailURL: String?
-    let formattedPrice: String
-    let formattedUsdPrice: String
-    let detailsDescription: String
-    let locationDescription: String
-    let typeTag: String
-    let period: String
-    var isLiked: Bool
-    var favoriteCount: Int?
+public struct ListingItemModel: Equatable, Identifiable {
+    public let id: String
+    public let title: String
+    public let thumbnailURL: String?
+    public let formattedPrice: String
+    public let formattedUsdPrice: String
+    public let detailsDescription: String
+    public let locationDescription: String
+    public let typeTag: String
+    public let period: String
+    public var isLiked: Bool
+    public var favoriteCount: Int?
 
-    var listingID: String { id }
+    public var listingID: String { id }
 
-    nonisolated init(
+    public nonisolated init(
         id: String,
         title: String = "",
         thumbnailURL: String? = nil,
@@ -48,7 +48,7 @@ struct ListingItemModel: Equatable, Identifiable {
         self.favoriteCount = favoriteCount
     }
 
-    nonisolated init(
+    public nonisolated init(
         id: Int,
         title: String = "",
         thumbnailURL: String? = nil,

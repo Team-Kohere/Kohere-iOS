@@ -11,6 +11,7 @@ import KohereCore
 import KohereData
 import KohereDesignSystem
 import KohereDomain
+import KohereListing
 import KohereMapEntry
 
 extension MapFeature {
