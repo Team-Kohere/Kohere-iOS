@@ -13,7 +13,7 @@ import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 
-enum ListingDetailDelegate: Equatable {
+public enum ListingDetailDelegate: Equatable {
     case applicationRequested(
         listingID: String,
         listingTitle: String,
@@ -26,7 +26,9 @@ enum ListingDetailDelegate: Equatable {
 }
 
 @Reducer
-struct ListingDetailFeature {
+public struct ListingDetailFeature {
+    public init() {}
+
     @Dependency(\.fetchListingDetailUseCase)
     var fetchListingDetailUseCase
     @Dependency(\.listingClient)
@@ -39,8 +41,8 @@ struct ListingDetailFeature {
     var createChatInquiryUseCase
 
     @ObservableState
-    struct State: Equatable {
-        let listingID: String
+    public struct State: Equatable {
+        public let listingID: String
         var detail: ListingDetailModel?
         var listingDetail: ListingDetail?
         var krwToUSDExchangeRate: KRWToUSDExchangeRate?
@@ -58,7 +60,7 @@ struct ListingDetailFeature {
         var roomTypeValidationMessage: String?
         var errorMessage: String?
 
-        init(
+        public init(
             listingID: String,
             userType: UserType? = nil,
             appLanguage: AppLanguage = .english,
@@ -71,7 +73,7 @@ struct ListingDetailFeature {
         }
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case onAppear
         case detailResponse(Result<ListingDetail, DataError>)
         case exchangeRateResponse(Result<KRWToUSDExchangeRate, CurrencyError>)
@@ -91,7 +93,7 @@ struct ListingDetailFeature {
         case delegate(ListingDetailDelegate)
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

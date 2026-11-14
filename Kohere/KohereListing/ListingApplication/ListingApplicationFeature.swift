@@ -13,14 +13,16 @@ import KohereDomain
 import KohereLocalization
 
 @Reducer
-struct ListingApplicationFeature {
+public struct ListingApplicationFeature {
+    public init() {}
+
     @Dependency(\.fetchCurrentUserUseCase)
     var fetchCurrentUserUseCase
     @Dependency(\.createListingBookingUseCase)
     var createListingBookingUseCase
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var step: ListingApplicationStep = .dateSelection
         let listingID: String
         let listingTitle: String
@@ -146,7 +148,7 @@ struct ListingApplicationFeature {
             displayedMonth < Self.monthStart(for: maximumMoveInDate)
         }
 
-        init(
+        public init(
             listingID: String,
             listingTitle: String,
             roomOfferID: String,
@@ -168,7 +170,7 @@ struct ListingApplicationFeature {
         }
     }
 
-    enum Action: BindableAction, Equatable {
+    public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case onAppear
         case applicantProfileResponse(Result<UserProfile, DataError>)
@@ -192,7 +194,7 @@ struct ListingApplicationFeature {
         case delegate(ListingApplicationDelegate)
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         BindingReducer()
 
         Reduce { state, action in

@@ -9,10 +9,14 @@ import ComposableArchitecture
 import KohereDesignSystem
 import SwiftUI
 
-struct ListingApplicationPrivacyWebView: View {
+public struct ListingApplicationPrivacyWebView: View {
     let store: StoreOf<ListingApplicationPrivacyWebFeature>
 
-    var body: some View {
+    public init(store: StoreOf<ListingApplicationPrivacyWebFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         VStack(spacing: 0) {
             KohereNavigationBar(
                 left: .backButton({ store.send(.backButtonTapped) }),

@@ -11,17 +11,21 @@ import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 
-struct RecentlyViewedListingsView: View {
+public struct RecentlyViewedListingsView: View {
     
     // MARK: - Property
     
     let store: StoreOf<RecentlyViewedFeature>
+
+    public init(store: StoreOf<RecentlyViewedFeature>) {
+        self.store = store
+    }
     @Environment(\.locale)
     private var locale
     
     // MARK: - Body
     
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             KohereNavigationBar(
                 left: .backButton({ store.send(.backButtonTapped) }),

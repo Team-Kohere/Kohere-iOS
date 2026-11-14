@@ -9,7 +9,7 @@ import Foundation
 import KohereCore
 import KohereLocalization
 
-enum MonthlyRentPriceFormatter {
+public enum MonthlyRentPriceFormatter {
     nonisolated static func rangeTitle(
         prefix: String,
         min: Int?,
@@ -20,7 +20,7 @@ enum MonthlyRentPriceFormatter {
         return "\(prefix) \(rangeTitle)"
     }
 
-    static func wonTitle(
+    public static func wonTitle(
         min: Int?,
         max: Int?,
         language: AppLanguage
@@ -32,7 +32,7 @@ enum MonthlyRentPriceFormatter {
         return language.localized(.listingDetailFormatMonthlyRent(rangeTitle))
     }
 
-    nonisolated static func usdTitle(
+    public nonisolated static func usdTitle(
         min: Decimal?,
         max: Decimal?
     ) -> String {
@@ -50,11 +50,11 @@ enum MonthlyRentPriceFormatter {
         }
     }
 
-    nonisolated static func usdTitle(from amount: Decimal) -> String {
+    public nonisolated static func usdTitle(from amount: Decimal) -> String {
         "≈\(usdTitle(amount))/mo"
     }
 
-    nonisolated static func amountRangeTitle(
+    public nonisolated static func amountRangeTitle(
         min: Int?,
         max: Int?,
         language: AppLanguage

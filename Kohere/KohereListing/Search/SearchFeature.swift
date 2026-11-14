@@ -14,7 +14,9 @@ import KohereDomain
 import KohereLocalization
 
 @Reducer
-struct SearchFeature {
+public struct SearchFeature {
+    public init() {}
+
     private static let recentSearchLimit = 10
     @Dependency(\.placeSearchClient)
     var placeSearchClient
@@ -22,7 +24,7 @@ struct SearchFeature {
     var userDefaultsClient
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var appLanguage: AppLanguage = .english
         var searchText = ""
         var contentState: SearchContentState = .recentSearches
@@ -30,7 +32,7 @@ struct SearchFeature {
         var placeResults: [SearchPlaceResult] = []
     }
 
-    enum Action {
+    public enum Action {
         case backButtonTapped
         case searchTextChanged(String)
         case clearButtonTapped
@@ -45,7 +47,7 @@ struct SearchFeature {
         case popupRequested(AppPopup)
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:
@@ -138,7 +140,7 @@ struct SearchFeature {
 }
 
 extension SearchFeature {
-    static func initialState(
+    public static func initialState(
         userDefaultsClient: UserDefaultsClient,
         appLanguage: AppLanguage = .english
     ) -> State {
@@ -193,7 +195,7 @@ private extension Array where Element: Hashable {
     }
 }
 
-nonisolated enum SearchFeatureCancelID: Hashable, Sendable {
+public nonisolated enum SearchFeatureCancelID: Hashable, Sendable {
     case placeSearch
 }
 
@@ -213,12 +215,12 @@ nonisolated struct SearchRecentSearch: Equatable, Identifiable, Sendable {
     }
 }
 
-nonisolated struct SearchPlaceResult: Equatable, Identifiable, Sendable {
-    let id: String
-    let title: String
-    let roadAddress: String
-    let address: String
-    let coordinate: MapCoordinate
+public nonisolated struct SearchPlaceResult: Equatable, Identifiable, Sendable {
+    public let id: String
+    public let title: String
+    public let roadAddress: String
+    public let address: String
+    public let coordinate: MapCoordinate
 
     var displayAddress: String {
         roadAddress.isEmpty ? address : roadAddress

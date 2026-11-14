@@ -11,6 +11,7 @@ import ComposableArchitecture
 @testable import KohereData
 import KohereDesignSystem
 import KohereDomain
+@testable import KohereListing
 import KohereLocalization
 import KohereMapEntry
 import XCTest

@@ -10,8 +10,12 @@ import KohereDesignSystem
 import SwiftUI
 import UIKit
 
-struct ListingDetailView: View {
+public struct ListingDetailView: View {
     let store: StoreOf<ListingDetailFeature>
+
+    public init(store: StoreOf<ListingDetailFeature>) {
+        self.store = store
+    }
     @State private var topChromeProgress: CGFloat = 0
     @State private var verticalScrollOffset: CGFloat = 0
     @State private var fallbackScrollOffsetBaseline: CGFloat?
@@ -32,7 +36,7 @@ struct ListingDetailView: View {
         collapsedNavigationBarHeight + sectionTabsHeight
     }
 
-    var body: some View {
+    public var body: some View {
         ScrollViewReader { scrollProxy in
             Group {
                 if let detail = store.detail {

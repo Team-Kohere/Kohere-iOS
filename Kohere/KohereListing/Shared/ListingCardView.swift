@@ -8,7 +8,7 @@
 import KohereDesignSystem
 import SwiftUI
 
-struct ListingCardView: View {
+public struct ListingCardView: View {
     
     // MARK: - Properties
     
@@ -18,7 +18,7 @@ struct ListingCardView: View {
     var onCardTapped: () -> Void
     var onLikeTapped: () -> Void
 
-    init(
+    public init(
         item: ListingItemModel,
         showsLikeButton: Bool = true,
         onCardTapped: @escaping () -> Void,
@@ -32,7 +32,7 @@ struct ListingCardView: View {
     
     // MARK: - Body
     
-    var body: some View {
+    public var body: some View {
         HStack(alignment: .top, spacing: 12) {
             KohereRemoteImageView(urlString: item.thumbnailURL)
                 .frame(width: 156, height: 120)

@@ -7,6 +7,7 @@
 
 import KohereCore
 import KohereDomain
+import KohereListing
 import NMapsMap
 import SwiftUI
 

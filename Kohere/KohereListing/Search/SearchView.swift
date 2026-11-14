@@ -11,13 +11,17 @@ import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 
-struct SearchView: View {
+public struct SearchView: View {
     let store: StoreOf<SearchFeature>
+
+    public init(store: StoreOf<SearchFeature>) {
+        self.store = store
+    }
     @Environment(\.locale)
     private var locale
     @FocusState private var isSearchFocused: Bool
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             searchHeader
             searchBanner

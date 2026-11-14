@@ -9,6 +9,7 @@ import Foundation
 import KohereCore
 import KohereDesignSystem
 import KohereDomain
+import KohereListing
 import KohereLocalization
 import KohereMapEntry
 

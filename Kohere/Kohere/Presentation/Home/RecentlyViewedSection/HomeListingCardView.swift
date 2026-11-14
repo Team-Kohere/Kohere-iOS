@@ -6,6 +6,7 @@
 //
 
 import KohereDesignSystem
+import KohereListing
 import SwiftUI
 
 struct HomeListingCardView: View {

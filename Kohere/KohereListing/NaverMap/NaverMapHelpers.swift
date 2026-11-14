@@ -11,16 +11,16 @@ import NMapsMap
 
 // MARK: - Marker Images
 
-enum MapMarkerImageFactory {
+public enum MapMarkerImageFactory {
     static let propertyMarker = NMFOverlayImage(
         image: .mapPropertyMarker,
         reuseIdentifier: "MapPropertyMarker"
     )
-    static let clusterMarkerSingle = NMFOverlayImage(
+    public static let clusterMarkerSingle = NMFOverlayImage(
         image: .mapClusterMarkerSingle,
         reuseIdentifier: "MapClusterMarkerSingle"
     )
-    static let clusterMarkerDouble = NMFOverlayImage(
+    public static let clusterMarkerDouble = NMFOverlayImage(
         image: .mapClusterMarkerDouble,
         reuseIdentifier: "MapClusterMarkerDouble"
     )
@@ -29,7 +29,7 @@ enum MapMarkerImageFactory {
 // MARK: - Marker Styling
 
 // 단일 매물 마커는 같은 에셋을 유지하고 선택 상태에 따라 크기만 바꾼다.
-func applyPropertyMarkerStyle(
+public func applyPropertyMarkerStyle(
     to marker: NMFMarker,
     isSelected: Bool,
     animated: Bool
@@ -65,14 +65,14 @@ private func animatePropertyMarkerSize(_ marker: NMFMarker, to targetSize: CGFlo
 
 // MARK: - Coordinate Mapping
 
-func makeNaverLatLng(from coordinate: MapCoordinate) -> NMGLatLng {
+public func makeNaverLatLng(from coordinate: MapCoordinate) -> NMGLatLng {
     NMGLatLng(
         lat: coordinate.latitude,
         lng: coordinate.longitude
     )
 }
 
-func makeMapViewport(from mapView: NMFMapView) -> MapViewport {
+public func makeMapViewport(from mapView: NMFMapView) -> MapViewport {
     let cameraPosition = mapView.cameraPosition
     let contentBounds = mapView.contentBounds
 

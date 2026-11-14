@@ -10,14 +10,16 @@ import Foundation
 import KohereCore
 
 @Reducer
-struct ListingApplicationPrivacyWebFeature {
+public struct ListingApplicationPrivacyWebFeature {
+    public init() {}
+
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         let title: String
         let url: URL
         var isLoading: Bool
 
-        init(
+        public init(
             section: ListingApplicationPrivacySection,
             appLanguage: AppLanguage = .english,
             isLoading: Bool = true
@@ -28,13 +30,13 @@ struct ListingApplicationPrivacyWebFeature {
         }
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case backButtonTapped
         case loadingStarted
         case loadingFinished
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:
