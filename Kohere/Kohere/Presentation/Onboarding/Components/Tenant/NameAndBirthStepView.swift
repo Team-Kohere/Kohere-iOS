@@ -8,6 +8,7 @@
 import ComposableArchitecture
 import KohereDesignSystem
 import KohereLocalization
+import KohereProfileForm
 import SwiftUI
 
 struct NameAndBirthStepView: View {
