@@ -15,6 +15,7 @@ import KohereDomain
 import KohereLocalization
 import KohereMapEntry
 @testable import KohereProfileForm
+@testable import KohereMore
 import XCTest
 
 final class QuizAnswerResponseMappingTests: XCTestCase {

@@ -5,6 +5,7 @@ import KohereData
 import KohereDesignSystem
 @testable import KohereDomain
 import KohereLocalization
+@testable import KohereMore
 import XCTest
 
 @MainActor

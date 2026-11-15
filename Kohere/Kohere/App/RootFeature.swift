@@ -13,6 +13,7 @@ import KohereDesignSystem
 import KohereDomain
 import KohereListing
 import KohereLocalization
+import KohereMore
 
 @Reducer
 struct RootFeature {

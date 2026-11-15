@@ -10,10 +10,14 @@ import KohereListing
 import KohereLivingGuide
 import SwiftUI
 
-struct MoreFlowView: View {
+public struct MoreFlowView: View {
     @Bindable var store: StoreOf<MoreFeature>
 
-    var body: some View {
+    public init(store: StoreOf<MoreFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         NavigationStack(
             path: $store.scope(
                 state: \MoreFeature.State.path,

@@ -8,6 +8,7 @@ import Foundation
 import KohereCore
 import KohereData
 import KohereDomain
+import KohereMore
 
 extension RootFeature {
     func defaultLanguage(for userType: OnboardingUserType) -> AppLanguage {

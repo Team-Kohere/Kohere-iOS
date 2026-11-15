@@ -11,6 +11,7 @@ import KohereCore
 import KohereData
 import KohereDomain
 import KohereListing
+import KohereMore
 import OSLog
 
 private let startupAuthLogger = Logger(

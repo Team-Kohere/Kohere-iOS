@@ -13,21 +13,21 @@ import KohereDomain
 import KohereLocalization
 
 @Reducer
-struct AccountFeature {
+public struct AccountFeature {
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var userType: UserType
         var userProfile: UserProfile?
         var language: AppLanguage = .english
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case backButtonTapped
         case deleteAccountButtonTapped
         case popupRequested(AppPopup)
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:

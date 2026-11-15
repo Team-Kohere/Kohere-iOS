@@ -26,9 +26,9 @@ enum SettingDocument: Equatable {
 }
 
 @Reducer
-struct SettingDocumentWebFeature {
+public struct SettingDocumentWebFeature {
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         let document: SettingDocument
         let url: URL
         var isLoading: Bool
@@ -43,13 +43,13 @@ struct SettingDocumentWebFeature {
         }
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case backButtonTapped
         case loadingStarted
         case loadingFinished
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:
