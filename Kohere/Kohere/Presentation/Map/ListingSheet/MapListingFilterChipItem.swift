@@ -9,6 +9,7 @@ import Foundation
 import KohereCore
 import KohereDomain
 import KohereLocalization
+import KohereMapEntry
 
 struct MapListingFilterChipItem: Identifiable {
     enum Kind: Hashable {

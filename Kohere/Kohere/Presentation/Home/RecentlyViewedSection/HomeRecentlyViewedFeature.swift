@@ -10,6 +10,7 @@ import Foundation
 import KohereCore
 import KohereData
 import KohereDomain
+import KohereListing
 
 private extension HomeRecentlyViewedFeature {
     nonisolated enum EffectID: Hashable, Sendable {

@@ -1,4 +1,6 @@
 import ComposableArchitecture
+@testable import KohereListing
+import KohereMapEntry
 import XCTest
 @testable import Kohere
 import KohereCore

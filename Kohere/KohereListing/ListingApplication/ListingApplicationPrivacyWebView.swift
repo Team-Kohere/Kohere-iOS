@@ -1,0 +1,48 @@
+//
+//  ListingApplicationPrivacyWebView.swift
+//  Kohere
+//
+//  Created by Codex on 7/9/26.
+//
+
+import ComposableArchitecture
+import KohereDesignSystem
+import SwiftUI
+
+public struct ListingApplicationPrivacyWebView: View {
+    let store: StoreOf<ListingApplicationPrivacyWebFeature>
+
+    public init(store: StoreOf<ListingApplicationPrivacyWebFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
+        VStack(spacing: 0) {
+            KohereNavigationBar(
+                left: .backButton({ store.send(.backButtonTapped) }),
+                center: .none,
+                backgroundColor: .common0,
+                height: 48
+            )
+            .overlay(alignment: .bottom) {
+                Rectangle()
+                    .fill(.lineNeutral)
+                    .frame(height: 1)
+            }
+
+            ZStack {
+                KohereWebPageView(
+                    url: store.url,
+                    onLoadingStarted: { store.send(.loadingStarted) },
+                    onLoadingFinished: { store.send(.loadingFinished) }
+                )
+
+                if store.isLoading {
+                    ProgressView()
+                        .tint(.primary50)
+                }
+            }
+        }
+        .background(.backgroundNormalNormal)
+    }
+}

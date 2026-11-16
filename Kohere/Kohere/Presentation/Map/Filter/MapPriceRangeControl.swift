@@ -6,6 +6,7 @@
 //
 
 import KohereDesignSystem
+import KohereMapEntry
 import SwiftUI
 
 struct MapPriceRangeControl: View {

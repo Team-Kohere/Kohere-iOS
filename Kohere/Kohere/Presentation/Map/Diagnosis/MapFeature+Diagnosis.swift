@@ -9,6 +9,7 @@ import ComposableArchitecture
 import Foundation
 import KohereData
 import KohereDomain
+import KohereMapEntry
 
 extension MapFeature {
     func beginDiagnosisSearch(

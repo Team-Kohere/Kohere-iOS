@@ -41,6 +41,8 @@ let project = Project(
                 .target(name: "KohereDomain"),
                 .target(name: "KohereData"),
                 .target(name: "KohereLivingGuide"),
+                .target(name: "KohereMapEntry"),
+                .target(name: "KohereListing"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "GoogleSignIn"),
                 .external(name: "NMapsMap"),
@@ -130,6 +132,27 @@ let project = Project(
                 .external(name: "ComposableArchitecture")
             ]
         ),
+        .module(
+            name: "KohereMapEntry",
+            dependencies: [
+                .target(name: "KohereCore"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization")
+            ]
+        ),
+        .module(
+            name: "KohereListing",
+            dependencies: [
+                .target(name: "KohereCore"),
+                .target(name: "KohereData"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization"),
+                .external(name: "ComposableArchitecture"),
+                .external(name: "NMapsMap")
+            ]
+        ),
         .target(
             name: "KohereTests",
             destinations: [.iPhone],
@@ -145,6 +168,8 @@ let project = Project(
                 .target(name: "KohereDomain"),
                 .target(name: "KohereData"),
                 .target(name: "KohereLivingGuide"),
+                .target(name: "KohereMapEntry"),
+                .target(name: "KohereListing"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "Alamofire")
             ],

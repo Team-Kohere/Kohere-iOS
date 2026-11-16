@@ -5,6 +5,7 @@ import KohereData
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
+import KohereMapEntry
 
 @Reducer
 struct ChatBotFeature {

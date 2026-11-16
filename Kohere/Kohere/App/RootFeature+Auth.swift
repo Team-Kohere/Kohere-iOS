@@ -10,6 +10,7 @@ import Foundation
 import KohereCore
 import KohereData
 import KohereDomain
+import KohereListing
 import OSLog
 
 private let startupAuthLogger = Logger(

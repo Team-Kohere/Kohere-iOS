@@ -10,6 +10,7 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
+import KohereMapEntry
 import SwiftUI
 
 struct MapFilterView: View {
@@ -52,7 +53,7 @@ struct MapFilterView: View {
 
     private var filterOptionsSection: some View {
         MapFilterSection(title: language.localized(.mapFilterSectionOptions)) {
-            MapFilterFlowLayout(spacing: 8, rowSpacing: 8) {
+            KohereFlowLayout(spacing: 8, rowSpacing: 8) {
                 ForEach(RoomCondition.mapListingFilterCases, id: \.self) { option in
                     MapFilterSelectionChip(
                         title: option.mapFilterDisplayTitle(locale: locale),
@@ -93,7 +94,7 @@ struct MapFilterView: View {
 
     private var propertyTypeSection: some View {
         MapFilterSection(title: language.localized(.mapFilterSectionPropertyType)) {
-            MapFilterFlowLayout(spacing: 8, rowSpacing: 8) {
+            KohereFlowLayout(spacing: 8, rowSpacing: 8) {
                 ForEach(MapPropertyType.allCases, id: \.self) { propertyType in
                     MapFilterSelectionChip(
                         title: propertyType.displayTitle(locale: locale),
