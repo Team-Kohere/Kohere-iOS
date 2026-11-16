@@ -8,6 +8,7 @@ import Foundation
 import KohereCore
 import KohereData
 import KohereDomain
+import KohereLogin
 import KohereOnboarding
 
 extension RootFeature {

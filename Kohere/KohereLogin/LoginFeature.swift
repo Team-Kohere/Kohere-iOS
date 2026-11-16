@@ -12,7 +12,7 @@ import KohereDomain
 import KohereOnboarding
 
 @Reducer
-struct LoginFeature {
+public struct LoginFeature {
     @Dependency(\.googleSignInClient)
     var googleSignInClient
     @Dependency(\.appleSignInClient)
@@ -24,29 +24,33 @@ struct LoginFeature {
     @Dependency(\.keychainClient)
     var keychainClient
 
-    enum LoginSheet: Equatable, Identifiable {
+    public enum LoginSheet: Equatable, Identifiable {
         case notificationOption
         case termsAgreement
         case userTypeSelect
         
-        var id: Self { self }
+        public var id: Self { self }
     }
     
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var isLoginRequesting = false
-        var authInfo: Auth?
+        public var authInfo: Auth?
         var loginErrorMessage: String?
-        var currentSheet: LoginSheet?
+        public var currentSheet: LoginSheet?
         var isServiceTermsAgreed = true
         var isPrivacyTermsAgreed = true
         var isMarketingCommunicationsAgreed = false
         var isTermsAgreementRequesting = false
         var selectedTermsDetail: TermsDetailKind?
         
-        var isRequiredTermsAgreed: Bool {
+        public init(isLoginRequesting: Bool = false) {
+            self.isLoginRequesting = isLoginRequesting
+        }
+
+        public var isRequiredTermsAgreed: Bool {
             isServiceTermsAgreed && isPrivacyTermsAgreed
         }
         
@@ -54,7 +58,7 @@ struct LoginFeature {
     
     // MARK: - Action
     
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case googleLoginButtonTapped
         case appleLoginButtonTapped
         case socialLoginCredentialReceived(SocialLoginCredential)
@@ -79,9 +83,11 @@ struct LoginFeature {
         case setSheet(LoginSheet?)
     }
     
+    public init() {}
+
     // MARK: - Reducer Body
     
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .googleLoginButtonTapped:

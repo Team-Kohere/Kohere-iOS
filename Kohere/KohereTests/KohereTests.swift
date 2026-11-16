@@ -13,6 +13,7 @@ import KohereDesignSystem
 import KohereDomain
 @testable import KohereListing
 import KohereLocalization
+@testable import KohereLogin
 import KohereMapEntry
 @testable import KohereOnboarding
 import XCTest
