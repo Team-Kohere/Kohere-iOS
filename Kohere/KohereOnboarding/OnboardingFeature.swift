@@ -11,23 +11,23 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 
-enum OnboardingUserType: String, Equatable {
+public enum OnboardingUserType: String, Equatable {
     case tenant
     case landlord
 }
 
 @Reducer
-struct OnboardingFeature {
+public struct OnboardingFeature {
 
     // MARK: - State
 
     @ObservableState
-    struct State: Equatable {
-        var userType: OnboardingUserType
+    public struct State: Equatable {
+        public let userType: OnboardingUserType
         var tenant: TenantOnboardingFeature.State?
         var landlord: LandlordOnboardingFeature.State?
 
-        init(
+        public init(
             userType: OnboardingUserType = .tenant,
             appLanguage: AppLanguage = .english,
             socialName: String? = nil
@@ -46,24 +46,30 @@ struct OnboardingFeature {
                 )
             }
         }
+
+        public mutating func updateAppLanguage(_ language: AppLanguage) {
+            tenant?.appLanguage = language
+        }
     }
 
     // MARK: - Action
 
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case completed(Auth)
         case popupRequested(AppPopup)
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case tenant(TenantOnboardingFeature.Action)
         case landlord(LandlordOnboardingFeature.Action)
         case delegate(Delegate)
     }
 
+    public init() {}
+
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { _, action in
             switch action {
             case let .tenant(.delegate(.completed(auth))):

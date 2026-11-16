@@ -14,6 +14,7 @@ import KohereDomain
 @testable import KohereListing
 import KohereLocalization
 import KohereMapEntry
+@testable import KohereOnboarding
 import XCTest
 
 final class QuizAnswerResponseMappingTests: XCTestCase {
@@ -83,18 +84,18 @@ final class AppLanguageTests: XCTestCase {
 }
 
 final class OnboardingLocalizationTests: XCTestCase {
-    func testKoreanEmailVerificationCopyIsLocalized() {
+    func testKoreanPhoneVerificationCopyIsLocalized() {
         XCTAssertEqual(
-            AppLanguage.korean.localizedString(forKey: "onboarding.email.placeholder"),
-            "이메일을 입력해주세요"
+            AppLanguage.korean.localized(.onboardingProfilePhoneNumberPlaceholder),
+            "'-'를 제외하고 숫자만 입력해 주세요"
         )
         XCTAssertEqual(
-            AppLanguage.korean.localizedString(forKey: "onboarding.verification.emailSent"),
-            "이메일로 인증번호를 전송했어요"
+            AppLanguage.korean.localized(.onboardingPhoneVerificationCodeSent),
+            "휴대폰으로 인증 코드를 보냈어요."
         )
         XCTAssertEqual(
-            AppLanguage.korean.localizedString(forKey: "onboarding.verification.email.placeholder"),
-            "전송된 6자리 코드를 입력해주세요"
+            AppLanguage.korean.localized(.onboardingPhoneVerificationCodePlaceholder),
+            "전송된 6자리 코드를 입력해 주세요"
         )
     }
 }
@@ -1687,7 +1688,7 @@ final class OnboardingErrorPopupTests: XCTestCase {
             )
         ) {
             $0.isPhoneVerificationRequesting = false
-            $0.phoneVerificationCodeErrorMessage = "인증 코드가 올바르지 않거나 만료됐어요. 다시 시도해주세요."
+            $0.phoneVerificationCodeErrorMessage = "인증 코드가 올바르지 않거나 만료됐어요. 다시 시도해 주세요."
         }
     }
 
