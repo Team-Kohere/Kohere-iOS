@@ -11,12 +11,12 @@ import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 
-enum TermsDetailKind: String, Equatable, Identifiable {
+public enum TermsDetailKind: String, Equatable, Identifiable {
     case service
     case privacy
     case marketing
     
-    var id: String { rawValue }
+    public var id: String { rawValue }
     
     func title(language: AppLanguage) -> String {
         switch self {

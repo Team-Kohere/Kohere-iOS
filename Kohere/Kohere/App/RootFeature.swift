@@ -13,6 +13,8 @@ import KohereDesignSystem
 import KohereDomain
 import KohereListing
 import KohereLocalization
+import KohereLogin
+import KohereOnboarding
 
 @Reducer
 struct RootFeature {
@@ -106,7 +108,7 @@ struct RootFeature {
                 return presentAuthenticationGateIfNeeded(state: &state)
 
             case .saveAuthResponse(.failure):
-                state.popup = OnboardingErrorPopup.make(context: .saveAuthentication, language: state.appLanguage)
+                state.popup = OnboardingErrorPopup.saveAuthentication(language: state.appLanguage)
                 return .none
 
             case let .onboarding(.delegate(.popupRequested(popup))):

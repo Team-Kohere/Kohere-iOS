@@ -18,7 +18,7 @@ private nonisolated enum TenantOnboardingEffectID: Hashable, Sendable {
 }
 
 @Reducer
-struct TenantOnboardingFeature {
+public struct TenantOnboardingFeature {
     @Dependency(\.completeOnboardingUseCase)
     var completeOnboardingUseCase
 
@@ -43,7 +43,7 @@ struct TenantOnboardingFeature {
     // MARK: - State
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var appLanguage: AppLanguage = .english
         var currentStep: Step = .nameAndBirth
 
@@ -61,11 +61,11 @@ struct TenantOnboardingFeature {
 
     // MARK: - Action
 
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case completed(Auth)
     }
 
-    enum Action: BindableAction, Equatable {
+    public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case nextButtonTapped
         case backButtonTapped
@@ -77,7 +77,7 @@ struct TenantOnboardingFeature {
 
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         BindingReducer()
         Reduce { state, action in
             switch action {

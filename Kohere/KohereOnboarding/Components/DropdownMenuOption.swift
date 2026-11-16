@@ -11,20 +11,20 @@ import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
 
-struct DropdownMenuOption: KohereDropdownMenuOption {
-    let option: String
-    var id: String { option }
+public struct DropdownMenuOption: KohereDropdownMenuOption {
+    public let option: String
+    public var id: String { option }
 
-    nonisolated init(option: String) {
+    public nonisolated init(option: String) {
         self.option = option
     }
 
-    nonisolated static func == (lhs: DropdownMenuOption, rhs: DropdownMenuOption) -> Bool {
+    public nonisolated static func == (lhs: DropdownMenuOption, rhs: DropdownMenuOption) -> Bool {
         lhs.option == rhs.option
     }
 }
 
-extension DropdownMenuOption {
+public extension DropdownMenuOption {
     func localizedTitle(locale: Locale) -> String {
         if let month = Self.monthNumberByOption[option] {
             return Self.localizedMonth(month, locale: locale)
@@ -46,7 +46,7 @@ extension DropdownMenuOption {
     }
 }
 
-extension DropdownMenuOption {
+public extension DropdownMenuOption {
     static let months: [DropdownMenuOption] = [
         DropdownMenuOption(option: "JAN"),
         DropdownMenuOption(option: "FEB"),
@@ -79,7 +79,7 @@ extension DropdownMenuOption {
     static let genders = Gender.allCases.map(DropdownMenuOption.init)
 }
 
-extension DropdownMenuOption {
+public extension DropdownMenuOption {
     static func formattedBirthDate(
         year selectedYear: DropdownMenuOption?,
         month selectedMonth: DropdownMenuOption?,
