@@ -44,6 +44,8 @@ let project = Project(
                 .target(name: "KohereMapEntry"),
                 .target(name: "KohereListing"),
                 .target(name: "KohereProfileForm"),
+                .target(name: "KohereOnboarding"),
+                .target(name: "KohereLogin"),
                 .target(name: "KohereMore"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "GoogleSignIn"),
@@ -165,6 +167,31 @@ let project = Project(
             ]
         ),
         .module(
+            name: "KohereOnboarding",
+            dependencies: [
+                .target(name: "KohereCore"),
+                .target(name: "KohereData"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization"),
+                .target(name: "KohereProfileForm"),
+                .external(name: "ComposableArchitecture")
+            ]
+        ),
+        .module(
+            name: "KohereLogin",
+            dependencies: [
+                .target(name: "KohereCore"),
+                .target(name: "KohereData"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization"),
+                .target(name: "KohereOnboarding"),
+                .external(name: "ComposableArchitecture"),
+                .external(name: "GoogleSignIn")
+            ]
+        ),
+        .module(
             name: "KohereMore",
             dependencies: [
                 .target(name: "KohereCore"),
@@ -196,6 +223,8 @@ let project = Project(
                 .target(name: "KohereMapEntry"),
                 .target(name: "KohereListing"),
                 .target(name: "KohereProfileForm"),
+                .target(name: "KohereOnboarding"),
+                .target(name: "KohereLogin"),
                 .target(name: "KohereMore"),
                 .external(name: "ComposableArchitecture"),
                 .external(name: "Alamofire")

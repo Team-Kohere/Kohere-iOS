@@ -8,7 +8,9 @@ import Foundation
 import KohereCore
 import KohereData
 import KohereDomain
+import KohereLogin
 import KohereMore
+import KohereOnboarding
 
 extension RootFeature {
     func defaultLanguage(for userType: OnboardingUserType) -> AppLanguage {
@@ -22,7 +24,7 @@ extension RootFeature {
 
     func applyAppLanguage(_ language: AppLanguage, state: inout State) {
         state.appLanguage = language
-        state.onboarding.tenant?.appLanguage = language
+        state.onboarding.updateAppLanguage(language)
         state.home.appLanguage = language
         state.map.appLanguage = language
         state.chat.appLanguage = language

@@ -31,7 +31,11 @@ enum OnboardingErrorContext {
     }
 }
 
-enum OnboardingErrorPopup {
+public enum OnboardingErrorPopup {
+    public static func saveAuthentication(language: AppLanguage) -> AppPopup {
+        make(context: .saveAuthentication, language: language)
+    }
+
     static func make(context: OnboardingErrorContext, language: AppLanguage) -> AppPopup {
         .notice(
             AppPopup.Notice(
