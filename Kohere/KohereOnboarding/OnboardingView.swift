@@ -9,15 +9,19 @@ import ComposableArchitecture
 import KohereDesignSystem
 import SwiftUI
 
-struct OnboardingView: View {
+public struct OnboardingView: View {
 
     // MARK: - Properties
 
-    let store: StoreOf<OnboardingFeature>
+    private let store: StoreOf<OnboardingFeature>
+
+    public init(store: StoreOf<OnboardingFeature>) {
+        self.store = store
+    }
 
     // MARK: - Body
 
-    var body: some View {
+    public var body: some View {
         switch store.userType {
         case .tenant:
             if let tenantStore = store.scope(state: \.tenant, action: \.tenant) {

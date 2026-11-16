@@ -12,7 +12,7 @@ import KohereDomain
 import KohereLocalization
 
 public struct DropdownMenuOption: KohereDropdownMenuOption {
-    let option: String
+    public let option: String
     public var id: String { option }
 
     public nonisolated init(option: String) {
@@ -24,8 +24,8 @@ public struct DropdownMenuOption: KohereDropdownMenuOption {
     }
 }
 
-extension DropdownMenuOption {
-    public func localizedTitle(locale: Locale) -> String {
+public extension DropdownMenuOption {
+    func localizedTitle(locale: Locale) -> String {
         if let month = Self.monthNumberByOption[option] {
             return Self.localizedMonth(month, locale: locale)
         }
@@ -46,8 +46,8 @@ extension DropdownMenuOption {
     }
 }
 
-extension DropdownMenuOption {
-    public static let months: [DropdownMenuOption] = [
+public extension DropdownMenuOption {
+    static let months: [DropdownMenuOption] = [
         DropdownMenuOption(option: "JAN"),
         DropdownMenuOption(option: "FEB"),
         DropdownMenuOption(option: "MAR"),
@@ -62,25 +62,25 @@ extension DropdownMenuOption {
         DropdownMenuOption(option: "DEC")
     ]
 
-    public static let days = (1...31).map {
+    static let days = (1...31).map {
         DropdownMenuOption(option: String($0))
     }
 
-    public static let years = (1950...2026).reversed().map {
+    static let years = (1950...2026).reversed().map {
         DropdownMenuOption(option: String($0))
     }
 
-    public static let visas = VisaType.allCases.map(DropdownMenuOption.init)
+    static let visas = VisaType.allCases.map(DropdownMenuOption.init)
 
-    public static let nationalities = ["Korea, Republic of", "United States", "Japan", "China", "Vietnam", "Canada", "United Kingdom", "France", "Spain", "Italy", "Turkey", "Hungary"].map {
+    static let nationalities = ["Korea, Republic of", "United States", "Japan", "China", "Vietnam", "Canada", "United Kingdom", "France", "Spain", "Italy", "Turkey", "Hungary"].map {
         DropdownMenuOption(option: $0)
     }
 
-    public static let genders = Gender.allCases.map(DropdownMenuOption.init)
+    static let genders = Gender.allCases.map(DropdownMenuOption.init)
 }
 
-extension DropdownMenuOption {
-    public static func formattedBirthDate(
+public extension DropdownMenuOption {
+    static func formattedBirthDate(
         year selectedYear: DropdownMenuOption?,
         month selectedMonth: DropdownMenuOption?,
         day selectedDay: DropdownMenuOption?
@@ -98,27 +98,27 @@ extension DropdownMenuOption {
         return "\(selectedYear.option)-\(String(format: "%02d", month))-\(String(format: "%02d", day))"
     }
 
-    public nonisolated init(_ gender: Gender) {
+    nonisolated init(_ gender: Gender) {
         self.init(option: gender.displayTitle)
     }
 
-    public nonisolated init(_ visaType: VisaType) {
+    nonisolated init(_ visaType: VisaType) {
         self.init(option: visaType.displayTitle)
     }
 
-    public nonisolated var gender: Gender? {
+    nonisolated var gender: Gender? {
         Gender.allCases.first { $0.displayTitle == option }
     }
 
-    public nonisolated var visaType: VisaType? {
+    nonisolated var visaType: VisaType? {
         VisaType.allCases.first { $0.displayTitle == option }
     }
 
-    public var nationalityCountryCode: String? {
+    var nationalityCountryCode: String? {
         Self.countryCodeByNationalityOption[option]
     }
 
-    public static func nationalityOption(countryCode: String?) -> DropdownMenuOption? {
+    static func nationalityOption(countryCode: String?) -> DropdownMenuOption? {
         guard let countryCode else { return nil }
 
         return nationalities.first { $0.nationalityCountryCode == countryCode }

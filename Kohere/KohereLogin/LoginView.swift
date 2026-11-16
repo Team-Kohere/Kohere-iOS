@@ -8,17 +8,22 @@
 import ComposableArchitecture
 import KohereDesignSystem
 import KohereLocalization
+import KohereOnboarding
 import SwiftUI
 
-struct LoginView: View {
+public struct LoginView: View {
     
     // MARK: - Property
     
-    @Bindable var store: StoreOf<LoginFeature>
+    @Bindable private var store: StoreOf<LoginFeature>
     
+    public init(store: StoreOf<LoginFeature>) {
+        self.store = store
+    }
+
     // MARK: - Body
     
-    var body: some View {
+    public var body: some View {
         ZStack {
             loginContent
             
