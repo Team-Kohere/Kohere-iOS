@@ -3,11 +3,11 @@
 import Foundation
 
 // Bundle.module은 Tuist가 만든다. 정적 프레임워크에서도 리소스 번들을 정확히 가리킨다.
-private let resourceBundleDescription = LocalizedStringResource.BundleDescription.atURL(Bundle.module.bundleURL)
+private nonisolated let resourceBundleDescription = LocalizedStringResource.BundleDescription.atURL(Bundle.module.bundleURL)
 
 /// 문자열 카탈로그가 들어 있는 번들. 키를 문자열로만 아는 경우에 쓴다.
 public enum KohereLocalizationBundle {
-    public static let value = Bundle.module
+    public nonisolated static let value = Bundle.module
 }
 
 extension LocalizedStringResource {
