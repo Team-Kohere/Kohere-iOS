@@ -49,6 +49,9 @@ public struct MapFeature {
             case .mapDismissed:
                 return handleMapDismissed(state: &state)
 
+            case .cancelEffects:
+                return cancelEffects()
+
             // 일반 매물 검색
             case .initialLocationSearchRequested:
                 return beginLocationSearch(.initialEntry, state: &state)

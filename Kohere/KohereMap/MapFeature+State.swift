@@ -18,9 +18,9 @@ extension MapFeature {
     @ObservableState
     public struct State: Equatable {
         // Navigation
-        public var path = StackState<Path.State>()
-        public var userType: UserType?
-        public var appLanguage: AppLanguage = .english
+        public internal(set) var path = StackState<Path.State>()
+        var userType: UserType?
+        var appLanguage: AppLanguage = .english
 
         // 현재 검색 모드 / 화면 표시
         // - searchMode(listingSource): 목록과 마커를 어느 API 결과로 채우는지 정한다. (위치 검색 / 진단 추천)
@@ -64,7 +64,8 @@ extension MapFeature {
         var isDiagnosisButtonExpanded = false
         var isDiagnosisMatchesButtonExpanded = true
 
-        public init(appLanguage: AppLanguage = .english) {
+        public init(userType: UserType? = nil, appLanguage: AppLanguage = .english) {
+            self.userType = userType
             self.appLanguage = appLanguage
         }
     }
@@ -74,6 +75,7 @@ extension MapFeature {
         // Lifecycle
         case mapAppeared
         case mapDismissed
+        case cancelEffects
 
         // 일반 매물 검색
         case initialLocationSearchRequested
@@ -127,6 +129,26 @@ extension MapFeature {
         case depositMaximumChanged(Int)
         case filterApplyButtonTapped
         case filterResetButtonTapped
+    }
+}
+
+// MARK: - 루트에서 쓰는 상태 변경
+
+extension MapFeature.State {
+    public mutating func clearNavigation() {
+        path.removeAll()
+    }
+
+    public mutating func popNavigation() {
+        _ = path.popLast()
+    }
+
+    public mutating func updateUserType(_ userType: UserType) {
+        self.userType = userType
+    }
+
+    public mutating func updateAppLanguage(_ language: AppLanguage) {
+        appLanguage = language
     }
 }
 

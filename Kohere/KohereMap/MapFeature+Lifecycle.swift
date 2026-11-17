@@ -57,7 +57,12 @@ extension MapFeature {
         if state.selectedListingRequestID != nil {
             state.clearSelectedListing()
         }
-        return .merge(
+        return cancelEffects()
+    }
+
+    /// 지도에서 돌고 있는 효과를 모두 끈다. 화면을 떠날 때와, 로그아웃으로 루트가 `.cancelEffects`를 보낼 때 쓴다.
+    func cancelEffects() -> Effect<Action> {
+        .merge(
             .cancel(id: MapEffectID.exchangeRate),
             .cancel(id: MapEffectID.diagnosisButtonAutoCollapse),
             .cancel(id: MapEffectID.diagnosisDetail),
