@@ -11,17 +11,21 @@ import KohereDesignSystem
 import KohereLocalization
 import SwiftUI
 
-struct ChatBotView: View {
+public struct ChatBotView: View {
     
     // MARK: - Property
     
-    let store: StoreOf<ChatBotFeature>
+    private let store: StoreOf<ChatBotFeature>
     @Environment(\.locale)
     private var locale
     
     // MARK: - Body
     
-    var body: some View {
+    public init(store: StoreOf<ChatBotFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         VStack(alignment: .center, spacing: 0) {
             KohereNavigationBar(
                 left: .backButton({ store.send(.backButtonTapped) }),
