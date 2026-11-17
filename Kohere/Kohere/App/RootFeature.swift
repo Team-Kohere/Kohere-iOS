@@ -15,6 +15,7 @@ import KohereDomain
 import KohereListing
 import KohereLocalization
 import KohereLogin
+import KohereMap
 import KohereMore
 import KohereOnboarding
 

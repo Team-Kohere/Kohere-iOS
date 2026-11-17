@@ -14,6 +14,7 @@ import KohereDesignSystem
 import KohereDomain
 import KohereListing
 import KohereLocalization
+import KohereMap
 import KohereMore
 import OSLog
 

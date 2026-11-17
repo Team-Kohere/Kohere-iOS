@@ -10,10 +10,14 @@ import KohereChatBot
 import KohereListing
 import SwiftUI
 
-struct MapFlowView: View {
-    @Bindable var store: StoreOf<MapFeature>
+public struct MapFlowView: View {
+    @Bindable private var store: StoreOf<MapFeature>
 
-    var body: some View {
+    public init(store: StoreOf<MapFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         NavigationStack(
             path: $store.scope(
                 state: \MapFeature.State.path,

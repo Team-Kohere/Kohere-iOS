@@ -6,6 +6,7 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 import KohereLocalization
+@testable import KohereMap
 import KohereMapEntry
 import XCTest
 

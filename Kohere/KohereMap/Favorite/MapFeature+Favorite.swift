@@ -69,7 +69,7 @@ extension MapFeature {
 }
 
 extension MapFeature.State {
-    mutating func synchronizeFavoriteStatus(
+    public mutating func synchronizeFavoriteStatus(
         _ status: ListingFavoriteStatus,
         for listingID: String
     ) {

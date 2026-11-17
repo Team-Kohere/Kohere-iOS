@@ -16,11 +16,11 @@ import KohereMapEntry
 
 extension MapFeature {
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         // Navigation
-        var path = StackState<Path.State>()
-        var userType: UserType?
-        var appLanguage: AppLanguage = .english
+        public var path = StackState<Path.State>()
+        public var userType: UserType?
+        public var appLanguage: AppLanguage = .english
 
         // 현재 검색 모드 / 화면 표시
         // - searchMode(listingSource): 목록과 마커를 어느 API 결과로 채우는지 정한다. (위치 검색 / 진단 추천)
@@ -63,10 +63,14 @@ extension MapFeature {
         // 진단 버튼
         var isDiagnosisButtonExpanded = false
         var isDiagnosisMatchesButtonExpanded = true
+
+        public init(appLanguage: AppLanguage = .english) {
+            self.appLanguage = appLanguage
+        }
     }
 
     @CasePathable
-    enum Action {
+    public enum Action {
         // Lifecycle
         case mapAppeared
         case mapDismissed
