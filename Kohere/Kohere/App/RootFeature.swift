@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 import Foundation
+import KohereChat
 import KohereCore
 import KohereData
 import KohereDesignSystem

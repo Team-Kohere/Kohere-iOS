@@ -7,6 +7,7 @@
 
 import FirebaseCore
 import FirebaseMessaging
+import KohereChat
 import KohereData
 import OSLog
 import UIKit

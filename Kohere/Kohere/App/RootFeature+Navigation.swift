@@ -6,6 +6,7 @@
 //
 
 import ComposableArchitecture
+import KohereChat
 import KohereDesignSystem
 import KohereDomain
 import KohereLogin
