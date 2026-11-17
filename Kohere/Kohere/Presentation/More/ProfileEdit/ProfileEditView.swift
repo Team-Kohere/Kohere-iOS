@@ -9,7 +9,7 @@ import ComposableArchitecture
 import KohereCore
 import KohereDesignSystem
 import KohereLocalization
-import KohereOnboarding
+import KohereProfileForm
 import SwiftUI
 
 struct ProfileEditView: View {

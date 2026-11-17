@@ -43,6 +43,7 @@ let project = Project(
                 .target(name: "KohereLivingGuide"),
                 .target(name: "KohereMapEntry"),
                 .target(name: "KohereListing"),
+                .target(name: "KohereProfileForm"),
                 .target(name: "KohereOnboarding"),
                 .target(name: "KohereLogin"),
                 .external(name: "ComposableArchitecture"),
@@ -156,6 +157,15 @@ let project = Project(
             ]
         ),
         .module(
+            name: "KohereProfileForm",
+            dependencies: [
+                .target(name: "KohereCore"),
+                .target(name: "KohereDesignSystem"),
+                .target(name: "KohereDomain"),
+                .target(name: "KohereLocalization")
+            ]
+        ),
+        .module(
             name: "KohereOnboarding",
             dependencies: [
                 .target(name: "KohereCore"),
@@ -163,6 +173,7 @@ let project = Project(
                 .target(name: "KohereDesignSystem"),
                 .target(name: "KohereDomain"),
                 .target(name: "KohereLocalization"),
+                .target(name: "KohereProfileForm"),
                 .external(name: "ComposableArchitecture")
             ]
         ),
@@ -196,6 +207,7 @@ let project = Project(
                 .target(name: "KohereLivingGuide"),
                 .target(name: "KohereMapEntry"),
                 .target(name: "KohereListing"),
+                .target(name: "KohereProfileForm"),
                 .target(name: "KohereOnboarding"),
                 .target(name: "KohereLogin"),
                 .external(name: "ComposableArchitecture"),

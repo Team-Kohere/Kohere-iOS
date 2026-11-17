@@ -9,7 +9,7 @@ import ComposableArchitecture
 import Foundation
 import KohereData
 import KohereDomain
-import KohereOnboarding
+import KohereProfileForm
 
 @Reducer
 struct ProfileEditFeature {

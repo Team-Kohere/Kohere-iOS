@@ -6,7 +6,7 @@
 //
 
 import KohereDesignSystem
-import KohereOnboarding
+import KohereProfileForm
 import SwiftUI
 
 struct ProfileEditDropdownField: View {
