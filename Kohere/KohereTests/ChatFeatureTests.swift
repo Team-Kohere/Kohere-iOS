@@ -654,8 +654,9 @@ final class ChatFeatureTests: XCTestCase {
 
     func testInquiryRoomShowsApplicationBannerAndOpensEnabledApplicationDetail() async {
         let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
-        let store = TestStore(initialState: ChatDetailFeature.State(chatRoom: room, hasSubmittedApplication: false,
-                                                                    showsInquiryCard: true)) {
+        var initialState = ChatDetailFeature.State(chatRoom: room, showsInquiryCard: true)
+        initialState.hasLoadedMessages = true
+        let store = TestStore(initialState: initialState) {
             ChatDetailFeature()
         }
 
