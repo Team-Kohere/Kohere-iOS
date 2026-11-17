@@ -638,6 +638,30 @@ final class ChatFeatureTests: XCTestCase {
         }
     }
 
+    func testPendingRoomListResponseDoesNotReplaceNewInquiry() async {
+        var initialState = ChatFeature.State(participantRole: .tenant)
+        initialState.isLoading = true
+        initialState.pendingNavigationListingID = "listing-1"
+        initialState.openInquiry(roomID: 2, listingID: "listing-2")
+
+        let store = TestStore(initialState: initialState) {
+            ChatFeature()
+        }
+        let previousRoom = makeRoom(roomID: 1)
+        let page = ChatRoomPage(
+            content: [previousRoom],
+            page: PageInfo(number: 0, size: 20, totalElements: 1, totalPages: 1, hasNext: false)
+        )
+
+        XCTAssertNil(store.state.pendingNavigationListingID)
+        await store.send(.chatRoomListResponse(requestedPage: 0, .success(page))) {
+            $0.isLoading = false
+            $0.hasLoadedInitialPage = true
+            $0.nextPage = 1
+            $0.chatRooms = [ChatRoomModel(room: previousRoom)]
+        }
+    }
+
     func testDetailResponseUsesServerRoleAndRoomInformation() async {
         let initialRoom = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
         let store = TestStore(

@@ -309,6 +309,7 @@ extension ChatFeature.State {
         )
         participantRole = .tenant
         hasLoadedInitialPage = false
+        pendingNavigationListingID = nil
         path.removeAll()
         path.append(.chatDetail(ChatDetailFeature.State(chatRoom: room, showsInquiryCard: true)))
     }
