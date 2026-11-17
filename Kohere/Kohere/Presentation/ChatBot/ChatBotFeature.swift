@@ -8,7 +8,7 @@ import KohereLocalization
 import KohereMapEntry
 
 @Reducer
-struct ChatBotFeature {
+public struct ChatBotFeature {
     @Dependency(\.startDiagnosisFlowUseCase)
     var startDiagnosisFlowUseCase
     @Dependency(\.advanceDiagnosisFlowUseCase)
@@ -40,7 +40,9 @@ struct ChatBotFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
+        public init() {}
+
         var history: [ChatItem] = []
         var currentQuestion: Diagnosis?
         var selectedOptionCodes: Set<String> = []
@@ -84,12 +86,12 @@ struct ChatBotFeature {
     // MARK: - Action
     
     @CasePathable
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case dismissRequested
         case mapRequested(MapEntryRequest)
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case backButtonTapped
         case onAppear
         case flowResponse(Result<DiagnosisFlowResult, DataError>)
@@ -105,7 +107,9 @@ struct ChatBotFeature {
     
     // MARK: - Reducer Body
     
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:
