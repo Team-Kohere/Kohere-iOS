@@ -1,5 +1,6 @@
 import ComposableArchitecture
 @testable import Kohere
+@testable import KohereChatBot
 import KohereCore
 @testable import KohereData
 import KohereDesignSystem
