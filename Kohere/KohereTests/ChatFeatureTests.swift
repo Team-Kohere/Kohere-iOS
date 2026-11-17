@@ -445,9 +445,11 @@ final class ChatFeatureTests: XCTestCase {
     func testDisconnectedSendingMessageIsQueuedAndResentWhenReady() async {
         let clientMessageID = UUID()
         let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
+        let sentAt = Date(timeIntervalSince1970: 0)
+        let timeText = ChatTimestampFormatter.timeText(sentAt)
         let pending = ChatMessage(
-            id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: "10:00",
-            sentAt: Date(timeIntervalSince1970: 0), clientMessageID: clientMessageID, deliveryStatus: .sending
+            id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: timeText,
+            sentAt: sentAt, clientMessageID: clientMessageID, deliveryStatus: .sending
         )
         var initialState = ChatDetailFeature.State(
             chatRoom: room,
@@ -461,16 +463,16 @@ final class ChatFeatureTests: XCTestCase {
         await store.send(.realtimeEvent(.connection(.disconnected))) {
             $0.isRealtimeReady = false
             $0.messages[0] = ChatMessage(
-                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: "10:00",
-                sentAt: Date(timeIntervalSince1970: 0), clientMessageID: clientMessageID, deliveryStatus: .queued
+                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: timeText,
+                sentAt: sentAt, clientMessageID: clientMessageID, deliveryStatus: .queued
             )
         }
 
         await store.send(.realtimeEvent(.connection(.ready))) {
             $0.isRealtimeReady = true
             $0.messages[0] = ChatMessage(
-                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: "10:00",
-                sentAt: Date(timeIntervalSince1970: 0), clientMessageID: clientMessageID, deliveryStatus: .sending
+                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: timeText,
+                sentAt: sentAt, clientMessageID: clientMessageID, deliveryStatus: .sending
             )
         }
         await store.receive(\.textSendResponse)
