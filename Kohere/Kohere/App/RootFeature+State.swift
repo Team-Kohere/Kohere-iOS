@@ -1,4 +1,5 @@
 import ComposableArchitecture
+import KohereChat
 import KohereCore
 import KohereDesignSystem
 import KohereDomain

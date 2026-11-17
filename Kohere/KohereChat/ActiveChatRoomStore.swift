@@ -7,14 +7,14 @@
 
 import os
 
-nonisolated final class ActiveChatRoomStore: @unchecked Sendable {
-    static let shared = ActiveChatRoomStore()
+public nonisolated final class ActiveChatRoomStore: @unchecked Sendable {
+    public static let shared = ActiveChatRoomStore()
 
     private let roomID = OSAllocatedUnfairLock<Int?>(initialState: nil)
 
     private init() {}
 
-    var activeRoomID: Int? {
+    public var activeRoomID: Int? {
         roomID.withLock { $0 }
     }
 

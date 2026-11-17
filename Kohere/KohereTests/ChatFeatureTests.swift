@@ -7,6 +7,7 @@
 
 import ComposableArchitecture
 @testable import KohereListing
+@testable import KohereChat
 import XCTest
 @testable import Kohere
 import KohereCore
@@ -444,9 +445,11 @@ final class ChatFeatureTests: XCTestCase {
     func testDisconnectedSendingMessageIsQueuedAndResentWhenReady() async {
         let clientMessageID = UUID()
         let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
+        let sentAt = Date(timeIntervalSince1970: 0)
+        let timeText = ChatTimestampFormatter.timeText(sentAt)
         let pending = ChatMessage(
-            id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: "10:00",
-            sentAt: Date(timeIntervalSince1970: 0), clientMessageID: clientMessageID, deliveryStatus: .sending
+            id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: timeText,
+            sentAt: sentAt, clientMessageID: clientMessageID, deliveryStatus: .sending
         )
         var initialState = ChatDetailFeature.State(
             chatRoom: room,
@@ -460,16 +463,16 @@ final class ChatFeatureTests: XCTestCase {
         await store.send(.realtimeEvent(.connection(.disconnected))) {
             $0.isRealtimeReady = false
             $0.messages[0] = ChatMessage(
-                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: "10:00",
-                sentAt: Date(timeIntervalSince1970: 0), clientMessageID: clientMessageID, deliveryStatus: .queued
+                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: timeText,
+                sentAt: sentAt, clientMessageID: clientMessageID, deliveryStatus: .queued
             )
         }
 
         await store.send(.realtimeEvent(.connection(.ready))) {
             $0.isRealtimeReady = true
             $0.messages[0] = ChatMessage(
-                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: "10:00",
-                sentAt: Date(timeIntervalSince1970: 0), clientMessageID: clientMessageID, deliveryStatus: .sending
+                id: "client-\(clientMessageID)", sender: .tenant, originalText: "Hello", timeText: timeText,
+                sentAt: sentAt, clientMessageID: clientMessageID, deliveryStatus: .sending
             )
         }
         await store.receive(\.textSendResponse)
@@ -635,6 +638,30 @@ final class ChatFeatureTests: XCTestCase {
         }
     }
 
+    func testPendingRoomListResponseDoesNotReplaceNewInquiry() async {
+        var initialState = ChatFeature.State(participantRole: .tenant)
+        initialState.isLoading = true
+        initialState.pendingNavigationListingID = "listing-1"
+        initialState.openInquiry(roomID: 2, listingID: "listing-2")
+
+        let store = TestStore(initialState: initialState) {
+            ChatFeature()
+        }
+        let previousRoom = makeRoom(roomID: 1)
+        let page = ChatRoomPage(
+            content: [previousRoom],
+            page: PageInfo(number: 0, size: 20, totalElements: 1, totalPages: 1, hasNext: false)
+        )
+
+        XCTAssertNil(store.state.pendingNavigationListingID)
+        await store.send(.chatRoomListResponse(requestedPage: 0, .success(page))) {
+            $0.isLoading = false
+            $0.hasLoadedInitialPage = true
+            $0.nextPage = 1
+            $0.chatRooms = [ChatRoomModel(room: previousRoom)]
+        }
+    }
+
     func testDetailResponseUsesServerRoleAndRoomInformation() async {
         let initialRoom = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
         let store = TestStore(
@@ -651,8 +678,9 @@ final class ChatFeatureTests: XCTestCase {
 
     func testInquiryRoomShowsApplicationBannerAndOpensEnabledApplicationDetail() async {
         let room = ChatRoomModel(room: makeRoom(roomID: 1, role: .tenant))
-        let store = TestStore(initialState: ChatDetailFeature.State(chatRoom: room, hasSubmittedApplication: false,
-                                                                    showsInquiryCard: true)) {
+        var initialState = ChatDetailFeature.State(chatRoom: room, showsInquiryCard: true)
+        initialState.hasLoadedMessages = true
+        let store = TestStore(initialState: initialState) {
             ChatDetailFeature()
         }
 

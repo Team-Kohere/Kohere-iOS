@@ -10,11 +10,11 @@ import KohereCore
 import KohereDomain
 
 @Reducer
-struct ChatReportFeature {
+public struct ChatReportFeature {
     @Dependency(\.reportChatRoomUseCase)
     var reportChatRoomUseCase
 
-    enum Reason: String, CaseIterable, Equatable, Identifiable {
+    public enum Reason: String, CaseIterable, Equatable, Identifiable {
         case abuse
         case illegalInformation
         case sexualContent
@@ -22,7 +22,7 @@ struct ChatReportFeature {
         case spam
         case other
 
-        var id: Self { self }
+        public var id: Self { self }
 
         var localizationKey: String {
             switch self {
@@ -39,7 +39,7 @@ struct ChatReportFeature {
     // MARK: - State
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         let roomID: Int
         let appLanguage: AppLanguage
         var selectedReason: Reason?
@@ -49,11 +49,11 @@ struct ChatReportFeature {
     // MARK: - Action
 
     @CasePathable
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case reportFinished(succeeded: Bool)
     }
 
-    enum Action {
+    public enum Action {
         case closeButtonTapped
         case reasonTapped(Reason)
         case reportButtonTapped
@@ -63,7 +63,7 @@ struct ChatReportFeature {
     
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .closeButtonTapped:

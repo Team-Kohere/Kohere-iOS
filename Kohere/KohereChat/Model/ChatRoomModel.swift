@@ -8,7 +8,7 @@
 import Foundation
 import KohereDomain
 
-nonisolated struct ChatRoomModel: Equatable, Identifiable {
+public nonisolated struct ChatRoomModel: Equatable, Identifiable {
     let roomID: Int
     let myRole: ChatRoomRole
     let listingID: String
@@ -21,7 +21,7 @@ nonisolated struct ChatRoomModel: Equatable, Identifiable {
     let thumbnailURL: String?
     let createdAt: Date?
 
-    var id: Int { roomID }
+    public var id: Int { roomID }
     var timeText: String { ChatTimestampFormatter.timeText(createdAt) }
 
     init(

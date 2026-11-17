@@ -11,7 +11,7 @@ import KohereData
 import KohereDomain
 
 @Reducer
-struct ChatDetailFeature {
+public struct ChatDetailFeature {
     @Dependency(\.fetchChatRoomUseCase)
     var fetchChatRoomUseCase
     @Dependency(\.fetchChatMessagesUseCase)
@@ -33,7 +33,7 @@ struct ChatDetailFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var chatRoom: ChatRoomModel
         var hasSubmittedApplication: Bool
         var messages: [ChatMessage]
@@ -78,7 +78,7 @@ struct ChatDetailFeature {
     }
 
     @CasePathable
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case dismissRequested
         case listingDetailRequested(String, isApplicationDisabled: Bool)
         case swipeActionRequested(ChatFeature.SwipeAction, roomID: Int)
@@ -87,7 +87,7 @@ struct ChatDetailFeature {
     
     // MARK: - Action
 
-    enum Action {
+    public enum Action {
         case onAppear
         case onDisappear
         case chatRoomResponse(Result<ChatRoom, Error>)
@@ -117,7 +117,7 @@ struct ChatDetailFeature {
     
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:
