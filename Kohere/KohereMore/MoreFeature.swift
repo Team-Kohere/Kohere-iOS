@@ -16,7 +16,9 @@ import KohereLivingGuide
 import KohereLocalization
 
 @Reducer
-struct MoreFeature {
+public struct MoreFeature {
+    public init() {}
+
     @Dependency(\.fetchLivingGuideTopicsUseCase)
     var fetchLivingGuideTopics
 
@@ -27,7 +29,7 @@ struct MoreFeature {
     var updateProfileUseCase
 
     @Reducer
-    enum Path {
+    public enum Path {
         case account(AccountFeature)
         case announcements(AnnouncementsFeature)
         case livingGuideDetail(LivingGuideDetailFeature)
@@ -44,20 +46,22 @@ struct MoreFeature {
     }
 
     @ObservableState
-    struct State: Equatable {
-        var path = StackState<Path.State>()
-        var userType: UserType?
-        var userProfile: UserProfile?
+    public struct State: Equatable {
+        public var path = StackState<Path.State>()
+        public var userType: UserType?
+        public var userProfile: UserProfile?
         var isLanguagePopoverPresented = false
-        var selectedLanguage: AppLanguage = .english
+        public var selectedLanguage: AppLanguage = .english
         var isLanguageUpdateLoading = false
         var livingGuides: [LivingGuide] = []
         var isLivingGuidesLoading: Bool = false
         var isLivingGuidesLoaded: Bool = false
         var livingGuidesErrorMessage: String?
+
+        public init() {}
     }
 
-    enum Action {
+    public enum Action {
         case path(StackActionOf<Path>)
         case onAppear
         case livingGuideTopicsResponse(Result<[LivingGuide], DataError>)
@@ -86,7 +90,7 @@ struct MoreFeature {
         case notificationSettingsPushRegistrationRequested
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case let .path(pathAction):

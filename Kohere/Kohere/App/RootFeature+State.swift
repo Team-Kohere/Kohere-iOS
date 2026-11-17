@@ -3,6 +3,7 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 import KohereLogin
+import KohereMore
 import KohereOnboarding
 
 extension RootFeature {

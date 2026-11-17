@@ -9,6 +9,7 @@ import KohereCore
 import KohereData
 import KohereDomain
 import KohereLogin
+import KohereMore
 import KohereOnboarding
 
 extension RootFeature {

@@ -14,6 +14,7 @@ import KohereDomain
 import KohereListing
 import KohereLocalization
 import KohereLogin
+import KohereMore
 import KohereOnboarding
 
 @Reducer
@@ -364,16 +365,6 @@ struct RootFeature {
 }
 
 extension RootFeature {
-    func presentAuthenticationGateIfNeeded(state: inout State, returnsToHomeOnDismiss: Bool = false) -> Effect<Action> {
-        guard state.authInfo?.onboardingRequired != false else { return .none }
-
-        state.popup = .action(
-            AppPopup.Action(message: state.appLanguage.localized(.authGateMessage), primaryTitle: state.appLanguage.localized(.authGateSignIn),
-                            secondaryTitle: state.appLanguage.localized(.authGateNotNow), primaryRoute: .signIn, secondaryRoute: returnsToHomeOnDismiss ? .home : nil)
-        )
-        return .none
-    }
-
     @discardableResult
     func resetMainContent(language: AppLanguage, userProfile: UserProfile, selectedTab: AppTab = .more, state: inout State) -> Effect<Action> {
         state.appLanguage = language

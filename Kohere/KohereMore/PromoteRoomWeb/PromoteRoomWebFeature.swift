@@ -9,9 +9,9 @@ import ComposableArchitecture
 import Foundation
 
 @Reducer
-struct PromoteRoomWebFeature {
+public struct PromoteRoomWebFeature {
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         let url: URL
         var isLoading: Bool
 
@@ -24,13 +24,13 @@ struct PromoteRoomWebFeature {
         }
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case backButtonTapped
         case loadingStarted
         case loadingFinished
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped:

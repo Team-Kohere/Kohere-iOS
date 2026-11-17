@@ -11,14 +11,14 @@ import KohereDomain
 import KohereLocalization
 
 @Reducer
-struct NotificationSettingFeature {
+public struct NotificationSettingFeature {
     @Dependency(\.userClient)
     var userClient
     @Dependency(\.pushNotificationClient)
     var pushNotificationClient
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var userType: UserType
         var language: AppLanguage = .english
 
@@ -61,7 +61,7 @@ struct NotificationSettingFeature {
         case idle, loading, loaded, failed
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case task
         case willEnterForeground
         case backButtonTapped
@@ -78,7 +78,7 @@ struct NotificationSettingFeature {
 
     nonisolated enum CancelID { case load, authorization, update, openSettings }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .task:

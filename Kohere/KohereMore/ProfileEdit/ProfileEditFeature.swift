@@ -12,14 +12,14 @@ import KohereDomain
 import KohereProfileForm
 
 @Reducer
-struct ProfileEditFeature {
+public struct ProfileEditFeature {
     @Dependency(\.updateProfileUseCase)
     var updateProfileUseCase
 
     // MARK: - State
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var nickname: String
         var email: String
 
@@ -102,7 +102,7 @@ struct ProfileEditFeature {
 
     // MARK: - Action
 
-    enum Action: BindableAction, Equatable {
+    public enum Action: BindableAction, Equatable {
         case binding(BindingAction<State>)
         case backButtonTapped
         case saveButtonTapped
@@ -110,13 +110,13 @@ struct ProfileEditFeature {
         case delegate(Delegate)
     }
 
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case profileUpdated(UserProfile)
     }
 
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         BindingReducer()
         Reduce { state, action in
             switch action {

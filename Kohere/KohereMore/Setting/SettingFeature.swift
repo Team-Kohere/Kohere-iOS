@@ -12,8 +12,8 @@ import KohereDesignSystem
 import KohereLocalization
 
 @Reducer
-struct SettingFeature {
-    enum SettingItem: Equatable {
+public struct SettingFeature {
+    public enum SettingItem: Equatable {
         case account
         case notification
         case termsOfService
@@ -22,7 +22,7 @@ struct SettingFeature {
     }
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var appVersion: String
         var language: AppLanguage
 
@@ -35,14 +35,14 @@ struct SettingFeature {
         }
     }
 
-    enum Action: Equatable {
+    public enum Action: Equatable {
         case backButtonTapped
         case settingItemTapped(SettingItem)
         case logoutButtonTapped
         case popupRequested(AppPopup)
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .backButtonTapped,

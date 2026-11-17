@@ -9,8 +9,11 @@ import ComposableArchitecture
 import Foundation
 import KohereCore
 import KohereData
+import KohereDesignSystem
 import KohereDomain
 import KohereListing
+import KohereLocalization
+import KohereMore
 import OSLog
 
 private let startupAuthLogger = Logger(
@@ -234,5 +237,17 @@ extension RootFeature {
 
     func cancelHomeEffects() -> Effect<Action> {
         .send(.home(.cancelEffects))
+    }
+}
+
+extension RootFeature {
+    func presentAuthenticationGateIfNeeded(state: inout State, returnsToHomeOnDismiss: Bool = false) -> Effect<Action> {
+        guard state.authInfo?.onboardingRequired != false else { return .none }
+
+        state.popup = .action(
+            AppPopup.Action(message: state.appLanguage.localized(.authGateMessage), primaryTitle: state.appLanguage.localized(.authGateSignIn),
+                            secondaryTitle: state.appLanguage.localized(.authGateNotNow), primaryRoute: .signIn, secondaryRoute: returnsToHomeOnDismiss ? .home : nil)
+        )
+        return .none
     }
 }
