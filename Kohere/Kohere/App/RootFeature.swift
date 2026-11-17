@@ -208,7 +208,7 @@ struct RootFeature {
                 return .none
 
             case let .chat(.delegate(.mapRequested(request))):
-                state.chat.path.removeAll()
+                state.chat.clearNavigation()
                 return openMap(request: request, state: &state)
 
             case let .chat(.delegate(.popupRequested(popup))):

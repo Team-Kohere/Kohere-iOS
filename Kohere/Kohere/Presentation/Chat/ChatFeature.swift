@@ -26,13 +26,13 @@ extension ChatRoomRole {
 }
 
 @Reducer
-struct ChatFeature {
+public struct ChatFeature {
     nonisolated enum EffectID {
         case rooms
         case swipeAction
     }
 
-    enum SwipeAction: Equatable {
+    public enum SwipeAction: Equatable {
         case report
         case block
         case delete
@@ -47,7 +47,7 @@ struct ChatFeature {
     var blockChatRoomUseCase
     
     @Reducer
-    enum Path {
+    public enum Path {
         case chatDetail(ChatDetailFeature)
         case chatBot(ChatBotFeature)
         case listingDetail(ListingDetailFeature)
@@ -59,11 +59,11 @@ struct ChatFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var path = StackState<Path.State>()
         var chatRooms: [ChatRoomModel] = []
         var participantRole: ChatRoomRole
-        var appLanguage: AppLanguage
+        public var appLanguage: AppLanguage
         var isContentAvailable = false
         var isLoading = false
         var hasLoadedInitialPage = false
@@ -76,7 +76,7 @@ struct ChatFeature {
         var pendingBookingListingIDs: Set<String> = []
         var pendingNavigationListingID: String?
         
-        init(
+        public init(
             chatRooms: [ChatRoomModel] = [],
             participantRole: ChatRoomRole = .landlord,
             appLanguage: AppLanguage = .english
@@ -90,12 +90,12 @@ struct ChatFeature {
     // MARK: - Action
 
     @CasePathable
-    enum Delegate: Equatable {
+    public enum Delegate: Equatable {
         case popupRequested(AppPopup)
         case mapRequested(MapEntryRequest)
     }
 
-    enum Action {
+    public enum Action {
         case onAppear
         case chatRoomListResponse(requestedPage: Int, Result<ChatRoomPage, Error>)
         case chatRoomAppeared(roomID: Int)
@@ -112,7 +112,9 @@ struct ChatFeature {
     
     // MARK: - Reducer Body
     
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case let .path(pathAction):
@@ -297,7 +299,21 @@ extension ChatFeature.State {
         }
     }
 
-    mutating func applyUserType(_ userType: UserType) -> Bool {
+    public mutating func clearNavigation() {
+        path.removeAll()
+    }
+
+    public mutating func openInquiry(roomID: Int, listingID: String) {
+        let room = ChatRoomModel(
+            roomID: roomID, myRole: .tenant, listingID: listingID, listingName: "", location: ""
+        )
+        participantRole = .tenant
+        hasLoadedInitialPage = false
+        path.removeAll()
+        path.append(.chatDetail(ChatDetailFeature.State(chatRoom: room, showsInquiryCard: true)))
+    }
+
+    public mutating func applyUserType(_ userType: UserType) -> Bool {
         guard let updatedParticipantRole = ChatRoomRole(userType: userType) else { return false }
         isContentAvailable = true
         guard participantRole != updatedParticipantRole else { return false }

@@ -10,15 +10,19 @@ import KohereChatBot
 import KohereListing
 import SwiftUI
 
-struct ChatFlowView: View {
+public struct ChatFlowView: View {
     
     // MARK: - Property
     
-    @Bindable var store: StoreOf<ChatFeature>
+    @Bindable private var store: StoreOf<ChatFeature>
     
     // MARK: - Body
 
-    var body: some View {
+    public init(store: StoreOf<ChatFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         NavigationStack(path: $store.scope(state: \ChatFeature.State.path, action: \.path)) {
             ChatView(store: store)
         } destination: { store in
