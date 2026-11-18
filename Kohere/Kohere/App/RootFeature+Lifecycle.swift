@@ -10,6 +10,7 @@ import KohereCore
 import KohereData
 import KohereDomain
 import KohereLogin
+import KohereMap
 import KohereMore
 import KohereOnboarding
 
@@ -27,7 +28,7 @@ extension RootFeature {
         state.appLanguage = language
         state.onboarding.updateAppLanguage(language)
         state.home.appLanguage = language
-        state.map.appLanguage = language
+        state.map.updateAppLanguage(language)
         state.chat.appLanguage = language
         state.more.selectedLanguage = language
     }

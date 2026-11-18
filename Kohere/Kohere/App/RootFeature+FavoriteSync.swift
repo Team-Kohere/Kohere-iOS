@@ -6,6 +6,7 @@
 //
 
 import KohereDomain
+import KohereMap
 
 extension RootFeature {
     func synchronizeFavoriteStatus(

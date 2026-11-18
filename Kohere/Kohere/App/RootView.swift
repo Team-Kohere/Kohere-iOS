@@ -11,6 +11,7 @@ import KohereCore
 import KohereDesignSystem
 import KohereDomain
 import KohereLogin
+import KohereMap
 import KohereMore
 import KohereOnboarding
 import SwiftUI

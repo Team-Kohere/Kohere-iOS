@@ -16,9 +16,9 @@ import KohereMapEntry
 
 extension MapFeature {
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         // Navigation
-        var path = StackState<Path.State>()
+        public internal(set) var path = StackState<Path.State>()
         var userType: UserType?
         var appLanguage: AppLanguage = .english
 
@@ -63,13 +63,19 @@ extension MapFeature {
         // 진단 버튼
         var isDiagnosisButtonExpanded = false
         var isDiagnosisMatchesButtonExpanded = true
+
+        public init(userType: UserType? = nil, appLanguage: AppLanguage = .english) {
+            self.userType = userType
+            self.appLanguage = appLanguage
+        }
     }
 
     @CasePathable
-    enum Action {
+    public enum Action {
         // Lifecycle
         case mapAppeared
         case mapDismissed
+        case cancelEffects
 
         // 일반 매물 검색
         case initialLocationSearchRequested
@@ -123,6 +129,26 @@ extension MapFeature {
         case depositMaximumChanged(Int)
         case filterApplyButtonTapped
         case filterResetButtonTapped
+    }
+}
+
+// MARK: - 루트에서 쓰는 상태 변경
+
+extension MapFeature.State {
+    public mutating func clearNavigation() {
+        path.removeAll()
+    }
+
+    public mutating func popNavigation() {
+        _ = path.popLast()
+    }
+
+    public mutating func updateUserType(_ userType: UserType) {
+        self.userType = userType
+    }
+
+    public mutating func updateAppLanguage(_ language: AppLanguage) {
+        appLanguage = language
     }
 }
 

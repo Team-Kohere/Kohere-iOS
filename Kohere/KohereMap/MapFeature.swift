@@ -14,7 +14,9 @@ import KohereListing
 import KohereMapEntry
 
 @Reducer
-struct MapFeature {
+public struct MapFeature {
+    public init() {}
+
     @Dependency(\.userDefaultsClient)
     var userDefaultsClient
     @Dependency(\.listingClient)
@@ -29,7 +31,7 @@ struct MapFeature {
     var uuid
 
     @Reducer
-    enum Path {
+    public enum Path {
         case listingDetail(ListingDetailFeature)
         case listingApplication(ListingApplicationFeature)
         case listingApplicationPrivacyWeb(ListingApplicationPrivacyWebFeature)
@@ -37,7 +39,7 @@ struct MapFeature {
         case search(SearchFeature)
     }
 
-    var body: some Reducer<State, Action> {
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             // Lifecycle
@@ -46,6 +48,9 @@ struct MapFeature {
 
             case .mapDismissed:
                 return handleMapDismissed(state: &state)
+
+            case .cancelEffects:
+                return cancelEffects()
 
             // 일반 매물 검색
             case .initialLocationSearchRequested:

@@ -10,6 +10,7 @@ import KohereChat
 import KohereDesignSystem
 import KohereDomain
 import KohereLogin
+import KohereMap
 import KohereMapEntry
 import KohereMore
 
@@ -68,7 +69,7 @@ extension RootFeature {
             case .home:
                 _ = state.home.path.popLast()
             case .map:
-                _ = state.map.path.popLast()
+                state.map.popNavigation()
             case .more:
                 _ = state.more.path.popLast()
             case .community, .chat:

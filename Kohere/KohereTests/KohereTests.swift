@@ -15,6 +15,7 @@ import KohereDomain
 @testable import KohereListing
 import KohereLocalization
 @testable import KohereLogin
+@testable import KohereMap
 import KohereMapEntry
 @testable import KohereOnboarding
 @testable import KohereProfileForm

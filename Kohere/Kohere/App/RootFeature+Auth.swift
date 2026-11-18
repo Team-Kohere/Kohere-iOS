@@ -14,6 +14,7 @@ import KohereDesignSystem
 import KohereDomain
 import KohereListing
 import KohereLocalization
+import KohereMap
 import KohereMore
 import OSLog
 
@@ -215,7 +216,7 @@ extension RootFeature {
             isSplashMinimumDurationElapsed: true
         )
         state.home.appLanguage = appLanguage
-        state.map.appLanguage = appLanguage
+        state.map.updateAppLanguage(appLanguage)
         state.chat.appLanguage = appLanguage
         state.more.selectedLanguage = appLanguage
 
@@ -225,11 +226,7 @@ extension RootFeature {
             .cancel(id: Self.pushTokenObserverID),
             .cancel(id: "RootFeature.pushDeviceRegister"),
             .cancel(id: SearchFeatureCancelID.placeSearch),
-            .cancel(id: MapEffectID.exchangeRate),
-            .cancel(id: MapEffectID.diagnosisButtonAutoCollapse),
-            .cancel(id: MapEffectID.diagnosisDetail),
-            .cancel(id: MapEffectID.diagnosisRecommendations),
-            .cancel(id: MapEffectID.listingSearch),
+            cancelMapEffects(),
             .cancel(id: "ListingApplication.fetchApplicantProfile"),
             .cancel(id: "ListingApplication.createBooking"),
             .cancel(id: "ListingDetail.roomTypeValidationMessage")
@@ -238,6 +235,10 @@ extension RootFeature {
 
     func cancelHomeEffects() -> Effect<Action> {
         .send(.home(.cancelEffects))
+    }
+
+    func cancelMapEffects() -> Effect<Action> {
+        .send(.map(.cancelEffects))
     }
 }
 

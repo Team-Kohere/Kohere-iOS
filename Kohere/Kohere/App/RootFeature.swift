@@ -15,6 +15,7 @@ import KohereDomain
 import KohereListing
 import KohereLocalization
 import KohereLogin
+import KohereMap
 import KohereMore
 import KohereOnboarding
 
@@ -140,7 +141,7 @@ struct RootFeature {
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
             case let .map(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):
-                state.map.path.removeAll()
+                state.map.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
             case let .more(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):
@@ -189,7 +190,7 @@ struct RootFeature {
                 id: _,
                 action: .listingApplication(.delegate(.chatRoomRequested(listingID)))
             ))):
-                state.map.path.removeAll()
+                state.map.clearNavigation()
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
 
@@ -254,7 +255,7 @@ struct RootFeature {
 
                 state.currentUser = userProfile
                 state.home.userType = userProfile.userType
-                state.map.userType = userProfile.userType
+                state.map.updateUserType(userProfile.userType)
                 let didUpdateChatRole = state.chat.applyUserType(userProfile.userType)
                 var effects: [Effect<Action>] = [
                     .send(.home(.onAppear))
@@ -376,8 +377,7 @@ extension RootFeature {
         state.home = HomeFeature.State(userType: userProfile.userType, appLanguage: language)
         state.community = CommunityFeature.State()
 
-        state.map = MapFeature.State(appLanguage: language)
-        state.map.userType = userProfile.userType
+        state.map = MapFeature.State(userType: userProfile.userType, appLanguage: language)
 
         state.chat = ChatFeature.State(appLanguage: language)
         _ = state.chat.applyUserType(userProfile.userType)
