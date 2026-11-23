@@ -6,7 +6,7 @@
 
 > Your Housing Platform in Korea
 
-**복잡한 한국 주거 용어를 몰라도, 몇 번의 선택만으로 맞는 매물을 추천받고 탐색부터 신청까지 앱 하나로 끝내는 외국인 맞춤형 주거 플랫폼**
+**복잡한 한국 주거 용어를 몰라도, 몇 번의 선택만으로 맞는 매물을 추천받고<br/>탐색부터 신청까지 앱 하나로 끝내는 외국인 맞춤형 주거 플랫폼**
 
 <a href="https://apps.apple.com/kr/app/kohere-housing-in-korea/id6781619804"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="44" alt="App Store에서 다운로드" /></a>
 
