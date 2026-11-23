@@ -15,7 +15,7 @@ public struct SavedListingsView: View {
     
     // MARK: - Property
     
-    let store: StoreOf<SavedListingsFeature>
+    private let store: StoreOf<SavedListingsFeature>
 
     public init(store: StoreOf<SavedListingsFeature>) {
         self.store = store

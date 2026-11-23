@@ -15,7 +15,7 @@ public struct RecentlyViewedListingsView: View {
     
     // MARK: - Property
     
-    let store: StoreOf<RecentlyViewedFeature>
+    private let store: StoreOf<RecentlyViewedFeature>
 
     public init(store: StoreOf<RecentlyViewedFeature>) {
         self.store = store

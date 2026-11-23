@@ -10,7 +10,7 @@ import KohereDesignSystem
 import SwiftUI
 
 public struct ListingApplicationPrivacyWebView: View {
-    let store: StoreOf<ListingApplicationPrivacyWebFeature>
+    private let store: StoreOf<ListingApplicationPrivacyWebFeature>
 
     public init(store: StoreOf<ListingApplicationPrivacyWebFeature>) {
         self.store = store
