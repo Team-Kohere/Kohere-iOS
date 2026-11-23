@@ -118,11 +118,3 @@ flowchart TD
 <p align="center">
   <img src="docs/readme/build-time.png" width="720" alt="파일 1개 수정 후 빌드 시간 전후 비교" />
 </p>
-
-<br>
-
-## <img src="docs/readme/icon-collaboration.png" width="28" align="top" /> 협업 방식
-
-- **브랜치** `dev` 기준, 이슈마다 `type/#이슈번호` 브랜치를 만들고 PR로 머지
-- **커밋** `type: 내용` 형식 (feat, fix, refactor, del 등)
-- **리뷰** 팀원 리뷰와 CodeRabbit 자동 리뷰. Tuist 도입 후 `project.pbxproj`를 커밋하지 않아 동시 작업 충돌 없음
