@@ -59,7 +59,7 @@ struct RootFeature {
         case onboarding(OnboardingFeature.Action)
         case selectedTabChanged(AppTab), popupPresented(AppPopup)
         case popupNoticeConfirmButtonTapped, popupActionPrimaryButtonTapped, popupActionSecondaryButtonTapped
-        case home(HomeFeature.Action), community(CommunityFeature.Action), map(MapFeature.Action)
+        case home(HomeFeature.Action), map(MapFeature.Action)
         case chat(ChatFeature.Action), more(MoreFeature.Action)
     }
 
@@ -72,9 +72,6 @@ struct RootFeature {
         }
         Scope(state: \.home, action: \.home) {
             HomeFeature()
-        }
-        Scope(state: \.community, action: \.community) {
-            CommunityFeature()
         }
         Scope(state: \.map, action: \.map) {
             MapFeature()
@@ -358,7 +355,7 @@ struct RootFeature {
                 guard state.authInfo?.onboardingRequired == false else { return .none }
                 return registerPushDevice(fcmToken: token)
 
-            case .login, .onboarding, .home, .community, .map, .chat, .more:
+            case .login, .onboarding, .home, .map, .chat, .more:
                 return .none
             }
         }
@@ -375,7 +372,6 @@ extension RootFeature {
         state.popup = nil
 
         state.home = HomeFeature.State(userType: userProfile.userType, appLanguage: language)
-        state.community = CommunityFeature.State()
 
         state.map = MapFeature.State(userType: userProfile.userType, appLanguage: language)
 

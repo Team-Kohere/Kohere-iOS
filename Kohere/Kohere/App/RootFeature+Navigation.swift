@@ -72,7 +72,7 @@ extension RootFeature {
                 state.map.popNavigation()
             case .more:
                 _ = state.more.path.popLast()
-            case .community, .chat:
+            case .chat:
                 break
             }
             return .none
