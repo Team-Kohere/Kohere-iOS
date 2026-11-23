@@ -17,12 +17,12 @@ import KohereLivingGuide
 import KohereMapEntry
 
 @Reducer
-struct HomeFeature {
+public struct HomeFeature {
     @Dependency(\.userDefaultsClient)
     var userDefaultsClient
 
     @Reducer
-    enum Path {
+    public enum Path {
         case savedListings(SavedListingsFeature)
         case recentlyViewedList(RecentlyViewedFeature)
         case listingDetail(ListingDetailFeature)
@@ -36,13 +36,13 @@ struct HomeFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var path = StackState<Path.State>()
         var recentlyViewedSection: HomeRecentlyViewedFeature.State
         var quizSection: HomeQuizFeature.State
         var livingGuideSection: HomeLivingGuideFeature.State
         
-        init(
+        public init(
             userType: UserType? = nil,
             appLanguage: AppLanguage = .english,
             recentlyViewedItems: [ListingItemModel] = [],
@@ -62,7 +62,7 @@ struct HomeFeature {
     // MARK: - Action
 
     @CasePathable
-    enum Delegate {
+    public enum Delegate {
         case authenticationRequired
         case mapRequested(MapEntryRequest)
         case mapPlaceSearchRequested(SearchPlaceResult)
@@ -72,7 +72,7 @@ struct HomeFeature {
         case favoriteStatusChanged(listingID: String, status: ListingFavoriteStatus)
     }
 
-    enum Action {
+    public enum Action {
         case path(StackActionOf<Path>)
         case delegate(Delegate)
         case onAppear
@@ -92,7 +92,9 @@ struct HomeFeature {
     
     // MARK: - Reducer Body
     
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Scope(state: \.recentlyViewedSection, action: \.recentlyViewedSection) {
             HomeRecentlyViewedFeature()
         }
@@ -194,7 +196,7 @@ struct HomeFeature {
 extension HomeFeature.Path.State: Equatable {}
 
 extension HomeFeature.State {
-    mutating func synchronizeFavoriteStatus(_ status: ListingFavoriteStatus, for listingID: String) {
+    public mutating func synchronizeFavoriteStatus(_ status: ListingFavoriteStatus, for listingID: String) {
         recentlyViewedSection.synchronizeFavoriteStatus(status, for: listingID)
     }
 
@@ -206,12 +208,12 @@ extension HomeFeature.State {
         userType != .landlord
     }
 
-    var userType: UserType? {
+    public var userType: UserType? {
         get { recentlyViewedSection.userType }
         set { recentlyViewedSection.userType = newValue }
     }
 
-    var appLanguage: AppLanguage {
+    public var appLanguage: AppLanguage {
         get { recentlyViewedSection.appLanguage }
         set { recentlyViewedSection.appLanguage = newValue }
     }
