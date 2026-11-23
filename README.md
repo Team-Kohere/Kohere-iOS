@@ -12,13 +12,13 @@
 
 <br>
 
-## <img src="docs/readme/icon-problem.png" width="28" align="top" /> 외국인에게 한국 집 구하기가 어려운 이유
+## <img src="docs/readme/icon-problem.png" width="28" align="top" alt="" /> 외국인에게 한국 집 구하기가 어려운 이유
 
 - 낯선 한국 부동산 용어
 - 부담스러운 임대인 연락
 - 믿을 만한 한국 생활 정보 부족
 
-## <img src="docs/readme/icon-solution.png" width="28" align="top" /> Kohere가 해결하는 방법
+## <img src="docs/readme/icon-solution.png" width="28" align="top" alt="" /> Kohere가 해결하는 방법
 
 1. **맞춤 매물 챗봇** 지역·목적·예산·선호만 고르면 맞는 매물을 추천
 2. **탐색부터 신청까지 한 번에** 임대인에게 따로 연락하지 않고, 앱에서 원하는 날짜와 기간을 골라 바로 신청
@@ -26,25 +26,25 @@
 
 <br>
 
-## <img src="docs/readme/icon-features.png" width="28" align="top" /> 주요 기능
+## <img src="docs/readme/icon-features.png" width="28" align="top" alt="" /> 주요 기능
 
 | 홈 | 지도 탐색 | 맞춤 매물 챗봇 | 추천 결과 |
 | :---: | :---: | :---: | :---: |
-| <img src="docs/readme/feature-1.jpg" width="200" /> | <img src="docs/readme/feature-2.jpg" width="200" /> | <img src="docs/readme/feature-3.jpg" width="200" /> | <img src="docs/readme/feature-4.jpg" width="200" /> |
+| <img src="docs/readme/feature-1.jpg" alt="홈 화면: 1분 맞춤 추천 진입 배너와 최근 본 매물 목록" width="200" /> | <img src="docs/readme/feature-2.jpg" alt="지도 탐색 화면: 지도 위 매물 마커와 조건 필터, 매물 목록 시트" width="200" /> | <img src="docs/readme/feature-3.jpg" alt="맞춤 매물 챗봇 화면: 목적·학교·선호 조건을 묻는 대화와 선택지" width="200" /> | <img src="docs/readme/feature-4.jpg" alt="추천 결과 화면: 진단 조건으로 걸러진 매물을 지도와 목록으로 표시" width="200" /> |
 | 최근 본 매물과<br/>1분 맞춤 추천 진입 | 원하는 지역에서<br/>조건별로 매물 탐색 | 질문에 답하면<br/>조건에 맞는 매물 검색 | 진단 조건으로 걸러진<br/>매물을 지도와 목록으로 |
 
 <br>
 
-## <img src="docs/readme/icon-team.png" width="28" align="top" /> iOS Developers
+## <img src="docs/readme/icon-team.png" width="28" align="top" alt="" /> iOS Developers
 
-| <img src="https://github.com/SongKyuSeob.png" width="160" /> | <img src="https://github.com/gleamminn.png" width="160" /> |
+| <img src="https://github.com/SongKyuSeob.png" alt="송규섭" width="160" /> | <img src="https://github.com/gleamminn.png" alt="김수민" width="160" /> |
 | :---: | :---: |
 | [송규섭](https://github.com/SongKyuSeob) | [김수민](https://github.com/gleamminn) |
 | `iOS Developer`<br/>`Core · DesignSystem · Tuist`<br/>`지도 · 매물 · 더보기` | `iOS Developer`<br/>`Domain · Data`<br/>`홈 · 챗봇 · 채팅 · 온보딩 · 로그인` |
 
 <br>
 
-## <img src="docs/readme/icon-stack.png" width="28" align="top" /> Tech Stack
+## <img src="docs/readme/icon-stack.png" width="28" align="top" alt="" /> Tech Stack
 
 | 분류 | 사용 기술 |
 | --- | --- |
@@ -58,7 +58,7 @@
 
 <br>
 
-## <img src="docs/readme/icon-architecture.png" width="28" align="top" /> Architecture
+## <img src="docs/readme/icon-architecture.png" width="28" align="top" alt="" /> Architecture
 
 기능 화면마다 모듈을 나누고, 앱 타깃은 모듈을 조립하는 역할만 맡습니다. 화면 모듈은 실제로 띄우는 화면에만 의존하고(예: 지도 → 챗봇 진단), 여러 탭이 함께 쓰는 화면은 공용 모듈로 내려 순환 의존을 막습니다.
 
@@ -107,7 +107,7 @@ flowchart TD
 
 <br>
 
-## <img src="docs/readme/icon-modularization.png" width="28" align="top" /> 모듈화로 증분 빌드 시간 70% 개선
+## <img src="docs/readme/icon-modularization.png" width="28" align="top" alt="" /> 모듈화로 증분 빌드 시간 70% 개선
 
 **문제** 앱 전체(약 3만 줄)가 하나의 모듈이라, 파일 하나만 고쳐도 앱 전체의 모듈 인터페이스를 다시 생성(Emit 약 10초)했습니다. 두 명이 동시에 작업하면 `project.pbxproj` 충돌도 잦았습니다.
 
