@@ -26,7 +26,6 @@ extension RootFeature {
         var selectedTab: AppTab = .home
         var popup: AppPopup?
         var home = HomeFeature.State()
-        var community = CommunityFeature.State()
         var map = MapFeature.State()
         var chat = ChatFeature.State()
         var more = MoreFeature.State()

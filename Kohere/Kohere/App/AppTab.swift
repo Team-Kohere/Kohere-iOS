@@ -10,7 +10,6 @@ import SwiftUI
 
 enum AppTab: Hashable {
     case home
-    case community
     case map
     case chat
     case more
@@ -19,8 +18,6 @@ enum AppTab: Hashable {
         switch self {
         case .home:
             .homeFill24
-        case .community:
-            .personsFill24
         case .map:
             .locationFill24
         case .chat:
@@ -34,8 +31,6 @@ enum AppTab: Hashable {
         switch self {
         case .home:
             "홈"
-        case .community:
-            "커뮤니티"
         case .map:
             "지도"
         case .chat:

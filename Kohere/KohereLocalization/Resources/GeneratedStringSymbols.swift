@@ -1476,11 +1476,6 @@ extension LocalizedStringResource {
         LocalizedStringResource("notifications.empty.title", table: "Localizable", bundle: resourceBundleDescription)
     }
 
-    /// Localized string for key "notifications.title" in table "Localizable.xcstrings".
-    nonisolated public static var notificationsTitle: LocalizedStringResource {
-        LocalizedStringResource("notifications.title", table: "Localizable", bundle: resourceBundleDescription)
-    }
-
     /// Localized string for key "onboarding.error.completeProfile" in table "Localizable.xcstrings".
     nonisolated public static var onboardingErrorCompleteProfile: LocalizedStringResource {
         LocalizedStringResource("onboarding.error.completeProfile", table: "Localizable", bundle: resourceBundleDescription)
@@ -1864,11 +1859,6 @@ extension LocalizedStringResource {
     /// Localized string for key "settings.withdrawal.failure" in table "Localizable.xcstrings".
     nonisolated public static var settingsWithdrawalFailure: LocalizedStringResource {
         LocalizedStringResource("settings.withdrawal.failure", table: "Localizable", bundle: resourceBundleDescription)
-    }
-
-    /// Localized string for key "tab.community" in table "Localizable.xcstrings".
-    nonisolated public static var tabCommunity: LocalizedStringResource {
-        LocalizedStringResource("tab.community", table: "Localizable", bundle: resourceBundleDescription)
     }
 
 }

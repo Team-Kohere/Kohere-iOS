@@ -70,10 +70,10 @@ extension RootFeature {
             case .home:
                 state.home.dismissLastDestination()
             case .map:
-                state.map.popNavigation()
+                state.map.dismissLastDestination()
             case .more:
                 _ = state.more.path.popLast()
-            case .community, .chat:
+            case .chat:
                 break
             }
             return .none
