@@ -12,6 +12,7 @@ import KohereCore
 import KohereData
 import KohereDesignSystem
 import KohereDomain
+import KohereHome
 import KohereListing
 import KohereLocalization
 import KohereLogin

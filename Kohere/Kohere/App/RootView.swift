@@ -10,6 +10,7 @@ import KohereChat
 import KohereCore
 import KohereDesignSystem
 import KohereDomain
+import KohereHome
 import KohereLogin
 import KohereMap
 import KohereMore

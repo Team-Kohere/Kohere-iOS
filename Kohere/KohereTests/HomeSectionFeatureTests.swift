@@ -7,6 +7,7 @@ import ComposableArchitecture
 @testable import KohereListing
 import XCTest
 @testable import Kohere
+@testable import KohereHome
 import KohereCore
 import KohereData
 import KohereDomain

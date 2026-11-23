@@ -9,6 +9,7 @@ import ComposableArchitecture
 import KohereChat
 import KohereDesignSystem
 import KohereDomain
+import KohereHome
 import KohereLogin
 import KohereMap
 import KohereMapEntry
