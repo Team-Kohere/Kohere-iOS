@@ -738,6 +738,21 @@ final class ChatFeatureTests: XCTestCase {
         }
     }
 
+    func testMapPreviewFromChatListingDetailRequestsListingMapPreview() async throws {
+        var initialState = ChatFeature.State(participantRole: .tenant)
+        initialState.path.append(.listingDetail(ListingDetailFeature.State(listingID: "listing-1",
+                                                                           userType: .tenant,
+                                                                           appLanguage: .english)))
+        let detailID = try XCTUnwrap(initialState.path.ids.last)
+        let coordinate = MapCoordinate(latitude: 37.5665, longitude: 126.9780)
+        let store = TestStore(initialState: initialState) {
+            ChatFeature()
+        }
+
+        await store.send(.path(.element(id: detailID, action: .listingDetail(.delegate(.mapPreviewRequested(coordinate))))))
+        await store.receive(\.delegate.listingMapPreviewRequested, coordinate)
+    }
+
     private func makeRoom(roomID: Int, role: ChatRoomRole = .tenant) -> ChatRoom {
         ChatRoom(
             roomID: roomID,
