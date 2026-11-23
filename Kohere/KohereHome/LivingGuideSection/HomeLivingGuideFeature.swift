@@ -16,14 +16,14 @@ private extension HomeLivingGuideFeature {
     }
 }
 @Reducer
-struct HomeLivingGuideFeature {
+public struct HomeLivingGuideFeature {
     @Dependency(\.fetchLivingGuideTopicsUseCase)
     var fetchLivingGuideTopics
     
     // MARK: - State
 
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var guides: [LivingGuide]
         var isLoading = false
         var isLoaded: Bool
@@ -37,7 +37,7 @@ struct HomeLivingGuideFeature {
     
     // MARK: - Action
 
-    enum Action {
+    public enum Action {
         case onAppear
         case cancelEffects
         case itemTapped(id: Int)
@@ -46,7 +46,9 @@ struct HomeLivingGuideFeature {
     
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

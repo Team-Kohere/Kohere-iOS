@@ -12,6 +12,7 @@ import KohereCore
 import KohereData
 import KohereDesignSystem
 import KohereDomain
+import KohereHome
 import KohereListing
 import KohereLocalization
 import KohereLogin
@@ -119,25 +120,25 @@ struct RootFeature {
                 return .none
 
             case let .home(.delegate(.mapRequested(request))):
-                state.home.path.removeAll()
+                state.home.clearNavigation()
                 return openMap(request: request, state: &state)
 
             case let .home(.delegate(.mapPlaceSearchRequested(placeResult))):
-                state.home.path.removeAll()
+                state.home.clearNavigation()
                 state.selectedTab = .map
                 return .send(.map(.placeSearchResultSelected(placeResult)))
 
             case let .home(.delegate(.listingMapPreviewRequested(coordinate))):
-                state.home.path.removeAll()
+                state.home.clearNavigation()
                 return openListingMapPreview(coordinate: coordinate, state: &state)
 
             case let .home(.delegate(.chatRoomRequested(listingID))):
-                state.home.path.removeAll()
+                state.home.clearNavigation()
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
 
             case let .home(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):
-                state.home.path.removeAll()
+                state.home.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
             case let .map(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):

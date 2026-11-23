@@ -21,7 +21,7 @@ private extension HomeRecentlyViewedFeature {
 }
 
 @Reducer
-struct HomeRecentlyViewedFeature {
+public struct HomeRecentlyViewedFeature {
     @Dependency(\.fetchRecentListingsUseCase)
     var fetchRecentListings
     @Dependency(\.updateListingFavoriteUseCase)
@@ -34,7 +34,7 @@ struct HomeRecentlyViewedFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var userType: UserType?
         var appLanguage: AppLanguage
         var recentListings: [Listing] = []
@@ -60,7 +60,7 @@ struct HomeRecentlyViewedFeature {
     
     // MARK: - Action
     
-    enum Action {
+    public enum Action {
         case onAppear
         case cancelEffects
         case recentListingsResponse(Result<[Listing], DataError>)
@@ -71,7 +71,9 @@ struct HomeRecentlyViewedFeature {
     
     // MARK: - Reducer Body
     
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

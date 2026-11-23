@@ -18,7 +18,7 @@ private extension HomeQuizFeature {
 }
 
 @Reducer
-struct HomeQuizFeature {
+public struct HomeQuizFeature {
     @Dependency(\.fetchRandomQuizUseCase)
     var fetchRandomQuiz
 
@@ -28,7 +28,7 @@ struct HomeQuizFeature {
     // MARK: - State
     
     @ObservableState
-    struct State: Equatable {
+    public struct State: Equatable {
         var quiz: Quiz
         var selectedChoiceKey: String?
         var answerResult: QuizAnswerResult?
@@ -60,7 +60,7 @@ struct HomeQuizFeature {
 
     // MARK: - Action
     
-    enum Action {
+    public enum Action {
         case onAppear
         case cancelEffects
         case randomQuizResponse(Result<Quiz, DataError>)
@@ -70,7 +70,9 @@ struct HomeQuizFeature {
     
     // MARK: - Reducer Body
 
-    var body: some Reducer<State, Action> {
+    public init() {}
+
+    public var body: some Reducer<State, Action> {
         Reduce { state, action in
             switch action {
             case .onAppear:

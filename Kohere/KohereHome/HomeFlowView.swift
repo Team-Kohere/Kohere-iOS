@@ -11,15 +11,19 @@ import KohereListing
 import KohereLivingGuide
 import SwiftUI
 
-struct HomeFlowView: View {
+public struct HomeFlowView: View {
     
     // MARK: - Property
     
-    @Bindable var store: StoreOf<HomeFeature>
+    @Bindable private var store: StoreOf<HomeFeature>
     
     // MARK: - Body
     
-    var body: some View {
+    public init(store: StoreOf<HomeFeature>) {
+        self.store = store
+    }
+
+    public var body: some View {
         NavigationStack(
             path: $store.scope(
                 state: \HomeFeature.State.path,
