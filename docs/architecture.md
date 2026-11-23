@@ -28,10 +28,6 @@ Kohere/                                   # Tuist 프로젝트 루트
 │   │   ├── KohereApp.swift
 │   │   ├── RootFeature.swift
 │   │   └── RootView.swift
-│   ├── Presentation/                     # 아직 모듈로 분리하지 않은 화면
-│   │   └── <FeatureName>/
-│   │       ├── <FeatureName>View.swift
-│   │       └── <FeatureName>Feature.swift
 │   └── Resource/                         # AppIcon, 폰트, Info.plist
 ├── KohereCore/                           # 범용 extension, 앱 언어
 │   ├── Extension/
@@ -62,7 +58,8 @@ Kohere/                                   # Tuist 프로젝트 루트
 │   ├── Local/                            # Keychain, UserDefaults
 │   ├── Push/
 │   └── Realtime/
-├── Kohere<FeatureName>/                  # 앱에서 분리한 화면 모듈 (예: KohereLivingGuide, KohereLogin, KohereMap, KohereMapEntry, KohereListing, KohereMore, KohereOnboarding, KohereProfileForm)
+├── Kohere<FeatureName>/                  # 화면 모듈: Home, Map, Chat, ChatBot, More, Onboarding, Login, LivingGuide
+│                                         # 공용 화면 모듈: Listing, MapEntry, ProfileForm
 └── KohereTests/
 ```
 
@@ -72,9 +69,11 @@ Kohere/                                   # Tuist 프로젝트 루트
 앱(Kohere) → KohereData → KohereDomain → KohereCore
 앱(Kohere) → KohereDesignSystem → KohereLocalization → KohereCore
 앱(Kohere) → Kohere<FeatureName> → KohereDomain, KohereDesignSystem 등 필요한 하위 모듈
+화면 모듈 → 공용 화면 모듈(KohereListing, KohereMapEntry, KohereProfileForm)
 ```
 
-화면은 `Presentation/<FeatureName>`에서 `Kohere<FeatureName>` 모듈 폴더로 하나씩 분리하는 중이다. 모듈을 추가할 때는 `Project.swift`에 `.module(name:dependencies:)`로 선언하고 `tuist generate`를 실행한다.
+화면은 모두 `Kohere<FeatureName>` 모듈로 분리돼 있고, 앱 타깃은 `App/`의 루트에서 모듈을 조립만 한다.
+새 화면 모듈을 추가할 때는 `Project.swift`에 `.module(name:dependencies:)`로 선언하고 `tuist generate`를 실행한 뒤, `.coderabbit.yaml`의 화면 규칙 경로에도 추가한다.
 
 ## Layers
 
