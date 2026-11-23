@@ -67,7 +67,7 @@ extension RootFeature {
         case .dismissListingDetail:
             switch state.selectedTab {
             case .home:
-                _ = state.home.path.popLast()
+                state.home.dismissLastDestination()
             case .map:
                 state.map.popNavigation()
             case .more:

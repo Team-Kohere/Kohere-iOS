@@ -196,6 +196,14 @@ public struct HomeFeature {
 extension HomeFeature.Path.State: Equatable {}
 
 extension HomeFeature.State {
+    public mutating func clearNavigation() {
+        path.removeAll()
+    }
+
+    public mutating func dismissLastDestination() {
+        _ = path.popLast()
+    }
+
     public mutating func synchronizeFavoriteStatus(_ status: ListingFavoriteStatus, for listingID: String) {
         recentlyViewedSection.synchronizeFavoriteStatus(status, for: listingID)
     }
