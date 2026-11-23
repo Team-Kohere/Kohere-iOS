@@ -139,7 +139,7 @@ extension MapFeature.State {
         path.removeAll()
     }
 
-    public mutating func popNavigation() {
+    public mutating func dismissLastDestination() {
         _ = path.popLast()
     }
 
