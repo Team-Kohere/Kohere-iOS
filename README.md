@@ -60,7 +60,7 @@
 
 ## <img src="docs/readme/icon-architecture.png" width="28" align="top" /> Architecture
 
-기능 화면마다 모듈을 나누고, 앱 타깃은 모듈을 조립하는 역할만 맡는다. 화면 모듈은 실제로 띄우는 화면에만 의존하고(예: 지도 → 챗봇 진단), 여러 탭이 함께 쓰는 화면은 공용 모듈로 내려 순환 의존을 막는다.
+기능 화면마다 모듈을 나누고, 앱 타깃은 모듈을 조립하는 역할만 맡습니다. 화면 모듈은 실제로 띄우는 화면에만 의존하고(예: 지도 → 챗봇 진단), 여러 탭이 함께 쓰는 화면은 공용 모듈로 내려 순환 의존을 막습니다.
 
 ```mermaid
 flowchart TD
@@ -109,11 +109,11 @@ flowchart TD
 
 ## <img src="docs/readme/icon-modularization.png" width="28" align="top" /> 모듈화로 증분 빌드 시간 70% 개선
 
-**문제** 앱 전체(약 3만 줄)가 하나의 모듈이라, 파일 하나만 고쳐도 앱 전체의 모듈 인터페이스를 다시 생성(Emit 약 10초)했다. 두 명이 동시에 작업하면 `project.pbxproj` 충돌도 잦았다.
+**문제** 앱 전체(약 3만 줄)가 하나의 모듈이라, 파일 하나만 고쳐도 앱 전체의 모듈 인터페이스를 다시 생성(Emit 약 10초)했습니다. 두 명이 동시에 작업하면 `project.pbxproj` 충돌도 잦았습니다.
 
-**해결** Tuist로 프로젝트를 코드로 관리하고, 레이어(Core·Domain·Data·DesignSystem)부터 화면까지 16개 모듈로 분리했다. 화면끼리 얽힌 의존은 공용 모듈(Listing·MapEntry·ProfileForm)로 풀었다.
+**해결** Tuist로 프로젝트를 코드로 관리하고, 레이어(Core·Domain·Data·DesignSystem)부터 화면까지 16개 모듈로 분리했습니다. 화면끼리 얽힌 의존은 공용 모듈(Listing·MapEntry·ProfileForm)로 풀었습니다.
 
-**결과** 수정한 모듈만 다시 빌드한다. 파일 1개 수정 후 증분 빌드가 약 14초에서 3~4초로 줄었다. (같은 날 같은 맥에서 전후 각 6회 측정한 중간값)
+**결과** 수정한 모듈만 다시 빌드합니다. 파일 1개 수정 후 증분 빌드가 약 14초에서 3~4초로 줄었습니다. (같은 날 같은 맥에서 전후 각 6회 측정한 중간값)
 
 <p align="center">
   <img src="docs/readme/build-time.png" width="720" alt="파일 1개 수정 후 빌드 시간 전후 비교" />
