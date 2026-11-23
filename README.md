@@ -1,37 +1,37 @@
 <p align="center">
-  <img src="docs/readme/banner.svg" width="100%" alt="Kohere 배너" />
+  <img src="docs/readme/banner.jpg" width="100%" alt="Kohere App Store 스크린샷" />
 </p>
 
 # <img src="docs/readme/app-icon.png" width="44" align="top" alt="Kohere 앱 아이콘" /> Kohere
 
-> 한국에서 집 찾기, 이제 용어부터 막히지 않게
+> Your Housing Platform in Korea
 
-**한국 부동산 용어를 몰라도 나에게 맞는 집을 찾을 수 있도록 돕는, 외국인을 위한 주거 큐레이션 앱**
+**복잡한 한국 주거 용어를 몰라도, 몇 번의 선택만으로 맞는 매물을 추천받고 탐색부터 신청까지 앱 하나로 끝내는 외국인 맞춤형 주거 플랫폼**
 
-<a href="https://apps.apple.com/app/idXXXXXXXXXX"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="44" alt="App Store에서 다운로드" /></a>
+<a href="https://apps.apple.com/kr/app/kohere-housing-in-korea/id6781619804"><img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" height="44" alt="App Store에서 다운로드" /></a>
 
 <br>
 
 ## <img src="docs/readme/icon-problem.png" width="28" align="top" /> 외국인에게 한국 집 구하기가 어려운 이유
 
-- **낯선 용어** 보증금, 전세, 관리비처럼 집을 고르는 데 꼭 필요한 정보가 한국식 용어로만 쓰여 있다.
-- **세우기 어려운 기준** 한국 시세와 계약 관행을 몰라 어떤 조건이 나에게 맞는지 판단하기 어렵다.
-- **막막한 소통** 매물을 찾아도 집주인에게 묻고 계약까지 이어 가는 과정이 막막하다.
+- 낯선 한국 부동산 용어
+- 부담스러운 임대인 연락
+- 믿을 만한 한국 생활 정보 부족
 
 ## <img src="docs/readme/icon-solution.png" width="28" align="top" /> Kohere가 해결하는 방법
 
-1. 낯선 용어 → **영어 지원 · 원화와 달러를 함께 표시하는 가격**으로 바로 이해
-2. 세우기 어려운 기준 → **챗봇 진단**으로 몇 가지 질문에 답하면 맞는 조건과 매물을 추천
-3. 막막한 소통 → **임대인과의 실시간 채팅 · 입주 신청**까지 앱 안에서 해결
+1. **맞춤 매물 챗봇** 지역·목적·예산·선호만 고르면 맞는 매물을 추천
+2. **탐색부터 신청까지 한 번에** 임대인에게 따로 연락하지 않고, 앱에서 원하는 날짜와 기간을 골라 바로 신청
+3. **한국 생활 꿀팁** 계좌 개설·대중교통·사기 유형·건강 정보와 하루 한 번 퀴즈
 
 <br>
 
 ## <img src="docs/readme/icon-features.png" width="28" align="top" /> 주요 기능
 
-| 맞춤 진단 | 지도 탐색 | 매물 상세 | 채팅 | 생활 가이드 |
-| :---: | :---: | :---: | :---: | :---: |
-| <img src="docs/readme/shot-1.svg" width="150" /> | <img src="docs/readme/shot-2.svg" width="150" /> | <img src="docs/readme/shot-3.svg" width="150" /> | <img src="docs/readme/shot-4.svg" width="150" /> | <img src="docs/readme/shot-5.svg" width="150" /> |
-| 질문에 답하면<br/>맞는 조건과 매물 추천 | 월세·보증금·방 조건으로<br/>지도에서 매물 찾기 | 원화·달러 가격 보고<br/>바로 입주 신청 | 임대인과<br/>실시간 대화 | 한국 생활 정보를<br/>퀴즈와 가이드로 |
+| 홈 | 지도 탐색 | 맞춤 매물 챗봇 | 추천 결과 |
+| :---: | :---: | :---: | :---: |
+| <img src="docs/readme/feature-1.jpg" width="200" /> | <img src="docs/readme/feature-2.jpg" width="200" /> | <img src="docs/readme/feature-3.jpg" width="200" /> | <img src="docs/readme/feature-4.jpg" width="200" /> |
+| 최근 본 매물과<br/>1분 맞춤 추천 진입 | 원하는 지역에서<br/>조건별로 매물 탐색 | 질문에 답하면<br/>조건에 맞는 매물 검색 | 진단 조건으로 걸러진<br/>매물을 지도와 목록으로 |
 
 <br>
 
@@ -107,7 +107,7 @@ flowchart TD
 
 <br>
 
-## <img src="docs/readme/icon-modularization.png" width="28" align="top" /> 모듈화로 빌드 시간 70% 줄이기
+## <img src="docs/readme/icon-modularization.png" width="28" align="top" /> 모듈화로 증분 빌드 시간 70% 개선
 
 **문제** 앱 전체(약 3만 줄)가 하나의 모듈이라, 파일 하나만 고쳐도 앱 전체의 모듈 인터페이스를 다시 생성(Emit 약 10초)했다. 두 명이 동시에 작업하면 `project.pbxproj` 충돌도 잦았다.
 
@@ -126,22 +126,3 @@ flowchart TD
 - **브랜치** `dev` 기준, 이슈마다 `type/#이슈번호` 브랜치를 만들고 PR로 머지
 - **커밋** `type: 내용` 형식 (feat, fix, refactor, del 등)
 - **리뷰** 팀원 리뷰와 CodeRabbit 자동 리뷰. Tuist 도입 후 `project.pbxproj`를 커밋하지 않아 동시 작업 충돌 없음
-
-<br>
-
-<details>
-<summary><img src="docs/readme/icon-setup.png" width="20" align="top" /> <b>개발 환경 설정</b></summary>
-
-<br>
-
-```bash
-mise install          # Tuist 4.211.0
-cd Kohere
-tuist install
-tuist generate
-```
-
-- Xcode 26.2 필요 (Swift 6.4는 TCA 1.26.0을 빌드하지 못해 `mise.local.toml`로 `DEVELOPER_DIR` 지정)
-- `Config/Secrets.xcconfig`, `GoogleService-Info.plist`는 팀 내부에서 별도 전달
-
-</details>
