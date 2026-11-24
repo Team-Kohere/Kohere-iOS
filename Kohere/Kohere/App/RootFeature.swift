@@ -211,6 +211,10 @@ struct RootFeature {
                 state.chat.clearNavigation()
                 return openMap(request: request, state: &state)
 
+            case let .chat(.delegate(.listingMapPreviewRequested(coordinate))):
+                state.chat.clearNavigation()
+                return openListingMapPreview(coordinate: coordinate, state: &state)
+
             case let .chat(.delegate(.popupRequested(popup))):
                 state.popup = popup
                 return .none

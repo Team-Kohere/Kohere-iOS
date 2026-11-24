@@ -93,6 +93,7 @@ public struct ChatFeature {
     public enum Delegate: Equatable {
         case popupRequested(AppPopup)
         case mapRequested(MapEntryRequest)
+        case listingMapPreviewRequested(MapCoordinate)
     }
 
     public enum Action {

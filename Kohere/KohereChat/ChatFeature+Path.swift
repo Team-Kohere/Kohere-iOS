@@ -82,6 +82,9 @@ extension ChatFeature {
                                                                   showsInquiryCard: true)))
             return .none
 
+        case let .element(id: _, action: .listingDetail(.delegate(.mapPreviewRequested(coordinate)))):
+            return .send(.delegate(.listingMapPreviewRequested(coordinate)))
+
         case .element(id: _, action: .listingApplication(.backButtonTapped)):
             _ = state.path.popLast()
             return .none
