@@ -12,7 +12,7 @@ import KohereLocalization
 import SwiftUI
 
 public struct SearchView: View {
-    let store: StoreOf<SearchFeature>
+    private let store: StoreOf<SearchFeature>
 
     public init(store: StoreOf<SearchFeature>) {
         self.store = store

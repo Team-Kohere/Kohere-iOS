@@ -12,7 +12,7 @@ import KohereLocalization
 import SwiftUI
 
 public struct ListingApplicationView: View {
-    @Bindable var store: StoreOf<ListingApplicationFeature>
+    @Bindable private var store: StoreOf<ListingApplicationFeature>
 
     public init(store: StoreOf<ListingApplicationFeature>) {
         self.store = store

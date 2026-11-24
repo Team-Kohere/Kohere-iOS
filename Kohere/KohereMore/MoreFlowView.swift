@@ -11,7 +11,7 @@ import KohereLivingGuide
 import SwiftUI
 
 public struct MoreFlowView: View {
-    @Bindable var store: StoreOf<MoreFeature>
+    @Bindable private var store: StoreOf<MoreFeature>
 
     public init(store: StoreOf<MoreFeature>) {
         self.store = store

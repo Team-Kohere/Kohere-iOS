@@ -11,7 +11,7 @@ import SwiftUI
 import UIKit
 
 public struct ListingDetailView: View {
-    let store: StoreOf<ListingDetailFeature>
+    private let store: StoreOf<ListingDetailFeature>
 
     public init(store: StoreOf<ListingDetailFeature>) {
         self.store = store
