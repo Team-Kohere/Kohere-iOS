@@ -307,7 +307,7 @@ final class LanguageSelectionTests: XCTestCase {
         }
 
         await store.receive(
-            \.popupRequested,
+            \.delegate.popupRequested,
             .action(
                 AppPopup.Action(
                     message: "언어를 변경하면 진행 중인 화면과 검색 설정이 초기화됩니다. 변경할까요?",
@@ -1413,7 +1413,7 @@ final class RootFavoritePropagationTests: XCTestCase {
             $0.map.path[id: detailID, case: \.listingDetail]?.detail?.overview.favoriteCount = 7
         }
         // 지도 탭이 찜 변경을 루트로 올리면, 루트가 홈과 지도에 같은 상태를 반영한다.
-        await store.receive(\.map.favoriteStatusChanged) {
+        await store.receive(\.map.delegate.favoriteStatusChanged) {
             $0.home.recentlyViewedSection.items[0].isLiked = true
             $0.home.recentlyViewedSection.items[0].favoriteCount = 7
             $0.map.favoriteStatusesByListingID["listing-1"] = status

@@ -54,9 +54,9 @@ extension MapFeature {
         }
 
         state.clearSelectedListing()
-        return .send(.popupRequested(.notice(AppPopup.Notice(
+        return .send(.delegate(.popupRequested(.notice(AppPopup.Notice(
             message: state.appLanguage.localized(.listingDetailErrorLoadFailed),
             confirmTitle: state.appLanguage.localized(.commonConfirm)
-        ))))
+        )))))
     }
 }

@@ -54,6 +54,7 @@ struct RootFeature {
         case logoutResponse(Result<Void, Error>)
         case deleteAccountResponse(Result<Void, Error>)
         case deleteAccountLocalCleanupResponse(Result<Void, Error>)
+        case logoutConfirmed, deleteAccountConfirmed
         case fcmTokenReceived(String)
         case login(LoginFeature.Action), saveAuthResponse(Result<Auth, Error>)
         case onboardingLanguageUpdateResponse(AppLanguage, Result<UserProfile, Error>)
@@ -99,11 +100,8 @@ struct RootFeature {
                 return reduceLifecycle(action, state: &state)
 
             case .home(.delegate(.authenticationRequired)),
-                 .map(.listingLikeButtonTapped),
-                 .map(.authenticationRequired),
-                 .more(.savedListingsTapped),
-                 .more(.recentlyViewedListingsTapped),
-                 .more(.authenticationRequired):
+                 .map(.delegate(.authenticationRequired)),
+                 .more(.delegate(.authenticationRequired)):
                 return presentAuthenticationGateIfNeeded(state: &state)
 
             case .saveAuthResponse(.failure):
@@ -136,11 +134,11 @@ struct RootFeature {
                 state.home.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
-            case let .map(.inquiryChatRoomRequested(roomID, listingID)):
+            case let .map(.delegate(.inquiryChatRoomRequested(roomID, listingID))):
                 state.map.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
-            case let .more(.inquiryChatRoomRequested(roomID, listingID)):
+            case let .more(.delegate(.inquiryChatRoomRequested(roomID, listingID))):
                 state.more.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
@@ -182,17 +180,17 @@ struct RootFeature {
                 guard let route = popup.secondaryRoute else { return .none }
                 return handlePopupRoute(route, state: &state)
 
-            case let .map(.chatRoomRequested(listingID)):
+            case let .map(.delegate(.chatRoomRequested(listingID))):
                 state.map.clearNavigation()
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
 
-            case let .map(.popupRequested(popup)):
+            case let .map(.delegate(.popupRequested(popup))):
                 state.popup = popup
                 return .none
 
-            case let .map(.favoriteStatusChanged(listingID, status)),
-                 let .more(.favoriteStatusChanged(listingID, status)):
+            case let .map(.delegate(.favoriteStatusChanged(listingID, status))),
+                 let .more(.delegate(.favoriteStatusChanged(listingID, status))):
                 synchronizeFavoriteStatus(status, for: listingID, state: &state)
                 return .none
 
@@ -208,20 +206,20 @@ struct RootFeature {
                 state.popup = popup
                 return .none
 
-            case let .more(.popupRequested(popup)):
+            case let .more(.delegate(.popupRequested(popup))):
                 state.popup = popup
                 return .none
 
-            case let .more(.listingMapPreviewRequested(coordinate)):
+            case let .more(.delegate(.listingMapPreviewRequested(coordinate))):
                 state.more.clearNavigation()
                 return openListingMapPreview(coordinate: coordinate, state: &state)
 
-            case let .more(.chatRoomRequested(listingID)):
+            case let .more(.delegate(.chatRoomRequested(listingID))):
                 state.more.clearNavigation()
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
 
-            case let .more(.userProfileUpdated(userProfile)):
+            case let .more(.delegate(.profileUpdated(userProfile))):
                 if userProfile.userType == .landlord,
                    state.appLanguage != .korean {
                     try? userDefaultsClient.save(AppLanguage.korean.apiCode, for: .appLanguage)
@@ -245,13 +243,13 @@ struct RootFeature {
 
                 return .merge(effects)
 
-            case let .more(.languageUpdateResponse(language, .success(userProfile))):
+            case let .more(.delegate(.languageUpdated(language, userProfile))):
                 let resolvedLanguage = userProfile.userType == .landlord ? AppLanguage.korean : language
                 try? userDefaultsClient.save(resolvedLanguage.apiCode, for: .appLanguage)
                 let cancellation = resetMainContent(language: resolvedLanguage, userProfile: userProfile, state: &state)
                 return .concatenate(cancellation, .merge(.send(.home(.onAppear)), .send(.more(.onAppear))))
 
-            case .more(.logoutConfirmed):
+            case .logoutConfirmed:
                 guard !state.isLogoutRequesting else { return .none }
                 state.isLogoutRequesting = true
                 let logoutUseCase = logoutUseCase
@@ -287,7 +285,7 @@ struct RootFeature {
 
                 return completeLogout(state: &state)
 
-            case .more(.deleteAccountConfirmed):
+            case .deleteAccountConfirmed:
                 guard !state.isDeleteAccountRequesting else { return .none }
                 state.isDeleteAccountRequesting = true
                 let deleteCurrentUserUseCase = deleteCurrentUserUseCase
@@ -328,7 +326,7 @@ struct RootFeature {
             case .deleteAccountLocalCleanupResponse(.failure):
                 return completeLogout(state: &state)
                 
-            case .willEnterForeground, .more(.notificationSettingsPushRegistrationRequested):
+            case .willEnterForeground, .more(.delegate(.pushRegistrationRequested)):
                 guard state.authInfo?.onboardingRequired == false else { return .none }
                 return startPushRegistration(requestPermission: false)
 

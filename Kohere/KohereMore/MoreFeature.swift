@@ -61,8 +61,22 @@ public struct MoreFeature {
         public init() {}
     }
 
+    @CasePathable
+    public enum Delegate {
+        case authenticationRequired
+        case popupRequested(AppPopup)
+        case listingMapPreviewRequested(MapCoordinate)
+        case chatRoomRequested(listingID: String)
+        case inquiryChatRoomRequested(roomID: Int, listingID: String)
+        case favoriteStatusChanged(listingID: String, status: ListingFavoriteStatus)
+        case profileUpdated(UserProfile)
+        case languageUpdated(language: AppLanguage, profile: UserProfile)
+        case pushRegistrationRequested
+    }
+
     public enum Action {
         case path(StackActionOf<Path>)
+        case delegate(Delegate)
         case onAppear
         case livingGuideTopicsResponse(Result<[LivingGuide], DataError>)
         case navigationLanguageTapped
@@ -80,17 +94,8 @@ public struct MoreFeature {
         case savedListingsTapped
         case recentlyViewedListingsTapped
         case userProfileUpdated(UserProfile)
-        case popupRequested(AppPopup)
-        case listingMapPreviewRequested(MapCoordinate)
-        case chatRoomRequested(listingID: String)
-        case authenticationRequired
-        case inquiryChatRoomRequested(roomID: Int, listingID: String)
-        case favoriteStatusChanged(listingID: String, status: ListingFavoriteStatus)
-        case logoutConfirmed
-        case deleteAccountConfirmed
         case notificationSettingsDismissRequested
         case notificationSettingsOpenSystemSettingsRequested
-        case notificationSettingsPushRegistrationRequested
     }
 
     public var body: some Reducer<State, Action> {
@@ -191,7 +196,7 @@ public struct MoreFeature {
                 }
 
             case .savedListingsTapped:
-                guard state.canUseFavoriteFeatures else { return .none }
+                guard state.canUseFavoriteFeatures else { return .send(.delegate(.authenticationRequired)) }
                 state.path.append(
                     .savedListings(
                         SavedListingsFeature.State(
@@ -203,7 +208,7 @@ public struct MoreFeature {
                 return .none
 
             case .recentlyViewedListingsTapped:
-                guard state.canUseFavoriteFeatures else { return .none }
+                guard state.canUseFavoriteFeatures else { return .send(.delegate(.authenticationRequired)) }
                 state.path.append(
                     .recentlyViewedList(
                         RecentlyViewedFeature.State(
@@ -224,18 +229,11 @@ public struct MoreFeature {
                     state.path[id: id, case: \.notificationSetting]?.userType = userProfile.userType
                 }
 
-                guard userProfile.userType == .tenant else { return .none }
-                return .send(.onAppear)
+                let profileUpdated = Effect<Action>.send(.delegate(.profileUpdated(userProfile)))
+                guard userProfile.userType == .tenant else { return profileUpdated }
+                return .concatenate(profileUpdated, .send(.onAppear))
 
-            case .popupRequested,
-                 .notificationSettingsPushRegistrationRequested,
-                 .listingMapPreviewRequested,
-                 .chatRoomRequested,
-                 .authenticationRequired,
-                 .inquiryChatRoomRequested,
-                 .favoriteStatusChanged,
-                 .logoutConfirmed,
-                 .deleteAccountConfirmed:
+            case .delegate:
                 return .none
 
             }

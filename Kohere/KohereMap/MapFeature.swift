@@ -129,11 +129,7 @@ public struct MapFeature {
             case let .selectedListingResponse(requestID, result):
                 return handleSelectedListingResponse(requestID: requestID, result: result, state: &state)
 
-            case .popupRequested,
-                 .authenticationRequired,
-                 .inquiryChatRoomRequested,
-                 .chatRoomRequested,
-                 .favoriteStatusChanged:
+            case .delegate:
                 return .none
 
             case .selectedListingCardTapped:
@@ -217,6 +213,7 @@ public struct MapFeature {
 
             // 즐겨찾기 / 환율
             case let .listingLikeButtonTapped(listingID):
+                guard state.canUseFavoriteFeatures else { return .send(.delegate(.authenticationRequired)) }
                 return startFavoriteUpdateEffect(listingID: listingID, state: &state)
 
             case let .favoriteStatusResponse(listingID, result):

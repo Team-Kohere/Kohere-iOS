@@ -51,10 +51,10 @@ extension RootFeature {
             return .none
 
         case .logout:
-            return .send(.more(.logoutConfirmed))
+            return .send(.logoutConfirmed)
 
         case .deleteAccount:
-            return .send(.more(.deleteAccountConfirmed))
+            return .send(.deleteAccountConfirmed)
 
         case let .reportBooking(bookingID):
             return .send(.chat(.reportDetailsRequested(roomID: bookingID)))

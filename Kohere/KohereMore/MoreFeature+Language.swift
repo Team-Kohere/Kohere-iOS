@@ -25,12 +25,12 @@ extension MoreFeature {
         case let .languageSelected(language):
             state.isLanguagePopoverPresented = false
             guard state.userType != .landlord, language != state.selectedLanguage else { return .none }
-            return .send(.popupRequested(.action(AppPopup.Action(
+            return .send(.delegate(.popupRequested(.action(AppPopup.Action(
                 message: state.selectedLanguage.localized(.languageChangeResetNotice),
                 primaryTitle: state.selectedLanguage.localized(.languageChangeConfirm),
                 secondaryTitle: state.selectedLanguage.localized(.languageChangeCancel),
                 route: .confirmLanguageChange(language)
-            ))))
+            )))))
 
         case let .languageChangeConfirmed(language):
             guard state.userType != .landlord,
@@ -52,14 +52,14 @@ extension MoreFeature {
             state.isLanguageUpdateLoading = false
             state.selectedLanguage = language
             state.userProfile = profile
-            return .none
+            return .send(.delegate(.languageUpdated(language: language, profile: profile)))
 
         case .languageUpdateResponse(_, .failure):
             state.isLanguageUpdateLoading = false
-            return .send(.popupRequested(.notice(AppPopup.Notice(
+            return .send(.delegate(.popupRequested(.notice(AppPopup.Notice(
                 message: state.selectedLanguage.localized(.languageChangeFailure),
                 confirmTitle: state.selectedLanguage.localized(.commonConfirm)
-            ))))
+            )))))
 
         default:
             return .none
