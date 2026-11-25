@@ -73,7 +73,10 @@ let project = Project(
                         "$(BUILT_PRODUCTS_DIR)/KohereData.framework/KohereData",
                         // Keep the iOS authorization category used by Google Sign-In.
                         "-force_load",
-                        "$(BUILT_PRODUCTS_DIR)/AppAuth.framework/AppAuth"
+                        "$(BUILT_PRODUCTS_DIR)/AppAuth.framework/AppAuth",
+                        // Keep the NSData gzip category used by Firebase heartbeats.
+                        "-force_load",
+                        "$(BUILT_PRODUCTS_DIR)/GoogleUtilities_NSData.framework/GoogleUtilities_NSData"
                     ]
                 ],
                 configurations: [
