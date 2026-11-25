@@ -72,7 +72,7 @@ extension RootFeature {
             case .map:
                 state.map.dismissLastDestination()
             case .more:
-                _ = state.more.path.popLast()
+                state.more.dismissLastDestination()
             case .chat:
                 break
             }

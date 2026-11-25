@@ -129,7 +129,11 @@ public struct MapFeature {
             case let .selectedListingResponse(requestID, result):
                 return handleSelectedListingResponse(requestID: requestID, result: result, state: &state)
 
-            case .popupRequested:
+            case .popupRequested,
+                 .authenticationRequired,
+                 .inquiryChatRoomRequested,
+                 .chatRoomRequested,
+                 .favoriteStatusChanged:
                 return .none
 
             case .selectedListingCardTapped:

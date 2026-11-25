@@ -51,6 +51,23 @@ extension MapFeature {
         case let .element(id: _, action: .listingDetail(.delegate(.mapPreviewRequested(coordinate)))):
             return .send(.listingMapPreviewRequested(coordinate))
 
+        case .element(id: _, action: .listingDetail(.likeButtonTapped)):
+            return .send(.authenticationRequired)
+
+        case let .element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))):
+            return .send(.inquiryChatRoomRequested(roomID: roomID, listingID: listingID))
+
+        case let .element(id: _, action: .listingDetail(.popupRequested(popup))),
+             let .element(id: _, action: .search(.popupRequested(popup))):
+            return .send(.popupRequested(popup))
+
+        case let .element(id: id, action: .listingDetail(.favoriteStatusResponse(.success(status)))):
+            guard let listingID = state.path[id: id, case: \.listingDetail]?.listingID else { return .none }
+            return .send(.favoriteStatusChanged(listingID: listingID, status: status))
+
+        case let .element(id: _, action: .listingApplication(.delegate(.chatRoomRequested(listingID)))):
+            return .send(.chatRoomRequested(listingID: listingID))
+
         case let .element(
             id: _,
             action: .listingApplication(.delegate(.privacyDocumentRequested(section)))

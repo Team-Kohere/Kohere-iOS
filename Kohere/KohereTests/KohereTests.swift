@@ -1411,6 +1411,9 @@ final class RootFavoritePropagationTests: XCTestCase {
         ) {
             $0.map.path[id: detailID, case: \.listingDetail]?.detail?.overview.isLiked = true
             $0.map.path[id: detailID, case: \.listingDetail]?.detail?.overview.favoriteCount = 7
+        }
+        // 지도 탭이 찜 변경을 루트로 올리면, 루트가 홈과 지도에 같은 상태를 반영한다.
+        await store.receive(\.map.favoriteStatusChanged) {
             $0.home.recentlyViewedSection.items[0].isLiked = true
             $0.home.recentlyViewedSection.items[0].favoriteCount = 7
             $0.map.favoriteStatusesByListingID["listing-1"] = status

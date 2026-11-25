@@ -18,7 +18,7 @@ extension MapFeature {
     @ObservableState
     public struct State: Equatable {
         // Navigation
-        public internal(set) var path = StackState<Path.State>()
+        var path = StackState<Path.State>()
         var userType: UserType?
         var appLanguage: AppLanguage = .english
 
@@ -108,6 +108,10 @@ extension MapFeature {
         case markerTapped(String)
         case selectedListingResponse(requestID: UUID, Result<Listing, DataError>)
         case popupRequested(AppPopup)
+        case authenticationRequired
+        case inquiryChatRoomRequested(roomID: Int, listingID: String)
+        case chatRoomRequested(listingID: String)
+        case favoriteStatusChanged(listingID: String, status: ListingFavoriteStatus)
         case searchButtonTapped
         case path(StackActionOf<Path>)
         case listingCardTapped(String)

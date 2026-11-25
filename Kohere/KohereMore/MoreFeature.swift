@@ -47,7 +47,7 @@ public struct MoreFeature {
 
     @ObservableState
     public struct State: Equatable {
-        public var path = StackState<Path.State>()
+        var path = StackState<Path.State>()
         public var userType: UserType?
         public var userProfile: UserProfile?
         var isLanguagePopoverPresented = false
@@ -83,6 +83,9 @@ public struct MoreFeature {
         case popupRequested(AppPopup)
         case listingMapPreviewRequested(MapCoordinate)
         case chatRoomRequested(listingID: String)
+        case authenticationRequired
+        case inquiryChatRoomRequested(roomID: Int, listingID: String)
+        case favoriteStatusChanged(listingID: String, status: ListingFavoriteStatus)
         case logoutConfirmed
         case deleteAccountConfirmed
         case notificationSettingsDismissRequested
@@ -228,6 +231,9 @@ public struct MoreFeature {
                  .notificationSettingsPushRegistrationRequested,
                  .listingMapPreviewRequested,
                  .chatRoomRequested,
+                 .authenticationRequired,
+                 .inquiryChatRoomRequested,
+                 .favoriteStatusChanged,
                  .logoutConfirmed,
                  .deleteAccountConfirmed:
                 return .none
@@ -269,5 +275,17 @@ extension MoreFeature {
             URLQueryItem(name: "body", value: body)
         ]
         return components.url
+    }
+}
+
+// MARK: - 루트에서 쓰는 상태 변경
+
+extension MoreFeature.State {
+    public mutating func clearNavigation() {
+        path.removeAll()
+    }
+
+    public mutating func dismissLastDestination() {
+        _ = path.popLast()
     }
 }

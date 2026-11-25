@@ -100,12 +100,10 @@ struct RootFeature {
 
             case .home(.delegate(.authenticationRequired)),
                  .map(.listingLikeButtonTapped),
+                 .map(.authenticationRequired),
                  .more(.savedListingsTapped),
-                 .more(.recentlyViewedListingsTapped):
-                return presentAuthenticationGateIfNeeded(state: &state)
-
-            case .map(.path(.element(id: _, action: .listingDetail(.likeButtonTapped)))),
-                 .more(.path(.element(id: _, action: .listingDetail(.likeButtonTapped)))):
+                 .more(.recentlyViewedListingsTapped),
+                 .more(.authenticationRequired):
                 return presentAuthenticationGateIfNeeded(state: &state)
 
             case .saveAuthResponse(.failure):
@@ -134,16 +132,16 @@ struct RootFeature {
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
 
-            case let .home(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):
+            case let .home(.delegate(.inquiryChatRoomRequested(roomID, listingID))):
                 state.home.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
-            case let .map(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):
+            case let .map(.inquiryChatRoomRequested(roomID, listingID)):
                 state.map.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
-            case let .more(.path(.element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))))):
-                state.more.path.removeAll()
+            case let .more(.inquiryChatRoomRequested(roomID, listingID)):
+                state.more.clearNavigation()
                 return openInquiryChat(roomID: roomID, listingID: listingID, state: &state)
 
             case let .home(.delegate(.popupRequested(popup))):
@@ -184,26 +182,17 @@ struct RootFeature {
                 guard let route = popup.secondaryRoute else { return .none }
                 return handlePopupRoute(route, state: &state)
 
-            case let .map(.path(.element(
-                id: _,
-                action: .listingApplication(.delegate(.chatRoomRequested(listingID)))
-            ))):
+            case let .map(.chatRoomRequested(listingID)):
                 state.map.clearNavigation()
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
 
-            case let .map(.popupRequested(popup)),
-                 let .map(.path(.element(id: _, action: .search(.popupRequested(popup))))):
+            case let .map(.popupRequested(popup)):
                 state.popup = popup
                 return .none
 
-            case let .map(.path(.element(id: _, action: .listingDetail(.popupRequested(popup))))),
-                 let .more(.path(.element(id: _, action: .listingDetail(.popupRequested(popup))))):
-                state.popup = popup
-                return .none
-
-            case let .map(.path(.element(id: id, action: .listingDetail(.favoriteStatusResponse(.success(status)))))):
-                guard let listingID = state.map.path[id: id, case: \.listingDetail]?.listingID else { return .none }
+            case let .map(.favoriteStatusChanged(listingID, status)),
+                 let .more(.favoriteStatusChanged(listingID, status)):
                 synchronizeFavoriteStatus(status, for: listingID, state: &state)
                 return .none
 
@@ -224,26 +213,13 @@ struct RootFeature {
                 return .none
 
             case let .more(.listingMapPreviewRequested(coordinate)):
-                state.more.path.removeAll()
+                state.more.clearNavigation()
                 return openListingMapPreview(coordinate: coordinate, state: &state)
 
             case let .more(.chatRoomRequested(listingID)):
-                state.more.path.removeAll()
+                state.more.clearNavigation()
                 state.selectedTab = .chat
                 return .send(.chat(.chatRoomForListingRequested(listingID)))
-
-            case let .more(.path(.element(id: id, action: .listingDetail(.favoriteStatusResponse(.success(status)))))):
-                guard let listingID = state.more.path[id: id, case: \.listingDetail]?.listingID else { return .none }
-                synchronizeFavoriteStatus(status, for: listingID, state: &state)
-                return .none
-
-            case let .more(.path(.element(id: _, action: .savedListings(.favoriteStatusResponse(listingID, .success(status)))))):
-                synchronizeFavoriteStatus(status, for: listingID, state: &state)
-                return .none
-
-            case let .more(.path(.element(id: _, action: .recentlyViewedList(.favoriteStatusResponse(listingID, .success(status)))))):
-                synchronizeFavoriteStatus(status, for: listingID, state: &state)
-                return .none
 
             case let .more(.userProfileUpdated(userProfile)):
                 if userProfile.userType == .landlord,

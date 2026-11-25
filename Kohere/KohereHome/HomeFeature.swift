@@ -68,6 +68,7 @@ public struct HomeFeature {
         case mapPlaceSearchRequested(SearchPlaceResult)
         case listingMapPreviewRequested(MapCoordinate)
         case chatRoomRequested(listingID: String)
+        case inquiryChatRoomRequested(roomID: Int, listingID: String)
         case popupRequested(AppPopup)
         case favoriteStatusChanged(listingID: String, status: ListingFavoriteStatus)
     }
