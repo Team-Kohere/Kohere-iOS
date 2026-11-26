@@ -2,13 +2,14 @@ import ProjectDescription
 
 public extension Target {
     static func module(
-        name: String,
+        _ module: Module,
         resources: ResourceFileElements? = nil,
         scripts: [TargetScript] = [],
         dependencies: [TargetDependency] = [],
         settings: SettingsDictionary = [:]
     ) -> Target {
-        .target(
+        let name = module.rawValue
+        return .target(
             name: name,
             destinations: .iOS,
             product: .staticFramework,
