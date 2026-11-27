@@ -329,7 +329,7 @@ final class MapSelectedListingTests: XCTestCase {
                 $0.selectedListingRequestID = nil
                 $0.sheetMode = .listingList
             }
-            await store.receive(\.popupRequested)
+            await store.receive(\.delegate.popupRequested)
             await store.finish()
         }
     }
@@ -350,7 +350,7 @@ final class MapSelectedListingTests: XCTestCase {
             $0.selectedListingRequestID = nil
             $0.sheetMode = .listingList
         }
-        await store.receive(\.popupRequested)
+        await store.receive(\.delegate.popupRequested)
         await store.finish()
     }
 
@@ -392,7 +392,7 @@ final class MapSelectedListingTests: XCTestCase {
     func testMapNoticeIsPresentedByRoot() async {
         let popup = AppPopup.notice(.init(message: "load failed", confirmTitle: "OK"))
         let store = TestStore(initialState: RootFeature.State(isAuthLoading: false)) { RootFeature() }
-        await store.send(.map(.popupRequested(popup))) { $0.popup = popup }
+        await store.send(.map(.delegate(.popupRequested(popup)))) { $0.popup = popup }
     }
 }
 

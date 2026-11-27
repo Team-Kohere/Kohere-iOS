@@ -50,6 +50,9 @@ extension HomeFeature {
             state.path.removeAll()
             return .send(.delegate(.listingMapPreviewRequested(coordinate)))
 
+        case let .element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))):
+            return .send(.delegate(.inquiryChatRoomRequested(roomID: roomID, listingID: listingID)))
+
         case .element(id: _, action: .listingDetail(.likeButtonTapped)) where state.userType == nil:
             return .send(.delegate(.authenticationRequired))
 

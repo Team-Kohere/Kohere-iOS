@@ -29,11 +29,26 @@ extension MoreFeature {
 
         case let .element(id: _, action: .account(.popupRequested(popup))),
              let .element(id: _, action: .setting(.popupRequested(popup))),
-             let .element(id: _, action: .notificationSetting(.popupRequested(popup))):
-            return .send(.popupRequested(popup))
+             let .element(id: _, action: .notificationSetting(.popupRequested(popup))),
+             let .element(id: _, action: .listingDetail(.popupRequested(popup))):
+            return .send(.delegate(.popupRequested(popup)))
+
+        case .element(id: _, action: .listingDetail(.likeButtonTapped)) where !state.canUseFavoriteFeatures:
+            return .send(.delegate(.authenticationRequired))
+
+        case let .element(id: _, action: .listingDetail(.delegate(.inquiryChatRoomRequested(roomID, listingID)))):
+            return .send(.delegate(.inquiryChatRoomRequested(roomID: roomID, listingID: listingID)))
+
+        case let .element(id: id, action: .listingDetail(.favoriteStatusResponse(.success(status)))):
+            guard let listingID = state.path[id: id, case: \.listingDetail]?.listingID else { return .none }
+            return .send(.delegate(.favoriteStatusChanged(listingID: listingID, status: status)))
+
+        case let .element(id: _, action: .savedListings(.favoriteStatusResponse(listingID, .success(status)))),
+             let .element(id: _, action: .recentlyViewedList(.favoriteStatusResponse(listingID, .success(status)))):
+            return .send(.delegate(.favoriteStatusChanged(listingID: listingID, status: status)))
 
         case .element(id: _, action: .notificationSetting(.pushRegistrationRequested)):
-            return .send(.notificationSettingsPushRegistrationRequested)
+            return .send(.delegate(.pushRegistrationRequested))
 
         case let .element(id: _, action: .profileEdit(.delegate(.profileUpdated(userProfile)))):
             _ = state.path.popLast()
@@ -49,7 +64,7 @@ extension MoreFeature {
 
         case let .element(id: _, action: .listingDetail(.delegate(.mapPreviewRequested(coordinate)))):
             state.path.removeAll()
-            return .send(.listingMapPreviewRequested(coordinate))
+            return .send(.delegate(.listingMapPreviewRequested(coordinate)))
 
         case let .element(id: _, action: .listingApplication(.delegate(.privacyDocumentRequested(section)))):
             state.path.append(.listingApplicationPrivacyWeb(ListingApplicationPrivacyWebFeature.State(
@@ -67,7 +82,7 @@ extension MoreFeature {
 
         case let .element(id: _, action: .listingApplication(.delegate(.chatRoomRequested(listingID)))):
             state.path.removeAll()
-            return .send(.chatRoomRequested(listingID: listingID))
+            return .send(.delegate(.chatRoomRequested(listingID: listingID)))
 
         case let .element(id: _, action: .savedListings(.delegate(.listingDetailRequested(listingID)))),
              let .element(id: _, action: .recentlyViewedList(.delegate(.listingDetailRequested(listingID)))):

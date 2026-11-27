@@ -51,10 +51,10 @@ extension RootFeature {
             return .none
 
         case .logout:
-            return .send(.more(.logoutConfirmed))
+            return .send(.logoutConfirmed)
 
         case .deleteAccount:
-            return .send(.more(.deleteAccountConfirmed))
+            return .send(.deleteAccountConfirmed)
 
         case let .reportBooking(bookingID):
             return .send(.chat(.reportDetailsRequested(roomID: bookingID)))
@@ -72,7 +72,7 @@ extension RootFeature {
             case .map:
                 state.map.dismissLastDestination()
             case .more:
-                _ = state.more.path.popLast()
+                state.more.dismissLastDestination()
             case .chat:
                 break
             }
