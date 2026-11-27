@@ -73,7 +73,7 @@ Kohere/                                   # Tuist 프로젝트 루트
 ```
 
 화면은 모두 `Kohere<FeatureName>` 모듈로 분리돼 있고, 앱 타깃은 `App/`의 루트에서 모듈을 조립만 한다.
-새 화면 모듈을 추가할 때는 `Project.swift`에 `.module(name:dependencies:)`로 선언하고 `tuist generate`를 실행한 뒤, `.coderabbit.yaml`의 화면 규칙 경로에도 추가한다.
+새 화면 모듈을 추가할 때는 `Tuist/ProjectDescriptionHelpers/ModuleName.swift`의 `Module`에 case를 추가하고, `Project.swift`에 `.module(.이름, dependencies:)`로 선언한 뒤 `tuist generate`를 실행한다. `.coderabbit.yaml`의 화면 규칙 경로에도 추가한다.
 
 ## Layers
 

@@ -35,26 +35,26 @@ let project = Project(
                 )
             ],
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereData"),
-                .target(name: "KohereLivingGuide"),
-                .target(name: "KohereMapEntry"),
-                .target(name: "KohereChatBot"),
-                .target(name: "KohereChat"),
-                .target(name: "KohereListing"),
-                .target(name: "KohereProfileForm"),
-                .target(name: "KohereOnboarding"),
-                .target(name: "KohereLogin"),
-                .target(name: "KohereMore"),
-                .target(name: "KohereMap"),
-                .target(name: "KohereHome"),
-                .external(name: "ComposableArchitecture"),
-                .external(name: "GoogleSignIn"),
-                .external(name: "NMapsMap"),
-                .external(name: "FirebaseMessaging")
+                .target(.core),
+                .target(.localization),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.data),
+                .target(.livingGuide),
+                .target(.mapEntry),
+                .target(.chatBot),
+                .target(.chat),
+                .target(.listing),
+                .target(.profileForm),
+                .target(.onboarding),
+                .target(.login),
+                .target(.more),
+                .target(.map),
+                .target(.home),
+                .external(.composableArchitecture),
+                .external(.googleSignIn),
+                .external(.nMapsMap),
+                .external(.firebaseMessaging)
             ],
             settings: .settings(
                 base: [
@@ -85,9 +85,9 @@ let project = Project(
                 ]
             )
         ),
-        .module(name: "KohereCore"),
+        .module(.core),
         .module(
-            name: "KohereLocalization",
+            .localization,
             resources: ["KohereLocalization/Resources/Localizable.xcstrings"],
             scripts: [
                 .pre(
@@ -100,172 +100,172 @@ let project = Project(
                     outputPaths: ["$(SRCROOT)/KohereLocalization/Resources/GeneratedStringSymbols.swift"]
                 )
             ],
-            dependencies: [.target(name: "KohereCore")],
+            dependencies: [.target(.core)],
             settings: ["STRING_CATALOG_GENERATE_SYMBOLS": "NO"]
         ),
         .module(
-            name: "KohereDomain",
+            .domain,
             dependencies: [
-                .target(name: "KohereCore"),
-                .external(name: "Dependencies")
+                .target(.core),
+                .external(.dependencies)
             ],
             settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
         ),
         .module(
-            name: "KohereDesignSystem",
+            .designSystem,
             resources: ["KohereDesignSystem/Resources/Assets.xcassets"],
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereLocalization"),
-                .external(name: "Kingfisher")
+                .target(.core),
+                .target(.localization),
+                .external(.kingfisher)
             ],
             settings: ["ASSETCATALOG_COMPILER_GENERATE_ASSET_SYMBOLS": "NO"]
         ),
         .module(
-            name: "KohereData",
+            .data,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereDomain"),
-                .external(name: "Alamofire"),
-                .external(name: "Dependencies"),
-                .external(name: "FirebaseMessaging"),
-                .external(name: "SwiftStomp")
+                .target(.core),
+                .target(.domain),
+                .external(.alamofire),
+                .external(.dependencies),
+                .external(.firebaseMessaging),
+                .external(.swiftStomp)
             ],
             settings: ["SWIFT_DEFAULT_ACTOR_ISOLATION": "nonisolated"]
         ),
         .module(
-            name: "KohereLivingGuide",
+            .livingGuide,
             dependencies: [
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization"),
-                .external(name: "ComposableArchitecture")
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization),
+                .external(.composableArchitecture)
             ]
         ),
         .module(
-            name: "KohereMapEntry",
+            .mapEntry,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization")
+                .target(.core),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization)
             ]
         ),
         .module(
-            name: "KohereListing",
+            .listing,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization"),
-                .external(name: "ComposableArchitecture"),
-                .external(name: "NMapsMap")
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization),
+                .external(.composableArchitecture),
+                .external(.nMapsMap)
             ]
         ),
         .module(
-            name: "KohereProfileForm",
+            .profileForm,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization")
+                .target(.core),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization)
             ]
         ),
         .module(
-            name: "KohereOnboarding",
+            .onboarding,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereProfileForm"),
-                .external(name: "ComposableArchitecture")
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization),
+                .target(.profileForm),
+                .external(.composableArchitecture)
             ]
         ),
         .module(
-            name: "KohereLogin",
+            .login,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereOnboarding"),
-                .external(name: "ComposableArchitecture"),
-                .external(name: "GoogleSignIn")
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization),
+                .target(.onboarding),
+                .external(.composableArchitecture),
+                .external(.googleSignIn)
             ]
         ),
         .module(
-            name: "KohereMore",
+            .more,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereListing"),
-                .target(name: "KohereLivingGuide"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereProfileForm"),
-                .external(name: "ComposableArchitecture")
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.listing),
+                .target(.livingGuide),
+                .target(.localization),
+                .target(.profileForm),
+                .external(.composableArchitecture)
             ]
         ),
         .module(
-            name: "KohereChatBot",
+            .chatBot,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereMapEntry"),
-                .external(name: "ComposableArchitecture")
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization),
+                .target(.mapEntry),
+                .external(.composableArchitecture)
             ]
         ),
         .module(
-            name: "KohereChat",
+            .chat,
             dependencies: [
-                .target(name: "KohereChatBot"),
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereListing"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereMapEntry"),
-                .external(name: "ComposableArchitecture")
+                .target(.chatBot),
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.listing),
+                .target(.localization),
+                .target(.mapEntry),
+                .external(.composableArchitecture)
             ]
         ),
         .module(
-            name: "KohereMap",
+            .map,
             dependencies: [
-                .target(name: "KohereChatBot"),
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereListing"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereMapEntry"),
-                .external(name: "ComposableArchitecture"),
-                .external(name: "NMapsMap")
+                .target(.chatBot),
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.listing),
+                .target(.localization),
+                .target(.mapEntry),
+                .external(.composableArchitecture),
+                .external(.nMapsMap)
             ]
         ),
         .module(
-            name: "KohereHome",
+            .home,
             dependencies: [
-                .target(name: "KohereCore"),
-                .target(name: "KohereData"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereListing"),
-                .target(name: "KohereLivingGuide"),
-                .target(name: "KohereChatBot"),
-                .target(name: "KohereMapEntry"),
-                .external(name: "ComposableArchitecture")
+                .target(.core),
+                .target(.data),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.localization),
+                .target(.listing),
+                .target(.livingGuide),
+                .target(.chatBot),
+                .target(.mapEntry),
+                .external(.composableArchitecture)
             ]
         ),
         .target(
@@ -277,24 +277,24 @@ let project = Project(
             sources: ["KohereTests/**/*.swift"],
             dependencies: [
                 .target(name: "Kohere"),
-                .target(name: "KohereCore"),
-                .target(name: "KohereLocalization"),
-                .target(name: "KohereDesignSystem"),
-                .target(name: "KohereDomain"),
-                .target(name: "KohereData"),
-                .target(name: "KohereLivingGuide"),
-                .target(name: "KohereMapEntry"),
-                .target(name: "KohereChatBot"),
-                .target(name: "KohereChat"),
-                .target(name: "KohereListing"),
-                .target(name: "KohereProfileForm"),
-                .target(name: "KohereOnboarding"),
-                .target(name: "KohereLogin"),
-                .target(name: "KohereMore"),
-                .target(name: "KohereMap"),
-                .target(name: "KohereHome"),
-                .external(name: "ComposableArchitecture"),
-                .external(name: "Alamofire")
+                .target(.core),
+                .target(.localization),
+                .target(.designSystem),
+                .target(.domain),
+                .target(.data),
+                .target(.livingGuide),
+                .target(.mapEntry),
+                .target(.chatBot),
+                .target(.chat),
+                .target(.listing),
+                .target(.profileForm),
+                .target(.onboarding),
+                .target(.login),
+                .target(.more),
+                .target(.map),
+                .target(.home),
+                .external(.composableArchitecture),
+                .external(.alamofire)
             ],
             settings: .settings(base: [
                 "SWIFT_VERSION": "5.0",
